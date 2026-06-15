@@ -1,8 +1,8 @@
+import AuthPage from "./features/auth/components/AuthPage";
+
 function App() {
   return (
-    <div>
-      <h1>Kronika Ghoredinu</h1>
-    </div>
+    <AuthPage />
   );
 }
 
