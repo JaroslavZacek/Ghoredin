@@ -1,5 +1,7 @@
+using Ghoredin.Application.Users;
 using Ghoredin.Infrastructure.Identity;
 using Ghoredin.Infrastructure.Persistence;
+using Ghoredin.Server.Services;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +18,8 @@ builder.Services
     .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
