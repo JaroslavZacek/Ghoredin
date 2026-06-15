@@ -1,4 +1,4 @@
-@import "./theme.css";
+@import "../src/shared/theme.css";
 
 * {
   box-sizing: border-box;
