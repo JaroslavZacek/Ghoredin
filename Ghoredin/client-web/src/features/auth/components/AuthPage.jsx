@@ -1,14 +1,16 @@
 import { useState } from "react";
 
-import { register, login, getMe } from "../api/authApi";
+import { register } from "../api/authApi";
+import { useAuth } from "../AuthContext";
 
 import "./AuthPage.css"
 
 function AuthPage() {
+    const { login } = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
-    const [currentUser, setCurrentUser] = useState(null);
 
     /*-------------------------------------------------------------*/
     /*---------------------Handle funkce---------------------------*/
@@ -34,12 +36,6 @@ function AuthPage() {
 
         try {
             await login(email, password);
-
-            const me = await getMe();
-
-            setCurrentUser(me);
-
-            setMessage("Přihlášení úspěšné.");
         }
         catch (error) {
             setCurrentUser(null);
@@ -99,32 +95,12 @@ function AuthPage() {
 
                 </div>
 
-                <button
-                    className="auth-button auth-button--secondary"
-                    onClick={handleCheckMe}
-                >
-                    Zjistit, kdo jsem
-                </button>
-
+            </div>
                 {
                     message && 
-                        
                         <p className="auth-message">{message}</p>
                 }
 
-                {
-                    currentUser && (
-                        <div className="auth-result">
-
-                            <strong>Přihlášený uživatel: </strong>
-
-                            <pre>{JSON.stringify(currentUser, null, 2)}</pre>
-
-                        </div>
-                    )
-                }
-
-            </div>
         </div>
     );
 }
