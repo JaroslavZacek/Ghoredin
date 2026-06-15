@@ -38,6 +38,22 @@ function AuthPage() {
         catch (error) {
             setCurrentUser(null);
 
+            setMessage("Chyba při přihlášení: " + error.message);
+        }
+    };
+
+    const handleCheckMe = async () => {
+
+        setMessage("");
+
+        try {
+            const me = await getMe();
+
+            setCurrentUser(me);
+        }
+        catch (error) {
+            setCurrentUser(null);
+
             setMessage("Nejsi přihlášený: " + error.message);
         }
     };
