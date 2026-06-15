@@ -1,0 +1,11 @@
+<Solution>
+  <Project Path="src/Ghoredin.Application/Ghoredin.Application.csproj" />
+  <Project Path="src/Ghoredin.Client.Desktop/Ghoredin.Client.Desktop.csproj" />
+  <Project Path="src/Ghoredin.Client.Shared/Ghoredin.Client.Shared.csproj" />
+  <Project Path="src/Ghoredin.Domain/Ghoredin.Domain.csproj" />
+  <Project Path="src/Ghoredin.Infrastructure/Ghoredin.Infrastructure.csproj" />
+  <Project Path="src/Ghoredin.Server/Ghoredin.Server.csproj" />
+  <Project Path="tests/Ghoredin.Application.Tests/Ghoredin.Application.Tests.csproj" />
+  <Project Path="tests/Ghoredin.Domain.Tests/Ghoredin.Domain.Tests.csproj" />
+  <Project Path="tests/Ghoredin.Server.IntegrationTests/Ghoredin.Server.IntegrationTests.csproj" />
+</Solution>
