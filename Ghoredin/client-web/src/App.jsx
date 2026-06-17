@@ -22,7 +22,7 @@ function App() {
 
       <p>Přihlášen jako: {user.userId}</p>
 
-      <button className="auth-button">Odhlásit se</button>
+      <button className="auth-button" onClick={logout}>Odhlásit se</button>
     </div>
   );
 }
