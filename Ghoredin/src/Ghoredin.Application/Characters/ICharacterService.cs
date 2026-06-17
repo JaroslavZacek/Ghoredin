@@ -9,7 +9,7 @@ namespace Ghoredin.Application.Characters
     public interface ICharacterService
     {
         Task<Character> CreateAsync(CreateCharacterCommand command);
-        Task<List<Character>> GetMyCharacterAsync();
+        Task<List<Character>> GetMyCharactersAsync();
         Task<Character> GetByIdAsync(Guid id);
     }
 }
