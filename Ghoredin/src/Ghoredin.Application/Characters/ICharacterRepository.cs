@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Ghoredin.Application.Characters
 {
-    public class ICharacterRepository
+    public interface ICharacterRepository
     {
         Task<Character> GetByIdAsync(Guid id);
         Task<List<Character>> GetByOwnerAsync(string ownerUserId);
