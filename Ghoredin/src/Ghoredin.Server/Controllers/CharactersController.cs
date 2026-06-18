@@ -27,6 +27,7 @@ namespace Ghoredin.Server.Controllers
             return Ok(characters);
         }
 
+        [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var character = await _characterService.GetByIdAsync(id);
@@ -41,6 +42,7 @@ namespace Ghoredin.Server.Controllers
 
         #region Post
 
+        [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateCharacterCommand command)
         {
             var character = await _characterService.CreateAsync(command);
