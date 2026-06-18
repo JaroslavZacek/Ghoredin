@@ -18,7 +18,7 @@ namespace Ghoredin.Application.Characters
             _currentUserService = currentUserService;
         }
 
-        public async Task<Character> CreateAsync(CreateCharacterCommand command)
+        public async Task<CharacterDto> CreateAsync(CreateCharacterCommand command)
         {
             var character = new Character
             {
@@ -34,20 +34,24 @@ namespace Ghoredin.Application.Characters
 
             await _characterRepository.SaveChangesAsync();
 
-            return character;
+            return character.ToDto();
         }
 
-        public async Task<List<Character>> GetMyCharactersAsync()
+        public async Task<List<CharacterDto>> GetMyCharactersAsync()
         {
             var userId = _currentUserService.UserId
                 ?? throw new InvalidOperationException("Není přihlášený uživatel.");
 
-            return await _characterRepository.GetByOwnerAsync(userId);
+            var characters = await _characterRepository.GetByOwnerAsync(userId);
+
+            return characters.Select(c => c.ToDto()).ToList();
         }
 
-        public async Task<Character> GetByIdAsync(Guid id)
+        public async Task<CharacterDto> GetByIdAsync(Guid id)
         {
-            return await _characterRepository.GetByIdAsync(id);
+            var character = await _characterRepository.GetByIdAsync(id);
+
+            return character?.ToDto();
         }
     }
 }
