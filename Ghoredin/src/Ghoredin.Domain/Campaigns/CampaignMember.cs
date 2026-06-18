@@ -6,7 +6,7 @@ namespace Ghoredin.Domain.Campaigns
 {
     public class CampaignMember
     {
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
         public Guid CampaignId { get; set; }
         public string UserId { get; set; } = string.Empty;
         public CampaignRole Role { get; set; }
