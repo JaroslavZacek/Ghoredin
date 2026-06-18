@@ -1,6 +1,8 @@
+using Ghoredin.Application.Characters;
 using Ghoredin.Application.Users;
 using Ghoredin.Infrastructure.Identity;
 using Ghoredin.Infrastructure.Persistence;
+using Ghoredin.Infrastructure.Persistence.Repositories;
 using Ghoredin.Server.Services;
 
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +22,8 @@ builder.Services
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<ICharacterService, CharacterService>();
+builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 
 builder.Services.AddCors(options =>
 {
