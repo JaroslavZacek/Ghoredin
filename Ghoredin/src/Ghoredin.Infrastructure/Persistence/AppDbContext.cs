@@ -65,6 +65,7 @@ namespace Ghoredin.Infrastructure.Persistence
             {
                 entity.HasKey(m => m.Id);
                 entity.Property(m => m.UserId).IsRequired();
+                entity.Property(m => m.CharacterId);
             });
         }
     }
