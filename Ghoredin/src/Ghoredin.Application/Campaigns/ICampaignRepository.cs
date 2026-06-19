@@ -11,6 +11,7 @@ namespace Ghoredin.Application.Campaigns
         Task<List<Campaign>> GetAllAsync();
         Task<List<Campaign>> GetByMemberAsync(string userId);
         Task AddAsync(Campaign campaign);
+        Task AddMemberAsync(CampaignMember member);
         Task SaveChangesAsync();
     }
 }
