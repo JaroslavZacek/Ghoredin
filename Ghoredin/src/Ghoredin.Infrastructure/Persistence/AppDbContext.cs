@@ -3,6 +3,7 @@ using Ghoredin.Domain.Characters;
 using Ghoredin.Domain.Campaigns;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 using System;
@@ -38,7 +39,12 @@ namespace Ghoredin.Infrastructure.Persistence
                     .HasConversion(
                         v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
                         v => JsonSerializer.Deserialize<Dictionary<string, object>>(v, (JsonSerializerOptions?)null)
-                            ?? new Dictionary<string, object>()
+                            ?? new Dictionary<string, object>(),
+                        new ValueComparer<Dictionary<string, object>>(
+                            (a, b) => JsonSerializer.Serialize(a, (JsonSerializerOptions?)null) == JsonSerializer.Serialize(b, (JsonSerializerOptions?)null),
+                            v => v == null ? 0 : JsonSerializer.Serialize(v, (JsonSerializerOptions?)null).GetHashCode(),
+                            v => JsonSerializer.Deserialize<Dictionary<string, object>>(JsonSerializer.Serialize(v, (JsonSerializerOptions?)null), (JsonSerializerOptions?)null)!
+                        )
                     );
             });
 
@@ -52,7 +58,12 @@ namespace Ghoredin.Infrastructure.Persistence
                     .HasConversion(
                         v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
                         v => JsonSerializer.Deserialize<Dictionary<string, object>>(v, (JsonSerializerOptions?)null)
-                            ?? new Dictionary<string, object>()
+                            ?? new Dictionary<string, object>(),
+                        new ValueComparer<Dictionary<string, object>>(
+                            (a, b) => JsonSerializer.Serialize(a, (JsonSerializerOptions?)null) == JsonSerializer.Serialize(b, (JsonSerializerOptions?)null),
+                            v => v == null ? 0 : JsonSerializer.Serialize(v, (JsonSerializerOptions?)null).GetHashCode(),
+                            v => JsonSerializer.Deserialize<Dictionary<string, object>>(JsonSerializer.Serialize(v, (JsonSerializerOptions?)null), (JsonSerializerOptions?)null)!
+                        )
                     );
 
                 entity.HasMany(c => c.Members)
