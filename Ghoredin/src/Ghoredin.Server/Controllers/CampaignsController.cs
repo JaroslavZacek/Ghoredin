@@ -1,8 +1,10 @@
 ﻿using Ghoredin.Application.Campaigns;
+using Ghoredin.Server.Requests;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+
 
 namespace Ghoredin.Server.Controllers
 {
@@ -38,6 +40,15 @@ namespace Ghoredin.Server.Controllers
 
             return Ok(campaign);
         }
+
+        [HttpGet("available")]
+        public async Task<IActionResult> GetAvailable()
+        {
+            var campaigns = await _campaignService.GetAvailableCampaignsAsync();
+
+            return Ok(campaigns);
+        }
+
         #endregion
 
         #region Post
@@ -48,6 +59,21 @@ namespace Ghoredin.Server.Controllers
             var campaign = await _campaignService.CreateAsync(command);
 
             return CreatedAtAction(nameof(GetById), new { id = campaign.Id }, campaign);
+        }
+
+        [HttpPost("{id:guid}/join")]
+        public async Task<IActionResult> Join(Guid id, [FromBody] JoinCampaignRequest request)
+        {
+            try 
+            {
+                await _campaignService.JoinAsync(new JoinCampaignCommand(id, request.CharacterId));
+
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
         #endregion
