@@ -80,7 +80,7 @@ namespace Ghoredin.Application.Campaigns
             if (campaign.MaxPlayers.HasValue && playerCount >= campaign.MaxPlayers.Value)
                 throw new InvalidOperationException("Dobrodružství už je plné dobrodruhů.");
 
-            campaign.Members.Add(new CampaignMember
+            await _repository.AddMemberAsync(new CampaignMember
             {
                 Id = Guid.NewGuid(),
                 CampaignId = campaign.Id,
