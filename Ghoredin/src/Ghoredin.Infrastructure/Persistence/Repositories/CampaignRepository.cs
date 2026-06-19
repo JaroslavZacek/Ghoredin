@@ -43,6 +43,11 @@ namespace Ghoredin.Infrastructure.Persistence.Repositories
             await _context.Campaigns.AddAsync(campaign);
         }
 
+        public async Task AddMemberAsync(CampaignMember member)
+        {
+            await _context.CampaignMembers.AddAsync(member);
+        }
+
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
