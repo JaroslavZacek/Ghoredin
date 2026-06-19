@@ -13,7 +13,7 @@ namespace Ghoredin.Application.Campaigns
             return campaign.Members.Any(m => m.UserId == userId && m.Role == CampaignRole.GameMaster);
         }
 
-        public bool IsMemeber(Campaign campaign, string userId)
+        public bool IsMember(Campaign campaign, string userId)
         {
             return campaign.Members.Any(m => m.UserId == userId);
         }
