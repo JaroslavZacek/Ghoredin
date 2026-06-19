@@ -1,5 +1,6 @@
 using Ghoredin.Application.Characters;
 using Ghoredin.Application.Users;
+using Ghoredin.Application.Campaigns;
 using Ghoredin.Infrastructure.Identity;
 using Ghoredin.Infrastructure.Persistence;
 using Ghoredin.Infrastructure.Persistence.Repositories;
@@ -24,6 +25,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
+builder.Services.AddScoped<ICampaignService, CampaignService>();
+builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
 
 builder.Services.AddCors(options =>
 {
