@@ -9,5 +9,7 @@ namespace Ghoredin.Application.Campaigns
         Task<CampaignDto> CreateAsync(CreateCampaignCommand command);
         Task<List<CampaignDto>> GetMyCampaignsAsync();
         Task<CampaignDto?> GetByIdAsync(Guid id); 
+        Task JoinAsync(JoinCampaignCommand command);
+        Task<List<CampaignDto>> GetAvailableCampaignsAsync();
     }
 }
