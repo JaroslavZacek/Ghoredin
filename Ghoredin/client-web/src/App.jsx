@@ -29,10 +29,10 @@ function App() {
         <h1 className="app__title">Kronika Ghoredinu</h1>
 
         <nav className="app__nav">
-          <Link className="app__nav-link">Postavy</Link>
-          <Link className="app__nav-link">Dobrodružství</Link>
+          <Link className="app__nav-link" to="/characters">Postavy</Link>
+          <Link className="app__nav-link" to="/campaigns">Dobrodružství</Link>
 
-          <button className="auth-button">Odhlásit se</button>
+          <button className="auth-button" onClick={logout}>Odhlásit se</button>
         </nav>
       </header>
 
