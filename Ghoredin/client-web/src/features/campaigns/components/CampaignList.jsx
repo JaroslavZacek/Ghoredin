@@ -112,8 +112,8 @@ function CampaignList() {
                     value={gameSystemId}
                     onChange={(e) => setGameSystemId(e.target.value)}
                 >
-                    <option value={dnd5e}>D&D 5e</option>
-                    <option value={hrdinove-fantasy}>Hrdinové Fantasy</option>
+                    <option value="dnd5e">D&D 5e</option>
+                    <option value="hrdinove-fantasy">Hrdinové Fantasy</option>
                 </select>
 
                 <input 
