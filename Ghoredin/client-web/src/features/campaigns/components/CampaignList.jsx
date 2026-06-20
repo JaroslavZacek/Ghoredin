@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { Link, Links } from "react-router-dom";
 
 import { getMyCampaigns, createCampaign } from "../api/campaignsApi";
 
 import "./CampaignList.css"
+
 
 function CampaignList() {
     const [campaigns, setCampaigns] = useState([]);
@@ -80,15 +82,17 @@ function CampaignList() {
                         {
                             campaigns.map((c) => (
                                 <li key={c.id} className="campaign-card">
-                                    <div className="campaign-card__main">
-                                        <span className="campaign-card__name">{c.name}</span>
-                                        <span className="campaign-card__system">{c.gameSystemId}</span>
-                                    </div>
+                                    <Link to={`/campaigns/${c.id}`} className="campaign-card campaign-card--link">
+                                        <div className="campaign-card__main">
+                                            <span className="campaign-card__name">{c.name}</span>
+                                            <span className="campaign-card__system">{c.gameSystemId}</span>
+                                        </div>
 
-                                    <span className="campaign-card__players">
-                                        {c.playerCount}
-                                        {c.maxPlayers != null ? ` / ${c.maxPlayers}` : ""} hráčů
-                                    </span>
+                                        <span className="campaign-card__players">
+                                            {c.playerCount}
+                                            {c.maxPlayers != null ? ` / ${c.maxPlayers}` : ""} hráčů
+                                        </span>
+                                    </Link>
                                 </li>
                             ))
                         }
