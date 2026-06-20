@@ -1,4 +1,5 @@
 ﻿using Ghoredin.Application.Characters;
+using Ghoredin.Server.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,21 @@ namespace Ghoredin.Server.Controllers
             return Ok(character);
         }
 
+        [HttpGet("campaign/{campaignId:guid}")]
+        public async Task<IActionResult> GetCampaignCharacters(Guid campaignId)
+        {
+            try
+            {
+                var characters = await _characterService.GetCampaignCharactersAsync(campaignId);
+
+                return Ok(characters);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
         #endregion
 
         #region Post
@@ -48,6 +64,23 @@ namespace Ghoredin.Server.Controllers
             var character = await _characterService.CreateAsync(command);
 
             return CreatedAtAction(nameof(GetById), new { id = character.Id }, character);
+        }
+
+        [HttpPost("campaign/{campaignId:guid}")]
+        public async Task<IActionResult> CreateInCampaign(Guid campaignId, [FromBody] CreateCharacterInCampaignRequest request)
+        {
+            try
+            {
+                var command = new CreateCharacterInCampaignCommand(campaignId, request.Name, request.SheetData ?? new());
+
+                var character = await _characterService.CreateInCampaignAsync(command);
+
+                return CreatedAtAction(nameof(GetById), new { id = character.Id }, character);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
         #endregion
