@@ -11,3 +11,6 @@ export const createCampaign = (data) =>
 
 export const joinCampaign = (campaignId, characterId = null) =>
     apiPost(`campaigns/${campaignId}/join`, { characterId });
+
+export const getCampaign = (id) =>
+    apiGet(`campaigns/${id}`);
