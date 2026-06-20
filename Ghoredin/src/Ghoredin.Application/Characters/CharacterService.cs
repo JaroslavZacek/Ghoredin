@@ -89,5 +89,21 @@ namespace Ghoredin.Application.Characters
 
             return character.ToDto();
         }
+
+        public async Task<List<CharacterDto>> GetCampaignCharactersAsync(Guid campaignId)
+        {
+            var userId = _currentUserService.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var campaign = await _campaignRepository.GetByIdAsync(campaignId)
+                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
+
+            if (campaign.Members.All(m => m.UserId != userId))
+                throw new InvalidOperationException("Nejsi členem tohoto dobrodružství.");
+
+            var characters = await _characterRepository.GetByCampaignAsync(campaignId);
+
+            return characters.Select(c => c.ToDto()).ToList();
+        }
     }
 }
