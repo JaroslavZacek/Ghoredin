@@ -12,5 +12,6 @@ namespace Ghoredin.Application.Characters
         Task<List<CharacterDto>> GetMyCharactersAsync();
         Task<CharacterDto> GetByIdAsync(Guid id);
         Task<CharacterDto> CreateInCampaignAsync(CreateCharacterInCampaignCommand command);
+        Task<List<CharacterDto>> GetCampaignCharactersAsync(Guid campaignId);
     }
 }
