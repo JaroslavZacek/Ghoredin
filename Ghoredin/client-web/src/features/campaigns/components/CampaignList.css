@@ -62,6 +62,16 @@
     gap: var(--space-md);
 }
 
+.campaign-card--link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.campaign-card--link:hover {
+    border-color: var(--color-primary);
+}
+
 .campaign-form {
     padding: var(--space-md);
     background: var(--color-surface);
