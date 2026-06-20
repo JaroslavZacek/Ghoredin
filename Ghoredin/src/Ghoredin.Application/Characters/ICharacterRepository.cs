@@ -10,6 +10,7 @@ namespace Ghoredin.Application.Characters
     {
         Task<Character> GetByIdAsync(Guid id);
         Task<List<Character>> GetByOwnerAsync(string ownerUserId);
+        Task<List<Character>> GetByCampaignAsync(Guid campaignId);
         Task AddAsync(Character character);
         Task SaveChangesAsync();
     }
