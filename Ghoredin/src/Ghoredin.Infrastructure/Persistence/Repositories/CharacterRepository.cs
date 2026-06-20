@@ -42,6 +42,13 @@ namespace Ghoredin.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Character>> GetByCampaignAsync(Guid campaignId)
+        {
+            return await _context.Characters
+                .Where(c => c.CampaignId == campaignId)
+                .ToListAsync();
+        }
+
         /// <summary>
         /// Asynchronně přidá novou instanci <c>Character</c> do DbSetu <c>Characters</c> v kontextu.
         /// </summary>
