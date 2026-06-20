@@ -5,6 +5,7 @@ import { useAuth } from "./features/auth/AuthContext";
 import AuthPage from "./features/auth/components/AuthPage";
 import CharacterList from "./features/characters/components/CharacterList";
 import CampaignList from "./features/campaigns/components/CampaignList";
+import AvailableCampaigns from "./features/campaigns/components/AvailableCampaigns";
 
 import "./App.css"
 
@@ -31,6 +32,7 @@ function App() {
         <nav className="app__nav">
           <Link className="app__nav-link" to="/characters">Postavy</Link>
           <Link className="app__nav-link" to="/campaigns">Dobrodružství</Link>
+          <Link className="app__nav-link" to="/campaigns/available">Najít dobrodružství</Link>
 
           <button className="auth-button" onClick={logout}>Odhlásit se</button>
         </nav>
@@ -40,6 +42,7 @@ function App() {
         <Routes>
           <Route path="/characters" element={<CharacterList />} />
           <Route path="/campaigns" element={<CampaignList />} />
+          <Route path="/campaigns/available" element={<AvailableCampaigns />} />
           {/* Výchozí adresa -> přesměrování na postavy*/}
           <Route path="*" element={<Navigate to="/characters" replace />} /> 
         </Routes>
