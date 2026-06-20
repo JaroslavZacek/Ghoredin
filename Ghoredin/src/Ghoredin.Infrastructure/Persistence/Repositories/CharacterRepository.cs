@@ -42,6 +42,12 @@ namespace Ghoredin.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Asynchronně načte všechny entity typu <see cref="Character"/>, které patří do kampaně se zadaným identifikátorem.
+        /// </summary>
+        /// <param name="campaignId">Identifikátor kampaně (<see cref="Guid"/>), jehož postavy se mají načíst.</param>
+        /// <returns>Asynchronní <see cref="Task{List{Character}}"/> vracející seznam nalezených instancí <see cref="Character"/>.
+        /// Pokud pro danou kampaň nejsou žádné postavy, vrátí se prázdný seznam.</returns>
         public async Task<List<Character>> GetByCampaignAsync(Guid campaignId)
         {
             return await _context.Characters
