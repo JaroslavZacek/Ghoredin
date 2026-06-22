@@ -6,7 +6,7 @@ import AuthPage from "./features/auth/components/AuthPage";
 import CharacterList from "./features/characters/components/CharacterList";
 import CampaignList from "./features/campaigns/components/CampaignList";
 import AvailableCampaigns from "./features/campaigns/components/AvailableCampaigns";
-import CampaignDetail from "./features/campaigns/components/CampaingDetail";
+import CampaignDetail from "./features/campaigns/components/CampaignDetail";
 
 import "./App.css"
 
