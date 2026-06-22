@@ -16,7 +16,7 @@ namespace Ghoredin.Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<Campaign> GetByIdAsync(Guid id)
+        public async Task<Campaign?> GetByIdAsync(Guid id)
         {
             return await _context.Campaigns
                             .Include(c => c.Members)
