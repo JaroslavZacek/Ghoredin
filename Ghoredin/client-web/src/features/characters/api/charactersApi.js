@@ -6,9 +6,6 @@ export const getMyCharacters = () =>
 export const getCharacter = (id) => 
     apiGet(`characters/${id}`);
 
-export const createCharacter = (data) => 
-    apiPost("characters", data);
-
 export const getCampaignCharacters = (campaignId) =>
     apiGet(`characters/campaign/${campaignId}`);
 

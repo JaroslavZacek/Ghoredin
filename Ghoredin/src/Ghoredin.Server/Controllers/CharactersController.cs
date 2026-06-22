@@ -58,14 +58,6 @@ namespace Ghoredin.Server.Controllers
 
         #region Post
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateCharacterCommand command)
-        {
-            var character = await _characterService.CreateAsync(command);
-
-            return CreatedAtAction(nameof(GetById), new { id = character.Id }, character);
-        }
-
         [HttpPost("campaign/{campaignId:guid}")]
         public async Task<IActionResult> CreateInCampaign(Guid campaignId, [FromBody] CreateCharacterInCampaignRequest request)
         {

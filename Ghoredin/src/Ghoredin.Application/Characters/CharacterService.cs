@@ -21,25 +21,6 @@ namespace Ghoredin.Application.Characters
             _campaignRepository = campaignRepository;
         }
 
-        public async Task<CharacterDto> CreateAsync(CreateCharacterCommand command)
-        {
-            var character = new Character
-            {
-                Id = Guid.NewGuid(),
-                Name = command.Name,
-                GameSystemId = command.GameSystemId,
-                SheetData = command.SheetData,
-                OwnerUserId = _currentUserService.UserId
-                    ?? throw new InvalidOperationException("Není přihlášený uživatel.")
-            };
-
-            await _characterRepository.AddAsync(character);
-
-            await _characterRepository.SaveChangesAsync();
-
-            return character.ToDto();
-        }
-
         public async Task<List<CharacterDto>> GetMyCharactersAsync()
         {
             var userId = _currentUserService.UserId

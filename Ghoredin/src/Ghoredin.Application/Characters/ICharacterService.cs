@@ -8,7 +8,6 @@ namespace Ghoredin.Application.Characters
 {
     public interface ICharacterService
     {
-        Task<CharacterDto> CreateAsync(CreateCharacterCommand command);
         Task<List<CharacterDto>> GetMyCharactersAsync();
         Task<CharacterDto> GetByIdAsync(Guid id);
         Task<CharacterDto> CreateInCampaignAsync(CreateCharacterInCampaignCommand command);

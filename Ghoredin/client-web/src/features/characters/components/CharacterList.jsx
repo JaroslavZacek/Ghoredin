@@ -1,6 +1,6 @@
-import { useState, useEffect, useSyncExternalStore } from "react";
+import { useState, useEffect } from "react";
 
-import { getMyCharacters, createCharacter } from "../api/charactersApi";
+import { getMyCharacters } from "../api/charactersApi";
 
 import "./CharacterList.css";
 
@@ -9,10 +9,6 @@ function CharacterList () {
     const [characters, setCharacters] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-
-    // Formulář
-    const [name, setName] = useState("");
-    const [gameSystemId, setGameSystemId] = useState("dnd5e");
 
     // Načtení postav při zobrazení komponenty
     const loadCharacters = async () => {
@@ -35,32 +31,6 @@ function CharacterList () {
         loadCharacters();
     }, []);
 
-    /*-----------------------------------------------------------------------------*/
-    /*------------------------------Handle funkce----------------------------------*/
-    /*-----------------------------------------------------------------------------*/
-
-    const handleCreate = async () => {
-        setError("");
-        if (!name.trim()) {
-            setError("Zadej jméno postavy.");
-            return;
-        }
-
-        try {
-            await createCharacter({
-                name: name,
-                gameSystemId: gameSystemId,
-                sheetData: {}
-            });
-            
-            setName("");
-            await loadCharacters();
-        }
-        catch (error) {
-            setError("Nepodařilo se vytvořit postavu: " + error.message);
-        }
-    };
-
     if (loading) {
         return <p>Načítání postav...</p>;
     }
@@ -77,7 +47,7 @@ function CharacterList () {
             {
                 characters.length === 0
                 ? (
-                    <p className="character-list__empty">Zatím nemáš žádné postavy.</p>
+                    <p className="character-list__empty">Zatím nemáš žádné postavy. Postavu si vytvoříš uvnitř dobrodružství.</p>
                 )
                 : (
                     <ul className="character-list__items">
@@ -93,30 +63,6 @@ function CharacterList () {
                 )
             }
 
-            <div className="character-form">
-                <h3 className="character-form__title">Nová postava</h3>
-
-                <input 
-                    className="character-form__input"
-                    type="text"
-                    placeholder="Jméno postavy"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-
-                <select
-                    className="character-form__input"
-                    value={gameSystemId}
-                    onChange={(e) => setGameSystemId(e.target.value)}
-                >
-                    <option value="dnd5e">D&D 5E</option>
-                    <option value="hrdinove-fantasy">Hrdinové Fantasy</option>
-                </select>
-
-                <button className="character-form__button" onClick={handleCreate}>
-                    Vytvoř postavu
-                </button>
-            </div>
         </div>
     );
 }
