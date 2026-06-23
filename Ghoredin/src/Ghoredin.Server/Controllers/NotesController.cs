@@ -1,8 +1,10 @@
 ﻿using Ghoredin.Application.Notes;
+using Ghoredin.Server.Requests;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+
 
 namespace Ghoredin.Server.Controllers
 {
@@ -58,7 +60,8 @@ namespace Ghoredin.Server.Controllers
 
         #region Put
 
-        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateNoteCommand request)
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateNoteRequest request)
         {
             try
             {
