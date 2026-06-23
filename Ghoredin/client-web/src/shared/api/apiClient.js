@@ -45,6 +45,17 @@ export const apiPost = async (url, body) => {
     return handleResponse(response);
 }
 
+export const apiPut = async (url, body) => {
+    const response = await fetch(`${API_URL}{url}`, {
+        method: "PUT",
+        credentials: "include",
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify(body)
+    });
+
+    return handleResponse(response);
+}
+
 export const apiPatch = async (url, body) => {
     const response = await fetch(`${API_URL}${url}`, {
         method: "PATCH",
