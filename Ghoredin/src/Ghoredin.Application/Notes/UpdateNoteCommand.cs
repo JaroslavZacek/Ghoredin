@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Ghoredin.Application.Notes
 {
-    public record CreateNoteCommand
+    public record UpdateNoteCommand
     (
-        Guid CamapignId,
+        Guid Id,
         string Title,
         string Content,
         string? PlayerFacingContent,
