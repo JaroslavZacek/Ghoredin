@@ -1,6 +1,7 @@
 using Ghoredin.Application.Characters;
 using Ghoredin.Application.Users;
 using Ghoredin.Application.Campaigns;
+using Ghoredin.Application.Notes;
 using Ghoredin.Infrastructure.Identity;
 using Ghoredin.Infrastructure.Persistence;
 using Ghoredin.Infrastructure.Persistence.Repositories;
@@ -28,6 +29,8 @@ builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<ICampaignService, CampaignService>();
 builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
 builder.Services.AddScoped<ICampaignAuthorizationService, CampaignAuthorizationService>();
+builder.Services.AddScoped<INoteService, NoteService>();
+builder.Services.AddScoped<INoteRepository, NoteRepository>();
 
 builder.Services.AddCors(options =>
 {
