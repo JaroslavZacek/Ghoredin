@@ -1,6 +1,7 @@
 ﻿using Ghoredin.Infrastructure.Identity;
 using Ghoredin.Domain.Characters;
 using Ghoredin.Domain.Campaigns;
+using Ghoredin.Domain.Notes;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -23,6 +24,7 @@ namespace Ghoredin.Infrastructure.Persistence
         public DbSet<Character> Characters => Set<Character>();
         public DbSet<Campaign> Campaigns => Set<Campaign>();
         public DbSet<CampaignMember> CampaignMembers => Set<CampaignMember>();
+        public DbSet<CampaignNote> CampaignNotes => Set<CampaignNote>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -77,6 +79,16 @@ namespace Ghoredin.Infrastructure.Persistence
                 entity.HasKey(m => m.Id);
                 entity.Property(m => m.UserId).IsRequired();
                 entity.Property(m => m.CharacterId);
+            });
+
+            builder.Entity<CampaignNote>(entity =>
+            {
+                entity.HasKey(n => n.Id);
+                entity.Property(n => n.AuthorUserId).IsRequired();
+                entity.Property(n => n.Title).IsRequired().HasMaxLength(100);
+                entity.Property(n => n.Content);
+                entity.Property(n => n.PlayerFacingContent);
+                entity.Property(n => n.Visibility).HasConversion<string>();
             });
         }
     }
