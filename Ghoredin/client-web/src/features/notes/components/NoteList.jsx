@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 
 import { getCampaignNotes } from "../api/notesApi";
+import NoteEditor from "./NoteEditor";
 
 import "./NoteList.css";
 
-function NoteList({ campaignId }) {
+function NoteList({ campaignId, isGameMaster }) {
     const [notes, setNotes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [editingNote, setEditingNote] = useState(null);
 
     const loadNotes = async () => {
         setError("");
@@ -29,6 +31,11 @@ function NoteList({ campaignId }) {
         loadNotes();
     }, [campaignId]);
 
+    const handleSaved = () => {
+        setEditingNote(null);
+        loadNotes();
+    };
+
     if (loading) {
         return <p>Načítání poznámek...</p>
     }
@@ -39,6 +46,17 @@ function NoteList({ campaignId }) {
             {
                 error &&
                     <p className="note-list__error">{error}</p>
+            }
+
+            {
+                isGameMaster && (
+                    <NoteEditor 
+                        campaignId={campaignId}
+                        editingNote={editingNote}
+                        onSaved={handleSaved}
+                        onCancel={() => setEditingNote(null)}
+                    />
+                )
             }
 
             {
@@ -53,9 +71,23 @@ function NoteList({ campaignId }) {
                                     <li key={n.id} className="note-card">
                                         <div className="note-card__header">
                                             <span className="note-card__title">{n.title}</span>
-                                            <span className="note-card__visibility">
-                                                {n.visibility === "GmOnly" ? "Jen PJ" : "Sdíleno"} 
-                                            </span>
+                                            <div className="note-card__meta">
+
+                                                <span className="note-card__visibility">
+                                                    {n.visibility === "GmOnly" ? "Jen PJ" : "Sdíleno"}
+                                                </span>
+
+                                                {
+                                                    isGameMaster &&
+                                                    <button
+                                                        className="note-card__edit"
+                                                        onClick={() => setEditingNote(n)}
+                                                    >
+                                                        Upravit
+                                                    </button>
+                                                }
+
+                                            </div>
                                         </div>
 
                                         {n.content && (
