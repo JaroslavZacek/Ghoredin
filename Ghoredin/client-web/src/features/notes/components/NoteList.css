@@ -57,3 +57,19 @@
     border-left: 3px solid var(--color-border);
     padding-left: var(--space-sm);
 }
+
+.note-card__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.note-card__edit {
+    font-size: 12px;
+    padding: 2px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--color-text);
+    cursor: pointer;
+}
