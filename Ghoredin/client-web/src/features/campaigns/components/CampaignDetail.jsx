@@ -120,7 +120,7 @@ function CampaignDetail() {
 
             <section className="campaign-detail__section">
                 <h3 className="campaign-detail__section-title">Poznámky a příběh</h3>
-                <NoteList campaignId={id} />
+                <NoteList campaignId={id} isGameMaster={iAmGameMaster}/>
             </section>
 
             {
