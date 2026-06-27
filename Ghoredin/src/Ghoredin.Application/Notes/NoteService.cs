@@ -28,6 +28,7 @@ namespace Ghoredin.Application.Notes
 
         public async Task<NoteDto> CreateAsync(CreateNoteCommand command)
         {
+
             var userId = _currentUserService.UserId
                 ?? throw new InvalidOperationException("Není přihlášený uživatel.");
 
