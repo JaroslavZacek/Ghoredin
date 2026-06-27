@@ -42,10 +42,18 @@ namespace Ghoredin.Server.Controllers
         #region Post
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateNoteCommand command)
+        public async Task<IActionResult> Create([FromBody] CreateNoteRequest request)
         {
             try
             {
+                var command = new CreateNoteCommand(
+                    request.CampaignId,
+                    request.Title,
+                    request.Content,
+                    request.PlayerFacingContent,
+                    request.Visibility
+                    );
+
                 var note = await _noteService.CreateAsync(command);
 
                 return Ok(note);
