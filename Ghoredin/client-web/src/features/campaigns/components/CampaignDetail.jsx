@@ -6,6 +6,8 @@ import { useAuth } from "../../auth/AuthContext";
 import { getCampaign } from "../api/campaignsApi";
 import { getCampaignCharacters, createCharacterInCampaign } from "../../characters/api/charactersApi";
 
+import NoteList from "../../notes/components/NoteList";
+
 import "./CampaignDetail.css"
 
 function CampaignDetail() {
@@ -114,6 +116,11 @@ function CampaignDetail() {
                         })
                     }
                 </ul>
+            </section>
+
+            <section className="campaign-detail__section">
+                <h3 className="campaign-detail__section-title">Poznámky a příběh</h3>
+                <NoteList campaignId={id} />
             </section>
 
             {
