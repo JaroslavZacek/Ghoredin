@@ -46,7 +46,7 @@ export const apiPost = async (url, body) => {
 }
 
 export const apiPut = async (url, body) => {
-    const response = await fetch(`${API_URL}{url}`, {
+    const response = await fetch(`${API_URL}${url}`, {
         method: "PUT",
         credentials: "include",
         headers: { "Content-Type": "application/json"},
