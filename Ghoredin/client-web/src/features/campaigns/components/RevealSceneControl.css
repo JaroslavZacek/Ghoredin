@@ -1,0 +1,71 @@
+.reveal-control {
+    margin-top: var(--space-sm);
+    padding: var(--space-sm);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+}
+
+.reveal-control__toggle {
+    font-size: 12px;
+    padding: 4px 12px;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--color-primary);
+    cursor: pointer;
+    margin-top: var(--space-sm);
+}
+
+.reveal-control__error {
+    color: var(--color-danger);
+    font-size: 13px;
+    margin: 0 0 var(--space-sm);
+}
+
+.reveal-control__players {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: var(--space-sm);
+}
+
+.reveal-control__player {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.reveal-control__empty {
+    font-size: 13px;
+    color: var(--color-text-muted);
+}
+
+.reveal-control__actions {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.reveal-control__all,
+.reveal-control__confirm,
+.reveal-control__cancel {
+    font-size: 12px;
+    padding: 6px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+
+.reveal-control__confirm {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+}
+
+.reveal-control__all,
+.reveal-control__cancel {
+    background: transparent;
+    color: var(--color-text);
+}
