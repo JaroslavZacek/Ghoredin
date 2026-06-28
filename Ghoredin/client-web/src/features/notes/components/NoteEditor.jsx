@@ -32,6 +32,7 @@ function NoteEditor({ campaignId, editingNote, onSaved, onCancel }) {
 
     const handleSave = async () => {
         setError("");
+        
 
         if (!title.trim()) {
             setError("Zadej titulek poznámky.");
