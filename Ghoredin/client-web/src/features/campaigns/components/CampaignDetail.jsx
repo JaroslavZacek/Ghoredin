@@ -7,6 +7,7 @@ import { getCampaign } from "../api/campaignsApi";
 import { getCampaignCharacters, createCharacterInCampaign } from "../../characters/api/charactersApi";
 
 import NoteList from "../../notes/components/NoteList";
+import CurrentScene from "./CurrentScene";
 
 import "./CampaignDetail.css"
 
@@ -92,6 +93,7 @@ function CampaignDetail() {
                     <p className="campaign-detail__error">{error}</p>
             }
 
+            <CurrentScene campaignId={id} />
             <section className="campaign-detail__section">
                 <h3 className="campaign-detail__section-title">
                     Členové ({campaign.playerCount}
