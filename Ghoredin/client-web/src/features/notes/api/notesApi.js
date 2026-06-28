@@ -8,3 +8,9 @@ export const createNote = (data) =>
 
 export const updateNote = (id, data) =>
     apiPut(`notes/${id}`, data);
+
+export const revealScene = (data) =>
+    apiPost("notes/reveal", data);
+
+export const getMyCurrentScene = (campaignId) =>
+    apiGet(`notes/campaign/${campaignId}/my-current-scene`);
