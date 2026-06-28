@@ -37,6 +37,19 @@ namespace Ghoredin.Server.Controllers
             }
         }
 
+        [HttpGet("campaign/{campaignId:guid}/my-current-scene")]
+        public async Task<IActionResult> GetMyCurrentScene(Guid campaignId)
+        {
+            try
+            {
+                var scene = await _noteService.GetMyCurrentSceneAsync(campaignId);
+                return Ok(scene);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
         #endregion
 
         #region Post
@@ -57,6 +70,27 @@ namespace Ghoredin.Server.Controllers
                 var note = await _noteService.CreateAsync(command);
 
                 return Ok(note);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost("reveal")]
+        public async Task<IActionResult> RevealScene([FromBody] RevealSceneRequest request)
+        {
+            try
+            {
+                var command = new RevealSceneCommand(
+                    request.CampaignId,
+                    request.NoteId,
+                    request.TargetUserIds
+                    );
+
+                await _noteService.RevealSceneAsync(command);
+
+                return NoContent();
             }
             catch (InvalidOperationException ex)
             {
