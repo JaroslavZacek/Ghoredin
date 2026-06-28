@@ -102,5 +102,33 @@ namespace Ghoredin.Application.Notes
 
             return visible.Select(n => n.ToDto(isGm)).ToList();
         }
+
+        public async Task RevealSceneAsync(RevealSceneCommand command)
+        {
+            var userId = _currentUserService.UserId ??
+                throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var campaign = await _campaignRepository.GetByIdAsync(command.CampaignId)
+                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
+
+            if (!_campaignAuthorizationService.IsGameMaster(campaign, userId))
+                throw new InvalidOperationException("Jen PJ může odhalovat scény.");
+
+            var note = await _noteRepository.GetByIdAsync(command.NoteId)
+                ?? throw new InvalidOperationException("Scéna neexistuje");
+
+            if (note.CampaignId != command.CampaignId)
+                throw new InvalidOperationException("Scéna nepatří do tohoto dobrodružství.");
+
+            foreach (var member in campaign.Members)
+            {
+                if (command.TargetUserIds.Contains(member.UserId))
+                {
+                    member.CurrentSceneNoteId = command.NoteId;
+                }
+            }
+
+            await _campaignRepository.SaveChangesAsync();
+        }
     }
 }
