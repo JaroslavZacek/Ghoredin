@@ -11,5 +11,7 @@ namespace Ghoredin.Domain.Campaigns
         public string UserId { get; set; } = string.Empty;
         public CampaignRole Role { get; set; }
         public Guid? CharacterId { get; set; }
+
+        public Guid? CurrentSceneNoteId { get; set; }
     }
 }
