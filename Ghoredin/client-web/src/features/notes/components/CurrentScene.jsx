@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { getMyCurrentScene } from "../../notes/api/notesApi";
+import { getMyCurrentScene } from "../api/notesApi";
 
 import "./CurrentScene.css";
 

@@ -7,7 +7,7 @@ import { getCampaign } from "../api/campaignsApi";
 import { getCampaignCharacters, createCharacterInCampaign } from "../../characters/api/charactersApi";
 
 import NoteList from "../../notes/components/NoteList";
-import CurrentScene from "./CurrentScene";
+import CurrentScene from "../../notes/components/CurrentScene";
 
 import "./CampaignDetail.css"
 
@@ -83,7 +83,7 @@ function CampaignDetail() {
     const players = campaign.members
                         .filter((m) => m.role ==="Player")
                         .map((m) => {
-                            const character = character.find((c) => c.id === m.characterId);
+                            const character = characters.find((c) => c.id === m.characterId);
 
                             return {
                                 userId: m.userId,

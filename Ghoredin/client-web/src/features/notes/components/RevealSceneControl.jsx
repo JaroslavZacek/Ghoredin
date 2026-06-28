@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { revealScene } from "../../notes/api/notesApi";
+import { revealScene } from "../api/notesApi";
 
 import "./RevealSceneControl.css";
 

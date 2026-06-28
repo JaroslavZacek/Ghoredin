@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 
 import { getCampaignNotes } from "../api/notesApi";
+
 import NoteEditor from "./NoteEditor";
+import RevealSceneControl from "./RevealSceneControl";
 
 import "./NoteList.css";
 
-function NoteList({ campaignId, isGameMaster }) {
+function NoteList({ campaignId, isGameMaster, players }) {
     const [notes, setNotes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -99,6 +101,19 @@ function NoteList({ campaignId, isGameMaster }) {
                                                 {n.playerFacingContent}
                                             </p>
                                         )}
+                                        
+                                        {
+                                            isGameMaster && n.visibility === "SharedWithPlayers" &&
+                                            (
+                                                <RevealSceneControl
+                                                    campaignId={campaignId}
+                                                    noteId={n.id}
+                                                    players={players}
+                                                    onRevealed={() => {}}
+                                                />
+                                            )
+                                        }
+
                                     </li>
                                 ))
                             }
