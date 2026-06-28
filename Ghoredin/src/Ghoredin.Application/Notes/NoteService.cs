@@ -130,5 +130,29 @@ namespace Ghoredin.Application.Notes
 
             await _campaignRepository.SaveChangesAsync();
         }
+
+        public async Task<NoteDto?> GetMyCurrentSceneAsync(Guid campaignId)
+        {
+            var userId = _currentUserService.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var campaign = await _campaignRepository.GetByIdAsync(campaignId)
+                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
+
+            var member = campaign.Members.FirstOrDefault(m => m.UserId == userId)
+                ?? throw new InvalidOperationException("Nejsi členem tohoto dobrodružství.");
+
+            if (member.CurrentSceneNoteId is null)
+                return null;
+
+            var note = await _noteRepository.GetByIdAsync(member.CurrentSceneNoteId.Value);
+
+            if (note is null) 
+                return null;
+
+            var isGm = _campaignAuthorizationService.IsGameMaster(campaign, userId);
+
+            return note.ToDto(isGm);
+        }
     }
 }
