@@ -10,6 +10,6 @@ namespace Ghoredin.Application.Notes
         Task<NoteDto> UpdateAsync(UpdateNoteCommand command);
         Task<List<NoteDto>> GetCampaignNotesAsync(Guid campaignId);
         Task RevealSceneAsync(RevealSceneCommand command);
-        Task<NoteDto> GetMyCurrentSceneAsync(Guid campaignId);
+        Task<NoteDto?> GetMyCurrentSceneAsync(Guid campaignId);
     }
 }
