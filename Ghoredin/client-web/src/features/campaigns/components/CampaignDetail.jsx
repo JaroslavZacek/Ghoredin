@@ -80,6 +80,17 @@ function CampaignDetail() {
     const iAmGameMaster = myMembership?.role === "GameMaster";
     const iHaveCharacter = myMembership?.characterId != null;
 
+    const players = campaign.members
+                        .filter((m) => m.role ==="Player")
+                        .map((m) => {
+                            const character = character.find((c) => c.id === m.characterId);
+
+                            return {
+                                userId: m.userId,
+                                characterName: character ? character.name : null
+                            };
+                        });
+
     return (
         <div className="campaign-detail">
             <div className="campaign-detail__header">
@@ -122,7 +133,7 @@ function CampaignDetail() {
 
             <section className="campaign-detail__section">
                 <h3 className="campaign-detail__section-title">Poznámky a příběh</h3>
-                <NoteList campaignId={campaign.id} isGameMaster={iAmGameMaster}/>
+                <NoteList campaignId={campaign.id} isGameMaster={iAmGameMaster} players={players}/>
             </section>
 
             {
