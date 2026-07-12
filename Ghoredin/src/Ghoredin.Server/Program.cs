@@ -10,6 +10,8 @@ using Ghoredin.Server.Services;
 using Microsoft.EntityFrameworkCore;
 
 using Scalar.AspNetCore;
+using Ghoredin.Application.GameSystems;
+using Ghoredin.Infrastructure.GameSystems;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,7 @@ builder.Services
 
 builder.Services.AddHttpContextAccessor();
 
+// DI 
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
@@ -31,6 +34,9 @@ builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
 builder.Services.AddScoped<ICampaignAuthorizationService, CampaignAuthorizationService>();
 builder.Services.AddScoped<INoteService, NoteService>();
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
+
+builder.Services.AddSingleton<IGameSystem, Dnd5eGameSystem>();
+builder.Services.AddSingleton<IGameSystemRegistry, GameSystemRegistry>();
 
 builder.Services.AddCors(options =>
 {
