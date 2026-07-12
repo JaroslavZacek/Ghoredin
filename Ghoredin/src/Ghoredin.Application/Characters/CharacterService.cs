@@ -1,4 +1,5 @@
 ﻿using Ghoredin.Application.Campaigns;
+using Ghoredin.Application.GameSystems;
 using Ghoredin.Application.Users;
 using Ghoredin.Domain.Characters;
 
@@ -13,12 +14,18 @@ namespace Ghoredin.Application.Characters
         private readonly ICharacterRepository _characterRepository;
         private readonly ICurrentUserService _currentUserService;
         private readonly ICampaignRepository _campaignRepository;
+        private readonly IGameSystemRegistry _gameSystemRegistry;
 
-        public CharacterService(ICharacterRepository repository, ICurrentUserService currentUserService, ICampaignRepository campaignRepository)
+        public CharacterService(
+            ICharacterRepository repository, 
+            ICurrentUserService currentUserService, 
+            ICampaignRepository campaignRepository,
+            IGameSystemRegistry gameSystemsRegistry)
         {
             _characterRepository = repository;
             _currentUserService = currentUserService;
             _campaignRepository = campaignRepository;
+            _gameSystemRegistry = gameSystemsRegistry;
         }
 
         public async Task<List<CharacterDto>> GetMyCharactersAsync()
