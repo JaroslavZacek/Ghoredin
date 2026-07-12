@@ -59,12 +59,22 @@ namespace Ghoredin.Application.Characters
             if (member.CharacterId.HasValue)
                 throw new InvalidOperationException("V tomto dobrodružství už máš postavu.");
 
+            var system = _gameSystemRegistry.Get(campaign.GameSystemId);
+
+            var sheetData = (command.SheetData is null || command.SheetData.Count == 0)
+                ? system.CreateDefaultSheet()
+                : command.SheetData;
+
+            var validation = system.ValidateSheet(sheetData);
+            if (!validation.IsValid)
+                throw new InvalidOperationException("Neplatný list postavy: " + string.Join(" ", validation.Errors));
+
             var character = new Character
             {
                 Id = Guid.NewGuid(),
                 Name = command.Name,
                 GameSystemId = campaign.GameSystemId,
-                SheetData = command.SheetData,
+                SheetData = sheetData,
                 OwnerUserId = userId,
                 CampaignId = campaign.Id
             };
