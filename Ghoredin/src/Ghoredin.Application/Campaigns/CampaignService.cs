@@ -30,7 +30,7 @@ namespace Ghoredin.Application.Campaigns
                 Id = Guid.NewGuid(),
                 Name = command.Name,
                 GameSystemId = command.GameSystemId,
-                MaxPlayers = command.MaxPlayers
+                MaxPlayers = command.MaxPlayers,
                 GameSystemSettings = new Dictionary<string, object>
                 {
                     ["characterCreation"] = command.CharacterCreationMethod.ToString()
