@@ -137,6 +137,7 @@ namespace Ghoredin.Infrastructure.GameSystems
                 : ValidationResult.Failure(errors.ToArray());
         }
 
+        // Validace standardního pole hodnot atributů
         public ValidationResult ValidateStandardArray(Dictionary<string, object> abilities)
         {
             var errors = new List<string>();
