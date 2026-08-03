@@ -208,6 +208,37 @@ namespace Ghoredin.Application.Characters
             return character.ToDto();
         }
 
+        public async Task<CharacterDto> CompleteRolledCharacterAsync(Guid characterId)
+        {
+            var userId = _currentUserService.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var character = await _characterRepository.GetByIdAsync(characterId)
+                ?? throw new InvalidOperationException("Postava neexistuje.");
+
+            if (character.OwnerUserId != userId)
+                throw new InvalidOperationException("Tuto postavu nevlastníš.");
+
+            var abilities = ExtractAbilities(character.SheetData);
+
+            foreach (var ability in abilities)
+            {
+                if ((ToInt(ability.Value) ?? 0) <= 0)
+                    throw new InvalidOperationException($"Ještě jsi neházel na všechny atributy (chybí '{ability.Key}').");
+            }
+
+            var system = _gameSystemRegistry.Get(character.GameSystemId);
+            var validation = system.ValidateAbilityScores(abilities, "Roll");
+            if (!validation.IsValid)
+                throw new InvalidOperationException("Neplatné atributy: " + string.Join(" ", validation.Errors));
+
+            character.SheetData["hitPoints"] = new Dictionary<string, object> { ["current"] = 10, ["max"] = 10 };
+            character.SheetData["creationComplete"] = true;
+
+            await _characterRepository.SaveChangesAsync();
+            return character.ToDto();
+        }
+
 
         // --------------------------------------------------------------------------------------
         // ----------------------------- Private methods ----------------------------------------
