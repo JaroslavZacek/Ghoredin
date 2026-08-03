@@ -10,12 +10,17 @@ namespace Ghoredin.Application.Campaigns
     {
         public static CampaignDto ToDto(this Campaign campaign)
         {
+            var creation = campaign.GameSystemSettings.TryGetValue("characterCreation", out var m)
+                ? m?.ToString() ?? "PointBuy"
+                : "PointBuy";
+
             return new CampaignDto(
                 campaign.Id,
                 campaign.Name,
                 campaign.GameSystemId,
                 campaign.MaxPlayers,
                 campaign.Members.Count(m => m.Role == CampaignRole.Player),
+                creation,
                 campaign.Members.Select(m => m.ToDto()).ToList()
             );
         }
