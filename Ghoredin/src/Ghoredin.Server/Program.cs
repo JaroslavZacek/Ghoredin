@@ -36,10 +36,11 @@ builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
 builder.Services.AddScoped<ICampaignAuthorizationService, CampaignAuthorizationService>();
 builder.Services.AddScoped<INoteService, NoteService>();
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
-builder.Services.AddScoped<IDiceService, DiceService>();
 
 builder.Services.AddSingleton<IGameSystem, Dnd5eGameSystem>();
 builder.Services.AddSingleton<IGameSystemRegistry, GameSystemRegistry>();
+builder.Services.AddSingleton<IDiceService, DiceService>();
+
 
 builder.Services.AddCors(options =>
 {
