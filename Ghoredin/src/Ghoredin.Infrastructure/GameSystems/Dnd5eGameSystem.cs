@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 
+using Ghoredin.Application.Dice;
 using Ghoredin.Application.GameSystems;
 
 namespace Ghoredin.Infrastructure.GameSystems
 {
     public class Dnd5eGameSystem : IGameSystem
-    {
+    {       
         public string Id => "dnd5e";
         public string DisplayName => "D&D 5e";
         public bool SupportsLeveling => true;
+
+        private readonly IDiceService _dice;
 
         private static readonly string[] AbilityNames =
         {   
@@ -22,6 +25,11 @@ namespace Ghoredin.Infrastructure.GameSystems
             "Wisdom",
             "Charisma"
         };
+
+        public Dnd5eGameSystem(IDiceService dice)
+        {
+            _dice = dice;
+        }
 
         public Dictionary<string, object> CreateDefaultSheet()
         {
@@ -40,6 +48,8 @@ namespace Ghoredin.Infrastructure.GameSystems
                 }
             };
         }
+
+        #region Validace
 
         public ValidationResult ValidateSheet(Dictionary<string, object> sheetData)
         {
@@ -94,7 +104,10 @@ namespace Ghoredin.Infrastructure.GameSystems
                 : ValidationResult.Failure(errors.ToArray());
         }
 
-        // ---- pomocné metody pro práci s JSON hodnotami ----
+        #endregion
+
+        #region pomocné metody pro práci s JSON hodnotami
+
         private static Dictionary<string, object> ToDictionary(object? value)
         {
             if (value is Dictionary<string, object> dict)
@@ -131,5 +144,19 @@ namespace Ghoredin.Infrastructure.GameSystems
 
             return null;
         }
+
+        #endregion
+
+        #region Pomocné metody
+
+        private int Roll4d6DropLowest()
+        {
+            var rolls = _dice.RollMany(DiceType.D6, 4);
+
+            return rolls.OrderByDescending(r => r).Take(3).Sum();
+        }
+
+        #endregion
+
     }
 }
