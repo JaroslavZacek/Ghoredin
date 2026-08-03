@@ -1,6 +1,7 @@
 ﻿using Ghoredin.Application.Campaigns;
 using Ghoredin.Application.GameSystems;
 using Ghoredin.Application.Users;
+using Ghoredin.Domain.Campaigns;
 using Ghoredin.Domain.Characters;
 
 using System;
@@ -60,14 +61,21 @@ namespace Ghoredin.Application.Characters
                 throw new InvalidOperationException("V tomto dobrodružství už máš postavu.");
 
             var system = _gameSystemRegistry.Get(campaign.GameSystemId);
+            var method = GetCreationMethod(campaign);
 
-            var sheetData = (command.SheetData is null || command.SheetData.Count == 0)
-                ? system.CreateDefaultSheet()
-                : command.SheetData;
+            if (method == "Roll")
+                throw new InvalidOperationException("Pro toto dobrodružství se postava tvoří házením - použij tvorbu s hody.");
 
-            var validation = system.ValidateSheet(sheetData);
+            var sheetData = command.SheetData ?? new Dictionary<string, object>();
+
+            var abilities = ExtractAbilities(sheetData);
+            var validation = system.ValidateAbilityScores(abilities, method);
+
             if (!validation.IsValid)
-                throw new InvalidOperationException("Neplatný list postavy: " + string.Join(" ", validation.Errors));
+                throw new InvalidOperationException("Neplatné rozdělení atributů:" + string.Join(" ", validation.Errors));
+
+            sheetData["hitPoints"] = new Dictionary<string, object> { ["current"] = 10, ["max"] = 10 };
+            sheetData["creationComplete"] = true;
 
             var character = new Character
             {
@@ -102,6 +110,37 @@ namespace Ghoredin.Application.Characters
             var characters = await _characterRepository.GetByCampaignAsync(campaignId);
 
             return characters.Select(c => c.ToDto()).ToList();
+        }
+
+        // --------------------------------------------------------------------------------------
+        // ----------------------------- Private methods ----------------------------------------
+        // --------------------------------------------------------------------------------------
+
+        private static string GetCreationMethod(Campaign campaign)
+        {
+            return campaign.GameSystemSettings.TryGetValue("characterCreation", out var m)
+                ? m?.ToString() ?? "PointBuy"
+                : "PointBuy";
+        }
+
+        private static Dictionary<string, object> ExtractAbilities(Dictionary<string, object> sheetData)
+        {
+            if (sheetData.TryGetValue("abilities", out var obj) && obj is Dictionary<string, object> dict)
+                return dict;
+
+            if (obj is System.Text.Json.JsonElement el && el.ValueKind == System.Text.Json.JsonValueKind.Object)
+            {
+                var result = new Dictionary<string, object>();
+
+                foreach (var prop in el.EnumerateObject())
+                {
+                    result[prop.Name] = prop.Value;
+                }
+
+                return result;
+            }
+
+            return new Dictionary<string, object>();
         }
     }
 }
