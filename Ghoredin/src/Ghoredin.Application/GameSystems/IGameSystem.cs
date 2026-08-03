@@ -15,5 +15,9 @@ namespace Ghoredin.Application.GameSystems
         Dictionary<string, object> CreateDefaultSheet();
 
         ValidationResult ValidateSheet(Dictionary<string, object> sheetData);
+
+        ValidationResult ValidateAbilityScores(Dictionary<string, object> abilities, string creationMethod);
+
+        int? RollSingleAbilityScore();
     }
 }
