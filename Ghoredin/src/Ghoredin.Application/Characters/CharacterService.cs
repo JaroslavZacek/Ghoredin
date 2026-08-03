@@ -6,7 +6,9 @@ using Ghoredin.Domain.Characters;
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
 
 namespace Ghoredin.Application.Characters
 {
@@ -170,6 +172,42 @@ namespace Ghoredin.Application.Characters
 
         }
 
+        public async Task<CharacterDto> RollAbilityAsync(Guid characterId, string abilityName)
+        {
+            var userId = _currentUserService.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var character = await _characterRepository.GetByIdAsync(characterId)
+                ?? throw new InvalidOperationException("Postava neexistuje.");
+
+            if (character.OwnerUserId != userId)
+                throw new InvalidOperationException("Tuto postavu nevlastníš.");
+
+            // Jen dokud je postava v procesu tvorby
+            var complete = character.SheetData.TryGetValue("creationComplete", out var c) && ToBool(c);
+            if (complete)
+                throw new InvalidOperationException("Postava je již dokončena.");
+
+            var abilities = ExtractAbilities(character.SheetData);
+            if (!abilities.ContainsKey(abilityName))
+                throw new InvalidOperationException($"Neznámý atribut: '{abilityName}'.");
+
+            var current = ToInt(abilities.GetValueOrDefault(abilityName)) ?? 0;
+            if (current > 0)
+                throw new InvalidOperationException($"Na atribut '{abilityName}' už jsi házel.");
+
+            // Hod kostkou přes herní systém
+            var system = _gameSystemRegistry.Get(character.GameSystemId);
+            var rolled = system.RollSingleAbilityScore()
+                ?? throw new InvalidOperationException("Tento systém nepodporuje naházení atributů.");
+
+            abilities[abilityName] = rolled;
+            character.SheetData["abilities"] = abilities;
+
+            await _characterRepository.SaveChangesAsync();
+            return character.ToDto();
+        }
+
 
         // --------------------------------------------------------------------------------------
         // ----------------------------- Private methods ----------------------------------------
@@ -204,6 +242,38 @@ namespace Ghoredin.Application.Characters
 
         #endregion
 
+        #region Pomocné metody
 
+        private static int? ToInt(object? value)
+        {
+            if (value is null)
+                return null;
+
+            if (value is int i)
+                return i;
+
+            if (value is long l)
+                return (int)l;
+
+            if (value is JsonElement el && el.ValueKind == JsonValueKind.Number)
+                return el.GetInt32();
+
+            if (int.TryParse(value.ToString(), out var parsed))
+                return parsed;
+
+            return null;
+        }
+
+        private static bool ToBool(object? value)
+        {
+            if (value is bool b)
+                return b;
+
+            if (value is System.Text.Json.JsonElement el)
+                return el.ValueKind == System.Text.Json.JsonValueKind.True;
+
+            return false;
+        }
+        #endregion
     }
 }
