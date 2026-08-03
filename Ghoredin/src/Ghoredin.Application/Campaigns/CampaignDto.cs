@@ -11,6 +11,7 @@ namespace Ghoredin.Application.Campaigns
         string GameSystemId,
         int? MaxPlayers,
         int PlayerCount,
+        string CharacterCreation,
         List<CampaignMemberDto> Members
     );
 }
