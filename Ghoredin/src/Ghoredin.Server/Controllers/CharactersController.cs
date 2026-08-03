@@ -75,6 +75,49 @@ namespace Ghoredin.Server.Controllers
             }
         }
 
+        // Tvorba postavy s nahazováním "kostkou"
+
+        [HttpPost("campaign/{campaignId:guid}/start-rolled")]
+        public async Task<IActionResult> StartRolled(Guid campaignId, [FromBody] StartRolledCharacterRequest request)
+        {
+            try
+            {
+                var character = await _characterService.StartRolledCharacterAsync(campaignId, request.Name);
+                return Ok(character);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message});
+            }
+        }
+
+        [HttpPost("{id:guid}/roll-ability")]
+        public async Task<IActionResult> RollAbility(Guid id, [FromBody] RollAbilityRequest request)
+        {
+            try
+            {
+                var character = await _characterService.RollAbilityAsync(id, request.AbilityName);
+                return Ok(character);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost("{id:guid}/complete-rolled")]
+        public async Task<IActionResult> CompleteRolled(Guid id)
+        {
+            try 
+            {
+                var character = await _characterService.CompleteRolledCharacterAsync(id);
+                return Ok(character);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
         #endregion
     }
 }
