@@ -18,12 +18,12 @@ namespace Ghoredin.Infrastructure.GameSystems
 
         private static readonly string[] AbilityNames =
         {   
-            "Strength",
-            "Dexterity",
-            "Constitution",
-            "Intelligence",
-            "Wisdom",
-            "Charisma"
+            "strength",
+            "dexterity",
+            "constitution",
+            "intelligence",
+            "wisdom",
+            "charisma"
         };
 
         public Dnd5eGameSystem(IDiceService dice)
