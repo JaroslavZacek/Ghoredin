@@ -2,16 +2,18 @@ using Ghoredin.Application.Characters;
 using Ghoredin.Application.Users;
 using Ghoredin.Application.Campaigns;
 using Ghoredin.Application.Notes;
+using Ghoredin.Application.GameSystems;
+using Ghoredin.Application.Dice;
 using Ghoredin.Infrastructure.Identity;
 using Ghoredin.Infrastructure.Persistence;
 using Ghoredin.Infrastructure.Persistence.Repositories;
+using Ghoredin.Infrastructure.GameSystems;
+using Ghoredin.Infrastructure.Dice;
 using Ghoredin.Server.Services;
 
 using Microsoft.EntityFrameworkCore;
 
 using Scalar.AspNetCore;
-using Ghoredin.Application.GameSystems;
-using Ghoredin.Infrastructure.GameSystems;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +36,7 @@ builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
 builder.Services.AddScoped<ICampaignAuthorizationService, CampaignAuthorizationService>();
 builder.Services.AddScoped<INoteService, NoteService>();
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
+builder.Services.AddScoped<IDiceService, DiceService>();
 
 builder.Services.AddSingleton<IGameSystem, Dnd5eGameSystem>();
 builder.Services.AddSingleton<IGameSystemRegistry, GameSystemRegistry>();
