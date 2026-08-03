@@ -13,5 +13,6 @@ namespace Ghoredin.Application.Characters
         Task<CharacterDto> CreateInCampaignAsync(CreateCharacterInCampaignCommand command);
         Task<List<CharacterDto>> GetCampaignCharactersAsync(Guid campaignId);
         Task<CharacterDto> StartRolledCharacterAsync(Guid campaignId, string name);
+        Task<CharacterDto> RollAbilityAsync(Guid characterId, string abilityName);
     }
 }
