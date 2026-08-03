@@ -239,7 +239,7 @@ namespace Ghoredin.Infrastructure.GameSystems
         // ---------------------- Metody pro tvorbu postavy (Public) ---------------------------
         // -------------------------------------------------------------------------------------
 
-        public ValidationResult ValidateAbilityScore(Dictionary<string, object> abilities, string creationMethod)
+        public ValidationResult ValidateAbilityScores(Dictionary<string, object> abilities, string creationMethod)
         {
             return creationMethod switch
             {
