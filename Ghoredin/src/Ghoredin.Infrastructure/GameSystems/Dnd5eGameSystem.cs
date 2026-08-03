@@ -104,8 +104,50 @@ namespace Ghoredin.Infrastructure.GameSystems
                 : ValidationResult.Failure(errors.ToArray());
         }
 
+
+
+        #endregion
+
+        #region Tvorba postavy
+
+        // ---------------------------------------------------------------------------------
+        // -------------------------------- Ceníky atributů --------------------------------
+        // ---------------------------------------------------------------------------------
+
+        // Point buy: kolik bodů stojí která hodnota atributu
+        private static readonly Dictionary<int, int> PointBuyCost = new()
+        {
+            [8] = 0,
+            [9] = 1,
+            [10] = 2,
+            [11] = 3,
+            [12] = 4,
+            [13] = 5,
+            [14] = 7,
+            [15] = 9
+        };
+
+        private const int PointBuyBudget = 27;
+
+        // Standard array: pevná sada hodnot atributů
+        private static readonly int[] StandardArray = { 15, 14, 13, 12, 10, 8 };
+
+
+
+        // -------------------------------------------------------------------------------------
+        // ---------------------- Metody pro tvorbu postavy (Private) --------------------------
+        // -------------------------------------------------------------------------------------
+
+        // Metoda pro hod 4d6 drop lowest
+        private int Roll4d6DropLowest()
+        {
+            var rolls = _dice.RollMany(DiceType.D6, 4);
+
+            return rolls.OrderByDescending(r => r).Take(3).Sum();
+        }
+
         // Validace point buy systému tvorby postavy
-        public ValidationResult ValidatePointBuy(Dictionary<string, object> abilities)
+        private ValidationResult ValidatePointBuy(Dictionary<string, object> abilities)
         {
             var errors = new List<string>();
 
@@ -138,7 +180,7 @@ namespace Ghoredin.Infrastructure.GameSystems
         }
 
         // Validace standardního pole hodnot atributů
-        public ValidationResult ValidateStandardArray(Dictionary<string, object> abilities)
+        private ValidationResult ValidateStandardArray(Dictionary<string, object> abilities)
         {
             var errors = new List<string>();
             var used = new List<int>();
@@ -170,27 +212,52 @@ namespace Ghoredin.Infrastructure.GameSystems
                 : ValidationResult.Failure(errors.ToArray());
         }
 
-        #endregion
-
-        #region Tvorba postavy
-
-        // Point buy: kolik bodů stojí která hodnota atributu
-        private static readonly Dictionary<int, int> PointBuyCost = new()
+        // Validace hodnot atributů při hodu kostkami (4d6 drop lowest)
+        private ValidationResult ValidationRolled(Dictionary<string, object> abilities)
         {
-            [8] = 0,
-            [9] = 1,
-            [10] = 2,
-            [11] = 3,
-            [12] = 4,
-            [13] = 5,
-            [14] = 7,
-            [15] = 9
-        };
+            var errors = new List<string>();
 
-        private const int PointBuyBudget = 27;
+            foreach (var name in AbilityNames)
+            {
+                var val = ToInt(abilities.GetValueOrDefault(name));
 
-        // Standard array: pevná sada hodnot atributů
-        private static readonly int[] StandardArray = { 15, 14, 13, 12, 10, 8 };
+                if (val is null)
+                    errors.Add($"Chybí atribut '{name}'.");
+
+                else if (val < 3 || val > 18)
+                    errors.Add($"Atribut '{name}' mimo možný rozsah 3–18 (je {val}).");
+
+            }
+
+            return errors.Count == 0
+                ? ValidationResult.Success()
+                : ValidationResult.Failure(errors.ToArray());
+        }
+
+
+        // -------------------------------------------------------------------------------------
+        // ---------------------- Metody pro tvorbu postavy (Public) ---------------------------
+        // -------------------------------------------------------------------------------------
+
+        public ValidationResult ValidateAbilityScore(Dictionary<string, object> abilities, string creationMethod)
+        {
+            return creationMethod switch
+            {
+                "PointBuy" => ValidatePointBuy(abilities),
+                "StandardArray" => ValidateStandardArray(abilities),
+                "Roll" => ValidationRolled(abilities),
+                _ => ValidationResult.Failure($"Neznámá metoda tvorby postavy {creationMethod}")
+            };
+        }
+
+
+        // Metoda pro hod 4d6 drop lowest pro jednotlivý atribut
+        public int? RollSingleAbilityScore()
+        {
+            return Roll4d6DropLowest();
+        }
+
+
 
         #endregion
 
@@ -236,13 +303,6 @@ namespace Ghoredin.Infrastructure.GameSystems
         #endregion
 
         #region Pomocné metody
-
-        private int Roll4d6DropLowest()
-        {
-            var rolls = _dice.RollMany(DiceType.D6, 4);
-
-            return rolls.OrderByDescending(r => r).Take(3).Sum();
-        }
 
         #endregion
 
