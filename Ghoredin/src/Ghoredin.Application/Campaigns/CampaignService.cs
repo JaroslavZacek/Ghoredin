@@ -31,6 +31,10 @@ namespace Ghoredin.Application.Campaigns
                 Name = command.Name,
                 GameSystemId = command.GameSystemId,
                 MaxPlayers = command.MaxPlayers
+                GameSystemSettings = new Dictionary<string, object>
+                {
+                    ["characterCreation"] = command.CharacterCreationMethod.ToString()
+                }
             };
 
             campaign.Members.Add(new CampaignMember
