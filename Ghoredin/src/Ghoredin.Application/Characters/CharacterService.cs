@@ -46,6 +46,25 @@ namespace Ghoredin.Application.Characters
             return character?.ToDto();
         }
 
+        public async Task<List<CharacterDto>> GetCampaignCharactersAsync(Guid campaignId)
+        {
+            var userId = _currentUserService.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var campaign = await _campaignRepository.GetByIdAsync(campaignId)
+                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
+
+            if (campaign.Members.All(m => m.UserId != userId))
+                throw new InvalidOperationException("Nejsi členem tohoto dobrodružství.");
+
+            var characters = await _characterRepository.GetByCampaignAsync(campaignId);
+
+            return characters.Select(c => c.ToDto()).ToList();
+        }
+
+
+        #region Tvorba postavy
+
         public async Task<CharacterDto> CreateInCampaignAsync(CreateCharacterInCampaignCommand command)
         {
             var userId = _currentUserService.UserId
@@ -96,7 +115,7 @@ namespace Ghoredin.Application.Characters
             return character.ToDto();
         }
 
-        public async Task<List<CharacterDto>> GetCampaignCharactersAsync(Guid campaignId)
+        public async Task<CharacterDto> StartRolledCharacterAsync(Guid campaignId, string name)
         {
             var userId = _currentUserService.UserId
                 ?? throw new InvalidOperationException("Není přihlášený uživatel.");
@@ -104,13 +123,53 @@ namespace Ghoredin.Application.Characters
             var campaign = await _campaignRepository.GetByIdAsync(campaignId)
                 ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
 
-            if (campaign.Members.All(m => m.UserId != userId))
-                throw new InvalidOperationException("Nejsi členem tohoto dobrodružství.");
+            var member = campaign.Members.FirstOrDefault(m => m.UserId == userId)
+                ?? throw new InvalidOperationException("Nejsi členem tohoto dobrodružství.");
 
-            var characters = await _characterRepository.GetByCampaignAsync(campaignId);
+            if (member.CharacterId.HasValue)
+                throw new InvalidOperationException("V tomto dobrodružství už máš postavu.");
 
-            return characters.Select(c => c.ToDto()).ToList();
+            var method = GetCreationMethod(campaign);
+
+            if (method != "Roll")
+                throw new InvalidOperationException("Toto dobrodružství používá jinou metodu tvorby postav.");
+
+            var abilities = new Dictionary<string, object>
+            {
+                ["strength"] = 0,
+                ["dexterity"] = 0,
+                ["constitution"] = 0,
+                ["intelligence"] = 0,
+                ["wisdom"] = 0,
+                ["charisma"] = 0
+            };
+
+            var sheetData = new Dictionary<string, object>
+            {
+                ["abilities"] = abilities,
+                ["creationComplete"] = false
+            };
+
+            var character = new Character
+            {
+                Id = Guid.NewGuid(),
+                Name = name,
+                GameSystemId = campaign.GameSystemId,
+                SheetData = sheetData,
+                OwnerUserId = userId,
+                CampaignId = campaign.Id
+            };
+
+            await _characterRepository.AddAsync(character);
+
+            member.CharacterId = character.Id;
+
+            await _characterRepository.SaveChangesAsync();
+
+            return character.ToDto();
+
         }
+
 
         // --------------------------------------------------------------------------------------
         // ----------------------------- Private methods ----------------------------------------
@@ -142,5 +201,9 @@ namespace Ghoredin.Application.Characters
 
             return new Dictionary<string, object>();
         }
+
+        #endregion
+
+
     }
 }
