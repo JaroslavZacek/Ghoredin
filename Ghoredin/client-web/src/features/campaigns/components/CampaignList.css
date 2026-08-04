@@ -59,6 +59,7 @@
 .campaign-card__creation {
     font-size: 13px;
     color: var(--color-text-muted);
+    margin-left: 4px;
 }
 
 .campaign-card__join {
