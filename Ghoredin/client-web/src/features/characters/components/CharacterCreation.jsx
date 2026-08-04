@@ -1,6 +1,6 @@
 import "./CharacterCreation.css"
 
-function CharacterCreation({ campaignId, creationMethod, onCreated}) {
+export default function CharacterCreation({ campaignId, creationMethod, onCreated}) {
     return (
         <div className="character-creation">
             {creationMethod === "PointBuy" && (
