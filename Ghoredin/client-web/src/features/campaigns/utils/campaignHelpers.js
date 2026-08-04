@@ -6,3 +6,10 @@ export function creationMethodLabel(method) {
         default: return method;
     }
 }
+
+export function isCharacterComplete(character) {
+    if (!character || !character.sheetData)
+        return false;
+
+    return character.sheetData.creationComplete === true;
+}
