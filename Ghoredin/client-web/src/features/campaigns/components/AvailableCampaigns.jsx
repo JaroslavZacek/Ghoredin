@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { getAvailableCampaigns, joinCampaign } from "../api/campaignsApi";
+import { creationMethodLabel } from "../utils/campaignHelpers";
 
 import "./CampaignList.css"
 
@@ -74,6 +75,9 @@ function AvailableCampaigns() {
                                         <span className="campaign-card__players">
                                             {c.playerCount}
                                             {c.maxPlayers != null ? ` / ${c.maxPlayers}` : ""} hráčů
+                                        </span>
+                                        <span className="campaign-card__creation">
+                                            Tvorba postavy: {creationMethodLabel(c.characterCreation)}
                                         </span>
 
                                         <button

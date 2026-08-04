@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, Links } from "react-router-dom";
 
 import { getMyCampaigns, createCampaign } from "../api/campaignsApi";
+import { creationMethodLabel } from "../utils/campaignHelpers";
 
 import "./CampaignList.css"
 
@@ -91,6 +92,9 @@ function CampaignList() {
                                         <span className="campaign-card__players">
                                             {c.playerCount}
                                             {c.maxPlayers != null ? ` / ${c.maxPlayers}` : ""} hráčů
+                                        </span>
+                                        <span className="campaign-card__creation ">
+                                            Tvorba postavy: {creationMethodLabel(c.characterCreation)}
                                         </span>
                                     </Link>
                                 </li>
