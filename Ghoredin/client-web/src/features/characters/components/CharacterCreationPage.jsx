@@ -42,7 +42,7 @@ export default function CharacterCreationPage() {
     
     return (
         <div className="creation-page">
-            <button className="creation-page__back" onClick={() => navigete(`/campaigns/${id}`)}>
+            <button className="creation-page__back" onClick={() => navigate(`/campaigns/${id}`)}>
                 Zpět na dobrodružství
             </button>
 
