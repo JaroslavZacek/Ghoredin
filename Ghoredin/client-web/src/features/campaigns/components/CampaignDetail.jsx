@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../auth/AuthContext";
 
 import { getCampaign } from "../api/campaignsApi";
 import { getCampaignCharacters, createCharacterInCampaign } from "../../characters/api/charactersApi";
+import { isCharacterComplete } from "../utils/campaignHelpers";
 
 import NoteList from "../../notes/components/NoteList";
 import CurrentScene from "../../notes/components/CurrentScene";
@@ -14,6 +15,7 @@ import "./CampaignDetail.css"
 function CampaignDetail() {
     const { id } = useParams();
     const { user } = useAuth();
+    const navigate = useNavigate();
 
     const [campaign, setCampaign] = useState(null);
     const [characters, setCharacters] = useState([]);
@@ -42,8 +44,6 @@ function CampaignDetail() {
     useEffect(() => {
         load();
     }, [id]);
-
-    
 
     const handleCreateCharacter = async () => {
         setError("");
@@ -79,6 +79,9 @@ function CampaignDetail() {
     const myMembership = campaign?.members?.find((m) => m.userId === user.userId);
     const iAmGameMaster = myMembership?.role === "GameMaster";
     const iHaveCharacter = myMembership?.characterId != null;
+
+    const myCharacter = characters.find((c) => c.id === myMembership?.characterId);
+    const myCharacterComplete = isCharacterComplete(myCharacter);
 
     const players = campaign.members
                         .filter((m) => m.role ==="Player")
@@ -140,21 +143,27 @@ function CampaignDetail() {
                 !iAmGameMaster && !iHaveCharacter && 
                 (
                     <section className="campaign-detail__section">
-                        <h3 className="campaign-detail__section-title">Vytvoř svou postavu</h3>
+                        <button
+                            className="auth-button"
+                            onClick={() => navigate(`/campaigns/${id}/create-character`)}
+                        >
+                            Vytvoř postavu
+                        </button>
+                    </section>
+                )
+            }
 
-                        <div className="character-create">
-                            <input 
-                                className="character-create__input"
-                                type="text"
-                                placeholder="Jméno postavy"
-                                value={characterName}
-                                onChange={(e) => setCharacterName(e.target.value)}
-                            />
-
-                            <button className="character-create__button" onClick={handleCreateCharacter}>
-                                Vytvoř postavu
-                            </button>
-                        </div>
+            {
+                !iAmGameMaster && iHaveCharacter && !myCharacterComplete &&
+                (
+                    <section className="campaign-detail__section">
+                        <p>Máš rozpracovanou postavu.</p>
+                        <button
+                            className="auth-button"
+                            onClick={() => navigate(`/campaigns/${id}/create-character`)}
+                        >
+                            Dokonči postavu
+                        </button>
                     </section>
                 )
             }
