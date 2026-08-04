@@ -7,6 +7,7 @@ import CharacterList from "./features/characters/components/CharacterList";
 import CampaignList from "./features/campaigns/components/CampaignList";
 import AvailableCampaigns from "./features/campaigns/components/AvailableCampaigns";
 import CampaignDetail from "./features/campaigns/components/CampaignDetail";
+import CharacterCreationPage from "./features/characters/components/CharacterCreationPage";
 
 import "./App.css"
 
@@ -45,6 +46,7 @@ function App() {
           <Route path="/campaigns" element={<CampaignList />} />
           <Route path="/campaigns/available" element={<AvailableCampaigns />} />
           <Route path="/campaigns/:id" element={<CampaignDetail />} />
+          <Route path="/campaigns/:id/create-character" element={<CharacterCreationPage />} />
           {/* Výchozí adresa -> přesměrování na postavy*/}
           <Route path="*" element={<Navigate to="/characters" replace />} /> 
         </Routes>
