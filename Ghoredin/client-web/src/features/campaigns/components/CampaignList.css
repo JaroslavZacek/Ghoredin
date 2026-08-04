@@ -56,6 +56,11 @@
     color: var(--color-text-muted);
 }
 
+.campaign-card__creation {
+    font-size: 13px;
+    color: var(--color-text-muted);
+}
+
 .campaign-card__join {
     display: flex;
     align-items: center;
