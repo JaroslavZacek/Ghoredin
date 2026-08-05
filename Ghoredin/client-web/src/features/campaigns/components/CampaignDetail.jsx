@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 import { useAuth } from "../../auth/AuthContext";
 
@@ -125,7 +125,18 @@ function CampaignDetail() {
                                         {m.role === "GameMaster" ? "PJ" : "Hráč"}
                                     </span>
                                     <span className="member-row__character">
-                                        {character ? character.name : <em>bez postavy</em>}
+                                        {
+                                            character ? (
+                                                <Link
+                                                    to={`/campaigns/${id}/characters/${character.id}`}
+                                                    className="member-row__character-link"
+                                                >
+                                                    {character.name}
+                                                </Link>
+                                            ) : (
+                                                <em>bez postavy</em>
+                                            )
+                                        }
                                     </span>
                                 </li>
                             );
