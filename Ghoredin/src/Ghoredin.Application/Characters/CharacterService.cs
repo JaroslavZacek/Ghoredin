@@ -276,6 +276,24 @@ namespace Ghoredin.Application.Characters
 
         #endregion
 
+        #region Zobrazovaní postavy
+
+        private static bool GetCharacterVisibleToAll(Campaign campaign)
+        {
+            if (campaign.GameSystemSettings.TryGetValue("characterVisibleToAll", out var v))
+            {
+                if (v is bool b)
+                    return b;
+
+                if (v is System.Text.Json.JsonElement el)
+                    return el.ValueKind == System.Text.Json.JsonValueKind.True;
+            }
+
+            return false;
+        }
+
+        #endregion
+
         #region Pomocné metody
 
         private static int? ToInt(object? value)
