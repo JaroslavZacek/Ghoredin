@@ -33,7 +33,8 @@ namespace Ghoredin.Application.Campaigns
                 MaxPlayers = command.MaxPlayers,
                 GameSystemSettings = new Dictionary<string, object>
                 {
-                    ["characterCreation"] = command.CharacterCreationMethod.ToString()
+                    ["characterCreation"] = command.CharacterCreationMethod.ToString(),
+                    ["charactersVisibleToAll"] = command.CharactersVisibleToAll
                 }
             };
 
