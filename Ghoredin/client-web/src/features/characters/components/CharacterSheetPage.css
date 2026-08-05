@@ -1,0 +1,87 @@
+.sheet-page {
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+.sheet-page__back {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+    margin-bottom: var(--space-md);
+}
+
+.sheet-page__name {
+    font-size: 24px;
+    margin: 0 0 2px;
+}
+
+.sheet-page__system {
+    color: var(--color-text-muted);
+    font-size: 13px;
+    margin: 0 0 var(--space-lg);
+}
+
+.sheet-page__incomplete {
+    background: #fdf6ec;
+    border: 1px solid #e6cfa6;
+    color: #6b4e16;
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    margin-bottom: var(--space-lg);
+}
+
+.sheet-page__error {
+    color: var(--color-danger);
+}
+
+.sheet-page__section {
+    margin-bottom: var(--space-lg);
+}
+
+.sheet-page__section-title {
+    font-size: 16px;
+    margin: 0 0 var(--space-md);
+}
+
+.sheet-page__abilities {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+}
+
+.sheet-page__hp {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.ability-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 8px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+}
+
+.ability-card__label {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    margin-bottom: 4px;
+}
+
+.ability-card__score {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.ability-card__mod {
+    font-size: 13px;
+    color: var(--color-text-muted);
+}
+
