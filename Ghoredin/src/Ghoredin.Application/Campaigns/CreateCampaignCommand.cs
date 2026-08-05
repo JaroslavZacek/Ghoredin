@@ -11,6 +11,7 @@ namespace Ghoredin.Application.Campaigns
         string Name,
         string GameSystemId,
         int? MaxPlayers,
-        CharacterCreationMethod CharacterCreationMethod
+        CharacterCreationMethod CharacterCreationMethod,
+        bool CharactersVisibleToAll = false
     );
 }
