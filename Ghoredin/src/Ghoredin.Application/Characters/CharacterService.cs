@@ -18,17 +18,20 @@ namespace Ghoredin.Application.Characters
         private readonly ICurrentUserService _currentUserService;
         private readonly ICampaignRepository _campaignRepository;
         private readonly IGameSystemRegistry _gameSystemRegistry;
+        private readonly ICampaignAuthorizationService _campaignAuthorizationService;
 
         public CharacterService(
             ICharacterRepository repository, 
             ICurrentUserService currentUserService, 
             ICampaignRepository campaignRepository,
-            IGameSystemRegistry gameSystemsRegistry)
+            IGameSystemRegistry gameSystemsRegistry,
+            ICampaignAuthorizationService campaignAuthorizationService)
         {
             _characterRepository = repository;
             _currentUserService = currentUserService;
             _campaignRepository = campaignRepository;
             _gameSystemRegistry = gameSystemsRegistry;
+            _campaignAuthorizationService = campaignAuthorizationService;
         }
 
         public async Task<List<CharacterDto>> GetMyCharactersAsync()
