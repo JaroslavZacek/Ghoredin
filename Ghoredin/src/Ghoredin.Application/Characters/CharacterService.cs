@@ -46,9 +46,33 @@ namespace Ghoredin.Application.Characters
 
         public async Task<CharacterDto> GetByIdAsync(Guid id)
         {
+            var userId = _currentUserService.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
             var character = await _characterRepository.GetByIdAsync(id);
 
-            return character?.ToDto();
+            if (character is null)
+                return null;
+
+            if (character.OwnerUserId == userId)
+                return character.ToDto();
+
+            if (character.CampaignId.HasValue)
+            {
+                var campaign = await _campaignRepository.GetByIdAsync(character.CampaignId.Value);
+
+                if (campaign is not null)
+                {
+                    var isGm = _campaignAuthorizationService.IsGameMaster(campaign, userId);
+                    var visibleToAll = GetCharacterVisibleToAll(campaign);
+                    var isMember = _campaignAuthorizationService.IsMember(campaign, userId);
+
+                    if (isGm || (visibleToAll && isMember))
+                        return character.ToDto();
+                }
+            }
+
+            throw new InvalidOperationException("Nemáš oprávnění zobrazit tuto postavu.");
         }
 
         public async Task<List<CharacterDto>> GetCampaignCharactersAsync(Guid campaignId)
