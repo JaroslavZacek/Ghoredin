@@ -16,6 +16,8 @@ function CampaignList() {
     const [name, setName] = useState("");
     const [gameSystemId, setGameSystemId] = useState("dnd5e");
     const [maxPlayers, setMaxPlayers] = useState("");
+    const [characterCreationMethod, setCharacterCreationMethod] = useState("PointBuy");
+    const [charactersVisibleToAll, setCharactersVisibleToAll] = useState(false);
 
     const loadCampaigns = async () => {
         setError("");
@@ -48,7 +50,9 @@ function CampaignList() {
             await createCampaign({
                 name: name,
                 gameSystemId: gameSystemId,
-                maxPlayers: maxPlayers === "" ? null : Number(maxPlayers)
+                maxPlayers: maxPlayers === "" ? null : Number(maxPlayers),
+                characterCreationMethod,
+                charactersVisibleToAll
             });
 
             setName("");
@@ -124,6 +128,16 @@ function CampaignList() {
                     <option value="hrdinove-fantasy">Hrdinové Fantasy</option>
                 </select>
 
+                <select
+                    className="campaign-form__input"
+                    value={characterCreationMethod}
+                    onChange={(e) => setCharacterCreationMethod(e.target.value)}
+                >
+                    <option value="PointBuy">Nákup bodů</option>
+                    <option value="StandardArray">Pevná sada</option>
+                    <option value="Roll">Házení kostkami</option>
+                </select>
+
                 <input 
                     className="campaign-form__input"
                     type="number"
@@ -132,6 +146,15 @@ function CampaignList() {
                     value={maxPlayers}
                     onChange={(e) => setMaxPlayers(e.target.value)}
                 />
+
+                <label className="campaign-form__checkbox">
+                    <input 
+                        type="checkbox"
+                        checked={charactersVisibleToAll}
+                        onChange={(e) => setCharactersVisibleToAll(e.target.checked)}
+                    />
+                    Postavy vidí všichni členové (Jinak jen vlastník a PJ)
+                </label>
 
                 <button className="campaign-form__button" onClick={handleCreate}>
                     Vytvoř dobrodružství
