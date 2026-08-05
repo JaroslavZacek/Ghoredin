@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+import { useAuth } from "../../auth/AuthContext";
+
 import { getCampaign } from "../../campaigns/api/campaignsApi";
 import { creationMethodLabel } from "../../campaigns/utils/campaignHelpers";
+
+import { getCharacter } from "../api/charactersApi";
 import CharacterCreation from "./CharacterCreation";
 
 import "./CharacterCreationPage.css";
@@ -10,16 +14,26 @@ import "./CharacterCreationPage.css";
 export default function CharacterCreationPage() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     const [campaign, setCampaign] = useState(null);
+    const [existingCharacter, setExistingCharacter] = useState(null);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
     useEffect(() => {
         const load = async () => {
+            setError("");
             try {
-                const data = await getCampaign(id);
-                setCampaign(data);
+                const campaignData = await getCampaign(id);
+                setCampaign(campaignData);
+
+                const myMembership = campaignData.members.find((m) => m.userId === user.userId);
+                if (myMembership?.characterId) {
+                    const character = await getCharacter(myMembership.characterId);
+                    setExistingCharacter(character);
+                }
             }
             catch (error) {
                 setError("Nepodařilo se načíst dobrodružství: " + error.message);
@@ -29,7 +43,7 @@ export default function CharacterCreationPage() {
             }
         };
         load();
-    }, [id]);
+    }, [id, user.userId]);
 
     const handleDone = () => {
         navigate(`/campaigns/${id}`);
@@ -54,6 +68,7 @@ export default function CharacterCreationPage() {
             <CharacterCreation 
                 campaignId={id}
                 creationMethod={campaign.characterCreation}
+                existingCharacter={existingCharacter}
                 onCreated={handleDone}
             />
         </div>
