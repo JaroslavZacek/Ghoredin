@@ -64,7 +64,7 @@ namespace Ghoredin.Application.Characters
                 if (campaign is not null)
                 {
                     var isGm = _campaignAuthorizationService.IsGameMaster(campaign, userId);
-                    var visibleToAll = GetCharacterVisibleToAll(campaign);
+                    var visibleToAll = GetCharactersVisibleToAll(campaign);
                     var isMember = _campaignAuthorizationService.IsMember(campaign, userId);
 
                     if (isGm || (visibleToAll && isMember))
@@ -302,9 +302,9 @@ namespace Ghoredin.Application.Characters
 
         #region Zobrazovaní postavy
 
-        private static bool GetCharacterVisibleToAll(Campaign campaign)
+        private static bool GetCharactersVisibleToAll(Campaign campaign)
         {
-            if (campaign.GameSystemSettings.TryGetValue("characterVisibleToAll", out var v))
+            if (campaign.GameSystemSettings.TryGetValue("charactersVisibleToAll", out var v))
             {
                 if (v is bool b)
                     return b;
