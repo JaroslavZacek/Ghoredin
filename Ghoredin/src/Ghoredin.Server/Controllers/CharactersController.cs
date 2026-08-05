@@ -31,12 +31,21 @@ namespace Ghoredin.Server.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var character = await _characterService.GetByIdAsync(id);
+            try
+            {
+                var character = await _characterService.GetByIdAsync(id);
 
-            if (character == null)
-                return NotFound();
+                if (character == null)
+                    return NotFound();
 
-            return Ok(character);
+                return Ok(character);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return StatusCode(403, new { error = ex.Message });
+            }
+
+            
         }
 
         [HttpGet("campaign/{campaignId:guid}")]
