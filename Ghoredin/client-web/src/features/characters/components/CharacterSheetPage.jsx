@@ -31,10 +31,6 @@ export default function CharacterSheetPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
-    const abilities = character.sheetData.abilities || {};
-    const hitPoints = character.sheetData.hitPoints || {};
-    const complete = character.sheetData.creationComplete === true;
-
     useEffect(() => {
         const load = async () => {
             setError("");
@@ -62,6 +58,10 @@ export default function CharacterSheetPage() {
 
     if (!character)
         return <p>Postava nenalezena</p>
+
+    const abilities = character.sheetData.abilities || {};
+    const hitPoints = character.sheetData.hitPoints || {};
+    const complete = character.sheetData.creationComplete === true;
 
     return (
         <div className="sheet-page">
