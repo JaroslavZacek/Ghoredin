@@ -68,6 +68,15 @@
     font-size: 14px;
 }
 
+.member-row__character-link {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.member-row__character-link:hover {
+    text-decoration: underline;
+}
+
 .character-create {
     display: flex;
     gap: var(--space-sm);
