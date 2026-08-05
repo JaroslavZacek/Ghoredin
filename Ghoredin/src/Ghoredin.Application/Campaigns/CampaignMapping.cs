@@ -14,6 +14,9 @@ namespace Ghoredin.Application.Campaigns
                 ? m?.ToString() ?? "PointBuy"
                 : "PointBuy";
 
+            var visibleToAll = campaign.GameSystemSettings.TryGetValue("charactersVisibleToAll", out var v)
+                && v is bool b && b;
+
             return new CampaignDto(
                 campaign.Id,
                 campaign.Name,
@@ -21,6 +24,7 @@ namespace Ghoredin.Application.Campaigns
                 campaign.MaxPlayers,
                 campaign.Members.Count(m => m.Role == CampaignRole.Player),
                 creation,
+                visibleToAll,
                 campaign.Members.Select(m => m.ToDto()).ToList()
             );
         }
