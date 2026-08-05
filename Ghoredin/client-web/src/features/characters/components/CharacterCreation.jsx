@@ -1,10 +1,12 @@
+import PointBuyForm  from "./PointBuyForm";
+
 import "./CharacterCreation.css"
 
 export default function CharacterCreation({ campaignId, creationMethod, onCreated}) {
     return (
         <div className="character-creation">
             {creationMethod === "PointBuy" && (
-                <p>Point buy formulář (doplníme)</p>
+                <PointBuyForm campaignId={campaignId} onCreated={onCreated} />
             )}
             {creationMethod === "StandardArray" && (
                 <p>Standard array formulář (doplníme).</p>
