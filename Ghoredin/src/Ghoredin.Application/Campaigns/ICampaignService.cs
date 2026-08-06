@@ -12,5 +12,6 @@ namespace Ghoredin.Application.Campaigns
         Task JoinAsync(JoinCampaignCommand command);
         Task<List<CampaignDto>> GetAvailableCampaignsAsync();
         Task DeleteAsync(Guid campaignId);
+        Task LeaveAsync(Guid campaignId);
     }
 }
