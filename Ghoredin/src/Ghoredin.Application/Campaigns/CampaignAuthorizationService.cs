@@ -10,12 +10,12 @@ namespace Ghoredin.Application.Campaigns
     {
         public bool IsGameMaster(Campaign campaign, string userId)
         {
-            return campaign.Members.Any(m => m.UserId == userId && m.Role == CampaignRole.GameMaster);
+            return campaign.Members.Any(m => m.UserId == userId && m.Role == CampaignRole.GameMaster && m.IsActive);
         }
 
         public bool IsMember(Campaign campaign, string userId)
         {
-            return campaign.Members.Any(m => m.UserId == userId);
+            return campaign.Members.Any(m => m.UserId == userId && m.IsActive);
         }
     }
 }
