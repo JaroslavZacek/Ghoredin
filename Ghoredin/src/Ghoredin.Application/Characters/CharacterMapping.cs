@@ -8,7 +8,7 @@ namespace Ghoredin.Application.Characters
 {
     public static class CharacterMapping
     {
-        public static CharacterDto ToDto(this Character character, string? campaignName = null)
+        public static CharacterDto ToDto(this Character character, string? campaignName = null, bool campaignActive = true)
         {
             return new CharacterDto(
                 character.Id,
@@ -16,6 +16,7 @@ namespace Ghoredin.Application.Characters
                 character.GameSystemId,
                 character.CampaignId,
                 campaignName,
+                campaignActive,
                 character.PortraitUrl,
                 character.SheetData
             );
