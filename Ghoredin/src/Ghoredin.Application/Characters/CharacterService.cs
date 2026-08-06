@@ -99,7 +99,7 @@ namespace Ghoredin.Application.Characters
             var campaign = await _campaignRepository.GetByIdAsync(campaignId)
                 ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
 
-            if (campaign.Members.All(m => m.UserId != userId))
+            if (campaign.Members.All(m => m.UserId != userId || !m.IsActive))
                 throw new InvalidOperationException("Nejsi členem tohoto dobrodružství.");
 
             var characters = await _characterRepository.GetByCampaignAsync(campaignId);
