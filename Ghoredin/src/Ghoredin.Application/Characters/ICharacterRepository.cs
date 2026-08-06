@@ -13,5 +13,6 @@ namespace Ghoredin.Application.Characters
         Task<List<Character>> GetByCampaignAsync(Guid campaignId);
         Task AddAsync(Character character);
         Task SaveChangesAsync();
+        Task DeleteByCampaignAsync(Guid campaignId);
     }
 }
