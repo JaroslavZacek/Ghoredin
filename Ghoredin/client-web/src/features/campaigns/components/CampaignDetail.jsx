@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 
 import { useAuth } from "../../auth/AuthContext";
 
-import { getCampaign, deleteCampaign } from "../api/campaignsApi";
+import { getCampaign, deleteCampaign, leaveCampaign } from "../api/campaignsApi";
 import { getCampaignCharacters, createCharacterInCampaign, deleteCharacter } from "../../characters/api/charactersApi";
 import { isCharacterComplete } from "../utils/campaignHelpers";
 
@@ -81,6 +81,20 @@ function CampaignDetail() {
         }
     };
 
+    const handleLeaveCampaign = async () => {
+        if (!window.confirm("Opravdu chceš odejít z tohoto dobrodružství? Tvá postava zůstane zachována, kdyby ses chtěl vrátit.")) {
+            return;
+        }
+        
+        try {
+            await leaveCampaign(id);
+            navigate("campaigns");
+        }
+        catch (error) {
+            setError("Nepodařilo se odejít z dobrodružství: " + error.message);
+        }
+    };
+
     const handleDeleteCampaign = async () => {
         if(!window.confirm("Opravdu chceš smazat tohle dobrodružství? Tato akce je nevratná a smaže i všechny postavy a poznámky.")) {
             return;
@@ -136,6 +150,17 @@ function CampaignDetail() {
                             onClick={handleDeleteCampaign}
                         >
                             Smazat dobrodružství
+                        </button>
+                    )
+                }
+
+                {
+                    !iAmGameMaster && myMembership && (
+                        <button
+                            className="campaign-detail__leave"
+                            onClick={handleLeaveCampaign}
+                        >
+                            Odejdi z dobrodružství
                         </button>
                     )
                 }
