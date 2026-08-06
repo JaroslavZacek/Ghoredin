@@ -85,8 +85,8 @@ namespace Ghoredin.Server.Controllers
                 return NoContent();
             }
             catch (InvalidOperationException ex)
-            { 
-                return BadRequest(new { error = ex.Message })
+            {
+                return BadRequest(new { error = ex.Message });
             }
         }
 
