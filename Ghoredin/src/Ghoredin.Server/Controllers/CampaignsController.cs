@@ -76,6 +76,20 @@ namespace Ghoredin.Server.Controllers
             }
         }
 
+        [HttpPost("{id:guid}/leave")]
+        public async Task<IActionResult> Leave(Guid id)
+        {
+            try
+            {
+                await _campaignService.LeaveAsync(id);
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            { 
+                return BadRequest(new { error = ex.Message })
+            }
+        }
+
         #endregion
 
         #region Delete
