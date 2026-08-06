@@ -107,6 +107,31 @@ namespace Ghoredin.Application.Characters
             return characters.Select(c => c.ToDto()).ToList();
         }
 
+        public async Task DeleteAsync(Guid characterId)
+        {
+            var userId = _currentUserService.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var character = await _characterRepository.GetByIdAsync(characterId)
+                ?? throw new InvalidOperationException("Postava neexistuje.");
+
+            if (!character.CampaignId.HasValue)
+                throw new InvalidOperationException("Postava nepatří do žádného dobrodružství.");
+
+            var campaign = await _campaignRepository.GetByIdAsync(character.CampaignId.Value)
+                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
+
+            if (!_campaignAuthorizationService.IsGameMaster(campaign, userId))
+                throw new InvalidOperationException("Jen PJ může smazat postavu.");
+
+            var member = campaign.Members.FirstOrDefault(m => m.CharacterId == character.Id);
+            if (member is not null)
+                member.CharacterId = null;
+
+            await _characterRepository.DeleteAsync(character);
+            await _characterRepository.SaveChangesAsync();
+        }
+
 
         #region Tvorba postavy
 
