@@ -52,5 +52,10 @@ namespace Ghoredin.Infrastructure.Persistence.Repositories
         {
             await _context.SaveChangesAsync();
         }
+
+        public async Task DeleteAsync(Campaign campaign)
+        {
+            _context.Campaigns.Remove(campaign);
+        }
     }
 }
