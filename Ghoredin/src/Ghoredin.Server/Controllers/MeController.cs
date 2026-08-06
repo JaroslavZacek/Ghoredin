@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Ghoredin.Server.Controllers
 {
@@ -25,9 +26,12 @@ namespace Ghoredin.Server.Controllers
         [Authorize]
         public IActionResult GetMe() 
         {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+
             return Ok(new
             {
                 userId = _currentUser.UserId,
+                email = email,
                 isAuthenticated = _currentUser.IsAuthenticated
             });
         }
