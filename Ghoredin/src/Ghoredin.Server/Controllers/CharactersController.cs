@@ -128,5 +128,23 @@ namespace Ghoredin.Server.Controllers
             }
         }
         #endregion
+
+        #region Delete
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                await _characterService.DeleteAsync(id);
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message});
+            }
+        }
+
+        #endregion
     }
 }
