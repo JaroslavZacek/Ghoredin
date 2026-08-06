@@ -1,4 +1,6 @@
-﻿using Ghoredin.Application.Users;
+﻿using Ghoredin.Application.Characters;
+using Ghoredin.Application.Notes;
+using Ghoredin.Application.Users;
 using Ghoredin.Domain.Campaigns;
 
 using System;
@@ -12,12 +14,17 @@ namespace Ghoredin.Application.Campaigns
         private readonly ICampaignRepository _repository;
         private readonly ICurrentUserService _currentUser;
         private readonly ICampaignAuthorizationService _campaignAuthorizationService;
+        private readonly ICharacterRepository _characterRepository;
+        private readonly INoteRepository _noteRepository;
 
-        public CampaignService(ICampaignRepository repository, ICurrentUserService currentUser, ICampaignAuthorizationService campaignAuthorizationService)
+        public CampaignService(ICampaignRepository repository, ICurrentUserService currentUser, ICampaignAuthorizationService campaignAuthorizationService,
+            ICharacterRepository characterRepository, INoteRepository noteRepository)
         {
             _repository = repository;
             _currentUser = currentUser;
             _campaignAuthorizationService = campaignAuthorizationService;
+            _characterRepository = characterRepository;
+            _noteRepository = noteRepository;
         }
 
         public async Task<CampaignDto> CreateAsync(CreateCampaignCommand command)
@@ -110,6 +117,24 @@ namespace Ghoredin.Application.Campaigns
                 c.Members.Count(m => m.Role == CampaignRole.Player) < c.MaxPlayers.Value));
 
             return available.Select(c => c.ToDto()).ToList();
+        }
+
+        public async Task DeleteAsync(Guid campaignId)
+        {
+            var userId = _currentUser.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var campaign = await _repository.GetByIdAsync(campaignId)
+                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
+
+            if (!_campaignAuthorizationService.IsGameMaster(campaign, userId))
+                throw new InvalidOperationException("Jen PJ může smazat dobrodružství.");
+
+            await _characterRepository.DeleteByCampaignAsync(campaignId);
+            await _noteRepository.DeleteByCampaignAsync(campaignId);
+
+            await _repository.DeleteAsync(campaign);
+            await _repository.SaveChangesAsync();
         }
     }
 }
