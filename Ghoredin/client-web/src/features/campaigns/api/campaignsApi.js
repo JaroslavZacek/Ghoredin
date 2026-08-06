@@ -17,3 +17,6 @@ export const getCampaign = (id) =>
 
 export const deleteCampaign = (id) =>
     apiDelete(`campaigns/${id}`);
+
+export const leaveCampaign = (id) =>
+    apiPost(`campaigns/${id}/leave`, {});
