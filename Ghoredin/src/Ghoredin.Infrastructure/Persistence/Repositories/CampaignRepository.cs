@@ -34,7 +34,7 @@ namespace Ghoredin.Infrastructure.Persistence.Repositories
         {
             return await _context.Campaigns
                             .Include(c => c.Members)
-                            .Where(c => c.Members.Any(m => m.UserId == userId))
+                            .Where(c => c.Members.Any(m => m.UserId == userId && m.IsActive))
                             .ToListAsync();
         }
 
