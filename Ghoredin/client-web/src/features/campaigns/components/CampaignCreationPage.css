@@ -33,12 +33,12 @@
     border-radius: var(--radius);
 }
 
-.campaign-form__title {
+.campaign-creation-page__form-title {
     font-size: 16px;
     margin: 0 0 var(--space-sm);
 }
 
-.campaign-form__input {
+.campaign-creation-page__form-input {
     padding: 10px 12px;
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
@@ -46,7 +46,7 @@
     font-family: inherit;
 }
 
-.campaign-form__button {
+.campaign-creation-page__form-btn {
     padding: 10px 14px;
     border: none;
     border-radius: var(--radius);
@@ -56,11 +56,11 @@
     cursor: pointer;
 }
 
-.campaign-form__button:hover {
+.campaign-creation-page__form-btn:hover {
     background: var(--color-primary-hover);
 }
 
-.campaign-form__checkbox {
+.campaign-creation-page__form-checkbox {
     display: flex;
     align-items: center;
     gap: 8px;
