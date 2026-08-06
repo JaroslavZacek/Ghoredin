@@ -89,3 +89,17 @@
     margin-left: 150px;
     margin-top: 10px;
 }
+
+.campaign-list-form__btn {
+    padding: 10px 14px;
+    border: none;
+    border-radius: var(--radius);
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.campaign-list-form__btn:hover {
+    background: var(--color-primary-hover);
+}
