@@ -41,7 +41,23 @@ namespace Ghoredin.Application.Characters
 
             var characters = await _characterRepository.GetByOwnerAsync(userId);
 
-            return characters.Select(c => c.ToDto()).ToList();
+            var campaignIds = characters
+                .Where(c => c.CampaignId.HasValue)
+                .Select(c => c.CampaignId!.Value)
+                .Distinct();
+
+            var campaignNames = new Dictionary<Guid, string>();
+
+            foreach (var campaignId in campaignIds)
+            {
+                var campaign = await _campaignRepository.GetByIdAsync(campaignId);
+                if (campaign is not null)
+                    campaignNames[campaignId] = campaign.Name;
+            }
+
+            return characters
+                .Select(c => c.ToDto(c.CampaignId.HasValue ? campaignNames.GetValueOrDefault(c.CampaignId.Value) : null))
+                .ToList();
         }
 
         public async Task<CharacterDto> GetByIdAsync(Guid id)
