@@ -38,6 +38,22 @@
     margin: 0 0 var(--space-md);
 }
 
+.campaign-detail__delete {
+    padding: 8px 14px;
+    border: 1px solid var(--color-danger);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--color-danger);
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: var(--space-lg);
+}
+
+.campaign-detail__delete:hover {
+    background: var(--color-danger);
+    color: #fff;
+}
+
 .member-list {
     list-style: none;
     padding: 0;
@@ -75,28 +91,4 @@
 
 .member-row__character-link:hover {
     text-decoration: underline;
-}
-
-.character-create {
-    display: flex;
-    gap: var(--space-sm);
-}
-
-.character-create__input {
-    flex: 1;
-    padding: 10px 12px;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    font-size: 14px;
-    font-family: inherit;
-}
-
-.character-create__button {
-    padding: 10px 14px;
-    border: none;
-    border-radius: var(--radius);
-    background: var(--color-primary);
-    color: #fff;
-    font-size: 14px;
-    cursor: pointer;
 }
