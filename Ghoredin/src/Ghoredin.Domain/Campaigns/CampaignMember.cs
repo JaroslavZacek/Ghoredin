@@ -13,5 +13,7 @@ namespace Ghoredin.Domain.Campaigns
         public Guid? CharacterId { get; set; }
 
         public Guid? CurrentSceneNoteId { get; set; }
+
+        public bool IsActive { get; set; } = true;
     }
 }
