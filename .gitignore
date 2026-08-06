@@ -67,3 +67,6 @@ obj/
 # ReSharper (pokud používáš)
 _ReSharper*/
 *.DotSettings.user
+
+#DB
+.db
