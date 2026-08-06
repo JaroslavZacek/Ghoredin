@@ -81,7 +81,7 @@ function AvailableCampaigns() {
                                         </span>
 
                                         <button
-                                            className="campaign-form__button"
+                                            className="campaign-list-form__btn"
                                             onClick={() => handleJoin(c.id)}
                                         >
                                             Připojit se
