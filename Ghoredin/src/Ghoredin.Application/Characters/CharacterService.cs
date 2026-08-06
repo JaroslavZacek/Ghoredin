@@ -46,18 +46,25 @@ namespace Ghoredin.Application.Characters
                 .Select(c => c.CampaignId!.Value)
                 .Distinct();
 
-            var campaignNames = new Dictionary<Guid, string>();
+            var campaigns = new Dictionary<Guid, Campaign>();
 
             foreach (var campaignId in campaignIds)
             {
                 var campaign = await _campaignRepository.GetByIdAsync(campaignId);
                 if (campaign is not null)
-                    campaignNames[campaignId] = campaign.Name;
+                    campaigns[campaignId] = campaign;
             }
 
-            return characters
-                .Select(c => c.ToDto(c.CampaignId.HasValue ? campaignNames.GetValueOrDefault(c.CampaignId.Value) : null))
-                .ToList();
+            return characters.Select(c =>
+            {
+                if (!c.CampaignId.HasValue)
+                    return c.ToDto();
+
+                campaigns.TryGetValue(c.CampaignId.Value, out var campaign);
+                var isActive = campaign?.Members.Any(m => m.UserId == userId && m.IsActive) ?? false;
+
+                return c.ToDto(campaign?.Name, isActive);
+            }).ToList();
         }
 
         public async Task<CharacterDto> GetByIdAsync(Guid id)
