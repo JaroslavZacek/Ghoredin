@@ -25,7 +25,7 @@ namespace Ghoredin.Application.Campaigns
                 campaign.Members.Count(m => m.Role == CampaignRole.Player && m.IsActive),
                 creation,
                 visibleToAll,
-                campaign.Members.Select(m => m.ToDto()).ToList()
+                campaign.Members.Where(m => m.IsActive).Select(m => m.ToDto()).ToList()
             );
         }
 
