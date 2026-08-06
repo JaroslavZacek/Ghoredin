@@ -73,5 +73,19 @@ namespace Ghoredin.Infrastructure.Persistence.Repositories
         {
             await _context.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// Asynchronně odstraní všechny entity typu <see cref="Character"/> spojené s kampaní se zadaným identifikátorem.
+        /// </summary>
+        /// <param name="campaignId">Identifikátor kampaně (<see cref="Guid"/>), jejíž postavy se mají odstranit.</param>
+        /// <returns>Asynchronní <see cref="Task"/>, která se dokončí po úspěšném odstranění postav.</returns>
+        public async Task DeleteByCampaignAsync(Guid campaignId)
+        {
+            var characters = await _context.Characters
+                .Where(c => c.CampaignId == campaignId)
+                .ToListAsync();
+
+            _context.Characters.RemoveRange(characters);
+        }
     }
 }
