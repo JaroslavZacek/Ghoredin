@@ -129,7 +129,7 @@ namespace Ghoredin.Application.Campaigns
             var available = allCampaigns.Where(c =>
                 !_campaignAuthorizationService.IsMember(c, userId) &&
                 (!c.MaxPlayers.HasValue ||
-                c.Members.Count(m => m.Role == CampaignRole.Player) < c.MaxPlayers.Value));
+                c.Members.Count(m => m.Role == CampaignRole.Player && m.IsActive) < c.MaxPlayers.Value));
 
             return available.Select(c => c.ToDto()).ToList();
         }
