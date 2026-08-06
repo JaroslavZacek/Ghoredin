@@ -8,7 +8,7 @@ namespace Ghoredin.Application.Characters
 {
     public static class CharacterMapping
     {
-        public static CharacterDto ToDto(this Character character, string? campaignName)
+        public static CharacterDto ToDto(this Character character, string? campaignName = null)
         {
             return new CharacterDto(
                 character.Id,
