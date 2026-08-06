@@ -47,7 +47,7 @@ function CampaignList() {
 
     return (
         <div className="campaign-list">
-            <button className="campaign-form__button" onClick={() => navigate("/campaigns/create")}>
+            <button className="campaign-list__create-button" onClick={() => navigate("/campaigns/create")}>
                 Nové dobrodružství
             </button>
 
