@@ -56,6 +56,12 @@ function CharacterList () {
                                 <li key={c.id} className="character-card">
                                     <span className="character-card__name">{c.name}</span>
                                     <span className="chatacter-card__system">{c.gameSystemId}</span>
+
+                                    {
+                                        c.campaignName && (
+                                            <span className="character-card__campaign">{c.campaignName}</span>
+                                        )
+                                    }
                                 </li>
                             ))
                         }
