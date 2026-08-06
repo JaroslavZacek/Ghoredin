@@ -1,4 +1,4 @@
-import { apiGet, apiPost } from "../../../shared/api/apiClient";
+import { apiDelete, apiGet, apiPost } from "../../../shared/api/apiClient";
 
 export const getMyCampaigns = () =>
     apiGet("campaigns");
@@ -14,3 +14,6 @@ export const joinCampaign = (campaignId, characterId = null) =>
 
 export const getCampaign = (id) =>
     apiGet(`campaigns/${id}`);
+
+export const deleteCampaign = (id) =>
+    apiDelete(`campaigns/${id}`);
