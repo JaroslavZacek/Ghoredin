@@ -1,10 +1,14 @@
 # TODO
 
 ## .Net
-- [] Přidat smazání postavy do ICharacterRepository a implementovat ji v CharacterRepository. (Jen PJ)
-- [] Přidat smazání postavy do ICharacterService a implementovat ji v CharacterService. (Jen PJ)
+- [+] Přidat smazání postavy do ICharacterRepository a implementovat ji v CharacterRepository. (Jen PJ)
+- [+] Přidat smazání postavy do ICharacterService a implementovat ji v CharacterService. (Jen PJ)
 - [] Přidat smazání Note do INoteRepository a implementovat ji v NoteRepository. (Jen tvůrce)
 - [] Přidat smazání Note do INoteService a implementovat ji v NoteService. (Jen tvůrce)
+
+## React
+- [] Přidat mazání postavy do detailu dobrodružství
+- [] Přidat mazání dobrodružství do detailu dobrodružství
 
 ## Všeobecné
 - [] Přidat pozvání hráče do dobrodružství. (Zřejmě přes email)
