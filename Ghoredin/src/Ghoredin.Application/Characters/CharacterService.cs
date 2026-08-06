@@ -193,7 +193,7 @@ namespace Ghoredin.Application.Characters
             var campaign = await _campaignRepository.GetByIdAsync(campaignId)
                 ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
 
-            var member = campaign.Members.FirstOrDefault(m => m.UserId == userId)
+            var member = campaign.Members.FirstOrDefault(m => m.UserId == userId && m.IsActive)
                 ?? throw new InvalidOperationException("Nejsi členem tohoto dobrodružství.");
 
             if (member.CharacterId.HasValue)
