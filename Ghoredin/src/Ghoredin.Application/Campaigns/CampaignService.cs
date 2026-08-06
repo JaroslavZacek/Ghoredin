@@ -151,5 +151,24 @@ namespace Ghoredin.Application.Campaigns
             await _repository.DeleteAsync(campaign);
             await _repository.SaveChangesAsync();
         }
+
+        public async Task LeaveAsync(Guid campaignId)
+        {
+            var userId = _currentUser.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var campaign = await _repository.GetByIdAsync(campaignId)
+                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
+
+            var member = campaign.Members.FirstOrDefault(m => m.UserId == userId && m.IsActive)
+                ?? throw new InvalidOperationException("Nejsi aktivním členem tohoto dobrodružství.");
+
+            if (member.Role == CampaignRole.GameMaster)
+                throw new InvalidOperationException("PJ nemůže odejít z vlastního dobrodružství.");
+
+            member.IsActive = false;
+
+            await _repository.SaveChangesAsync();
+        }
     }
 }
