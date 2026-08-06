@@ -3,8 +3,8 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 
 import { useAuth } from "../../auth/AuthContext";
 
-import { getCampaign } from "../api/campaignsApi";
-import { getCampaignCharacters, createCharacterInCampaign } from "../../characters/api/charactersApi";
+import { getCampaign, deleteCampaign } from "../api/campaignsApi";
+import { getCampaignCharacters, createCharacterInCampaign, deleteCharacter } from "../../characters/api/charactersApi";
 import { isCharacterComplete } from "../utils/campaignHelpers";
 
 import NoteList from "../../notes/components/NoteList";
@@ -67,6 +67,34 @@ function CampaignDetail() {
         }
     };
 
+    const handleDeleteCharacter = async (characterId) => {
+        if(!window.confirm("Opravdu chceš smazat tuto postavu?")) {
+            return;
+        }
+
+        try {
+            await deleteCharacter(characterId);
+            await load ();
+        }
+        catch (error) {
+            setError("Nepodařilo se smazat postavu: " + error.message);
+        }
+    };
+
+    const handleDeleteCampaign = async () => {
+        if(!window.confirm("Opravdu chceš smazat tohle dobrodružství? Tato akce je nevratná a smaže i všechny postavy a poznámky.")) {
+            return;
+        }
+
+        try {
+            await deleteCampaign(id);
+            navigate("/campaigns");
+        }
+        catch (error) {
+            setError("Nepodařilo se smazat dobrodružství: " + error.message);
+        }
+    };
+
     if (loading) {
         return <p>Načítání dobrodružství...</p>
     }
@@ -100,6 +128,17 @@ function CampaignDetail() {
                 <h2 className="campaign-detail__title">{campaign.name}</h2>
 
                 <span className="campaign-detail__system">{campaign.gameSystemId}</span>
+
+                {
+                    iAmGameMaster && (
+                        <button
+                            className="campaign-detail__delete"
+                            onClick={handleDeleteCampaign}
+                        >
+                            Smazat dobrodružství
+                        </button>
+                    )
+                }
             </div>
 
             {
@@ -127,12 +166,25 @@ function CampaignDetail() {
                                     <span className="member-row__character">
                                         {
                                             character ? (
-                                                <Link
-                                                    to={`/campaigns/${id}/characters/${character.id}`}
-                                                    className="member-row__character-link"
-                                                >
-                                                    {character.name}
-                                                </Link>
+                                                <>
+                                                    <Link
+                                                        to={`/campaigns/${id}/characters/${character.id}`}
+                                                        className="member-row__character-link"
+                                                    >
+                                                        {character.name}
+                                                    </Link>
+                                                    {
+                                                        iAmGameMaster && (
+                                                            <button
+                                                                className="member-row__delete-character"
+                                                                onClick={() => handleDeleteCharacter(character.id)}
+                                                            >
+                                                                Smazat
+                                                            </button>
+                                                        )
+                                                    }
+                                                </>
+                                                
                                             ) : (
                                                 <em>bez postavy</em>
                                             )
