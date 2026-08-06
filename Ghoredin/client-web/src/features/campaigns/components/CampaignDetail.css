@@ -54,6 +54,22 @@
     color: #fff;
 }
 
+.campaign-detail__leave {
+    padding: 8px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: var(--space-lg);
+}
+
+.campaign-detail__leave:hover {
+    background: var(--color-surface);
+    color: var(--color-text);
+}
+
 .member-list {
     list-style: none;
     padding: 0;
