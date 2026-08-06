@@ -87,5 +87,15 @@ namespace Ghoredin.Infrastructure.Persistence.Repositories
 
             _context.Characters.RemoveRange(characters);
         }
+
+        /// <summary>
+        /// Označí zadanou instanci <see cref="Character"/> k odstranění z DbSetu <c>Characters</c> v aktuálním DbContextu.
+        /// </summary>
+        /// <param name="character">Instanice <see cref="Character"/>, která má být odstraněna. Pokud je hodnota <c>null</c>, metoda neprovede žádnou operaci.</param>
+        /// <returns>Asynchronní <see cref="Task"/>. Metoda pouze označí entitu k odstranění; změny nejsou zapsány do databáze, dokud není voláno <see cref="SaveChangesAsync"/>.</returns>
+        public async Task DeleteAsync(Character character)
+        {
+            _context.Characters.Remove(character);
+        }
     }
 }
