@@ -70,3 +70,4 @@ _ReSharper*/
 
 #DB
 .db
+.db-wal
