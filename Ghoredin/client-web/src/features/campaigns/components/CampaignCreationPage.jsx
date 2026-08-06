@@ -61,7 +61,7 @@ export default function CampaignCreationPage() {
 
             <div className="campaign-creation-page__form">
                 <input 
-                    className="campaign-form__input"
+                    className="campaign-creation-page__form-input"
                     type="text" 
                     placeholder="Název dobrodružství"
                     value={name}
@@ -69,7 +69,7 @@ export default function CampaignCreationPage() {
                 />
 
                 <select
-                    className="campaign-form__input"
+                    className="campaign-creation-page__form-input"
                     value={gameSystemId}
                     onChange={(e) => setGameSystemId(e.target.value)}
                 >
@@ -77,7 +77,7 @@ export default function CampaignCreationPage() {
                 </select>
 
                 <select
-                    className="campaign-form__input"
+                    className="campaign-creation-page__form-input"
                     value={characterCreationMethod}
                     onChange={(e) => setCharacterCreationMethod(e.target.value)}
                 >
@@ -87,7 +87,7 @@ export default function CampaignCreationPage() {
                 </select>
 
                 <input 
-                    className="campaign-form__input"
+                    className="campaign-creation-page__form-input"
                     type="number"
                     min="1"
                     placeholder="Max. hráčů (prázdné = bez limitu)"
@@ -95,7 +95,7 @@ export default function CampaignCreationPage() {
                     onChange={(e) => setMaxPlayers(e.target.value)} 
                 />
 
-                <label className="campaign-form__checkbox">
+                <label className="campaign-creation-page__form-checkbox">
                     <input 
                         type="checkbox"
                         checked={charactersVisibleToAll}
@@ -105,7 +105,7 @@ export default function CampaignCreationPage() {
                 </label>
 
                 <button
-                    className="campaign-form_button"
+                    className="campaign-creation-page__form-btn"
                     onClick={handleCreate}
                     disabled={saving}
                 >
