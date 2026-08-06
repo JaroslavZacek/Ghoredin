@@ -9,6 +9,7 @@ import AvailableCampaigns from "./features/campaigns/components/AvailableCampaig
 import CampaignDetail from "./features/campaigns/components/CampaignDetail";
 import CharacterCreationPage from "./features/characters/components/CharacterCreationPage";
 import CharacterSheetPage from "./features/characters/components/CharacterSheetPage";
+import CampaignCreationPage from "./features/campaigns/components/CampaignCreationPage";
 
 import "./App.css"
 
@@ -48,7 +49,8 @@ function App() {
         <Routes>
           <Route path="/characters" element={<CharacterList />} />
           <Route path="/campaigns" element={<CampaignList />} />
-          <Route path="/campaigns/available" element={<AvailableCampaigns />} />
+          <Route path="/campaigns/create" element={<CampaignCreationPage />} />
+          <Route path="/campaigns/available" element={<AvailableCampaigns />} />   
           <Route path="/campaigns/:id" element={<CampaignDetail />} />
           <Route path="/campaigns/:id/create-character" element={<CharacterCreationPage />} />
           <Route path="/campaigns/:id/characters/:characterId" element={<CharacterSheetPage />} />
