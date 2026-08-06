@@ -14,5 +14,6 @@ namespace Ghoredin.Application.Characters
         Task AddAsync(Character character);
         Task SaveChangesAsync();
         Task DeleteByCampaignAsync(Guid campaignId);
+        Task DeleteAsync(Character character);
     }
 }
