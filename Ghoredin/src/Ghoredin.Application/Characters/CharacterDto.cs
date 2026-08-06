@@ -9,6 +9,7 @@ namespace Ghoredin.Application.Characters
         string Name,
         string GameSystemId,
         Guid? CampaignId,
+        string? CampaignName,
         string? PortraitUrl,
         Dictionary<string, object> SheetData
     );
