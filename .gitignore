@@ -69,5 +69,6 @@ _ReSharper*/
 *.DotSettings.user
 
 #DB
-.db
-.db-wal
+*.db
+*.db-wal
+*.db-shm
