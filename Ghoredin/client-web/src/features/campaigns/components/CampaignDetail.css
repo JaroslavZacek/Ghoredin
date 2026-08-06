@@ -92,3 +92,14 @@
 .member-row__character-link:hover {
     text-decoration: underline;
 }
+
+.member-row__delete-character {
+    margin-left: 8px;
+    font-size: 11px;
+    padding: 2px 8px;
+    border: 1px solid var(--color-danger);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--color-danger);
+    cursor: pointer;
+}
