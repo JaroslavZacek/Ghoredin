@@ -13,5 +13,6 @@ namespace Ghoredin.Application.Campaigns
         Task AddAsync(Campaign campaign);
         Task AddMemberAsync(CampaignMember member);
         Task SaveChangesAsync();
+        Task DeleteAsync(Campaign campaign);
     }
 }
