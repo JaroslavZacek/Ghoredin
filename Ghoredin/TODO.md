@@ -1,0 +1,17 @@
+# TODO
+
+## .Net
+- [] Přidat smazání postavy do ICharacterRepository a implementovat ji v CharacterRepository.
+- [] Přidat smazání postavy do ICharacterService a implementovat ji v CharacterService.
+- [] Přidat smazání Note do INoteRepository a implementovat ji v NoteRepository.
+- [] Přidat smazání Note do INoteService a implementovat ji v NoteService.
+
+## Všeobecné
+- [] Přidat pozvání hráče do dobrodružství. (Zřejmě přes email)
+- [] Přidat popisek k dobrodružství, který bude vidět v seznamu dobrodružství a v detailu dobrodružství. V tomto popisku bude možné uvést hráče do děje.
+- [] Přidat filtr na stránku Moje dobrodružství a výpisu dobrodružství ke kterým se můžu přidat. (
+		Filtr - Jméno dobrodružství, Jméno člena, Jméno postavy, Herní systém, Tvorba postavy
+- [] Vytvořit hlavní stránku
+- [] Vytvoření možnosti odstoupit z dobrodružství. (Členství se nastaví na neaktivní aby se nezneužívalo pro znovu vytvoření postavy)
+- [] Vytvořit možnost smazání dobrodružství (I se vším co je k dobrodružství připojené. - postavy, note atd.)
+- [] Vytvořit smazání postavy (Jen pro PJ)
