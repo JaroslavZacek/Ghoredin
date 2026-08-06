@@ -7,8 +7,8 @@
 - [] Přidat smazání Note do INoteService a implementovat ji v NoteService. (Jen tvůrce)
 
 ## React
-- [] Přidat mazání postavy do detailu dobrodružství
-- [] Přidat mazání dobrodružství do detailu dobrodružství
+- [+] Přidat mazání postavy do detailu dobrodružství
+- [+] Přidat mazání dobrodružství do detailu dobrodružství
 
 ## Všeobecné
 - [] Přidat pozvání hráče do dobrodružství. (Zřejmě přes email)
@@ -17,5 +17,5 @@
 		Filtr - Jméno dobrodružství, Jméno člena, Jméno postavy, Herní systém, Tvorba postavy
 - [] Vytvořit hlavní stránku
 - [] Vytvoření možnosti odstoupit z dobrodružství. (Členství se nastaví na neaktivní aby se nezneužívalo pro znovu vytvoření postavy)
-- [] Vytvořit možnost smazání dobrodružství (I se vším co je k dobrodružství připojené. - postavy, note atd.)
-- [] Vytvořit smazání postavy (Jen pro PJ)
+- [+] Vytvořit možnost smazání dobrodružství (I se vším co je k dobrodružství připojené. - postavy, note atd.)
+- [+] Vytvořit smazání postavy (Jen pro PJ)
