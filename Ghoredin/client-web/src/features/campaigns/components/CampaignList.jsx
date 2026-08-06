@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, Links } from "react-router-dom";
+import { Link, Links, useNavigate } from "react-router-dom";
 
 import { getMyCampaigns, createCampaign } from "../api/campaignsApi";
 import { creationMethodLabel } from "../utils/campaignHelpers";
@@ -8,6 +8,8 @@ import "./CampaignList.css"
 
 
 function CampaignList() {
+    const navigate = useNavigate();
+
     const [campaigns, setCampaigns] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -39,37 +41,16 @@ function CampaignList() {
         loadCampaigns();
     }, []);
 
-    const handleCreate = async () => {
-        setError("");
-
-        if (!name.trim()) {
-            setError("Zadej název dobrodružství.");
-        }
-
-        try {
-            await createCampaign({
-                name: name,
-                gameSystemId: gameSystemId,
-                maxPlayers: maxPlayers === "" ? null : Number(maxPlayers),
-                characterCreationMethod,
-                charactersVisibleToAll
-            });
-
-            setName("");
-            setMaxPlayers("");
-            await loadCampaigns();
-        }
-        catch (error) {
-            setError("Nepodařilo se vytvořit dobrodružství: " + error.message);
-        }
-    };
-
     if (loading) {
         return <p>Načítání kampaní...</p>;
     }
 
     return (
         <div className="campaign-list">
+            <button className="campaign-form__button" onClick={() => navigate("/campaigns/create")}>
+                Nové dobrodružství
+            </button>
+
             <h2>Moje dobrodružství</h2>
 
             {
@@ -107,59 +88,6 @@ function CampaignList() {
                     </ul>
                 )
             }
-
-            <div className="campaign-form">
-                <h3 className="campaign-form__title">Nové dobrodružství</h3>
-
-                <input 
-                    className="campaign-form__input"
-                    type="text"
-                    placeholder="Název dobrodružství"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-
-                <select
-                    className="campaign-form__input"
-                    value={gameSystemId}
-                    onChange={(e) => setGameSystemId(e.target.value)}
-                >
-                    <option value="dnd5e">D&D 5e</option>
-                    <option value="hrdinove-fantasy">Hrdinové Fantasy</option>
-                </select>
-
-                <select
-                    className="campaign-form__input"
-                    value={characterCreationMethod}
-                    onChange={(e) => setCharacterCreationMethod(e.target.value)}
-                >
-                    <option value="PointBuy">Nákup bodů</option>
-                    <option value="StandardArray">Pevná sada</option>
-                    <option value="Roll">Házení kostkami</option>
-                </select>
-
-                <input 
-                    className="campaign-form__input"
-                    type="number"
-                    min="1"
-                    placeholder="Max. hráčů (prázdné = bez limitu)"
-                    value={maxPlayers}
-                    onChange={(e) => setMaxPlayers(e.target.value)}
-                />
-
-                <label className="campaign-form__checkbox">
-                    <input 
-                        type="checkbox"
-                        checked={charactersVisibleToAll}
-                        onChange={(e) => setCharactersVisibleToAll(e.target.checked)}
-                    />
-                    Postavy vidí všichni členové (Jinak jen vlastník a PJ)
-                </label>
-
-                <button className="campaign-form__button" onClick={handleCreate}>
-                    Vytvoř dobrodružství
-                </button>
-            </div>
         </div>
     );
 }
