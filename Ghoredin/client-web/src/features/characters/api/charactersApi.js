@@ -1,4 +1,4 @@
-import { apiGet, apiPost } from "../../../shared/api/apiClient";
+import { apiDelete, apiGet, apiPost } from "../../../shared/api/apiClient";
 
 export const getMyCharacters = () => 
     apiGet("characters");
@@ -20,3 +20,6 @@ export const rollAbility = (characterId, abilityName) =>
 
 export const completeRolledCharacter = (characterId) =>
     apiPost(`characters/${characterId}/complete-rolled`, {});
+
+export const deleteCharacter = (id) =>
+    apiDelete(`characters/${id}`);
