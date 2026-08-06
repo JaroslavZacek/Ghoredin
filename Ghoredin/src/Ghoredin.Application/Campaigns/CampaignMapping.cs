@@ -22,7 +22,7 @@ namespace Ghoredin.Application.Campaigns
                 campaign.Name,
                 campaign.GameSystemId,
                 campaign.MaxPlayers,
-                campaign.Members.Count(m => m.Role == CampaignRole.Player),
+                campaign.Members.Count(m => m.Role == CampaignRole.Player && m.IsActive),
                 creation,
                 visibleToAll,
                 campaign.Members.Select(m => m.ToDto()).ToList()
