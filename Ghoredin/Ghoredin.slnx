@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Položky řešení/">
+    <File Path="TODO.md" />
+  </Folder>
   <Project Path="src/Ghoredin.Application/Ghoredin.Application.csproj" />
   <Project Path="src/Ghoredin.Client.Desktop/Ghoredin.Client.Desktop.csproj" />
   <Project Path="src/Ghoredin.Client.Shared/Ghoredin.Client.Shared.csproj" />
