@@ -11,5 +11,6 @@ namespace Ghoredin.Application.Notes
         Task<List<CampaignNote>> GetByCampaignAsync(Guid campaignId);
         Task AddAsync(CampaignNote note);
         Task SaveChangesAsync();
+        Task DeleteByCampaignAsync(Guid campaignId);
     }
 }
