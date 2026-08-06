@@ -78,7 +78,7 @@
     border-color: var(--color-primary);
 }
 
-.campaign-form__button {
+.campaign-list__create-button {
     padding: 10px 14px;
     border: none;
     border-radius: var(--radius);
