@@ -59,7 +59,7 @@ export default function CampaignCreationPage() {
                     <p className="campaign-creation-page__error">{error}</p>
             }
 
-            <div className="campaign-creatiom-page__form">
+            <div className="campaign-creation-page__form">
                 <input 
                     className="campaign-form__input"
                     type="text" 
