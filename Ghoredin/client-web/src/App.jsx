@@ -37,7 +37,10 @@ function App() {
           <Link className="app__nav-link" to="/campaigns">Dobrodružství</Link>
           <Link className="app__nav-link" to="/campaigns/available">Najít dobrodružství</Link>
 
-          <button className="auth-button" onClick={logout}>Odhlásit se</button>
+          <div style={{ display: "flex", alignItems: "center", gap: 12}}>
+            <span style={{fontSize: 14, color:"var(--color-text-muted)"}}>{user.email}</span>
+            <button className="auth-button" onClick={logout}>Odhlásit se</button>
+          </div>
         </nav>
       </header>
 
