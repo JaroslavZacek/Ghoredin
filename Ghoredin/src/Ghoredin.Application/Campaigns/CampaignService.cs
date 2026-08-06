@@ -87,9 +87,23 @@ namespace Ghoredin.Application.Campaigns
             if (_campaignAuthorizationService.IsMember(campaign, userId))
                 throw new InvalidOperationException("Už jsi členem tohoto dobrodružství.");
 
-            var playerCount = campaign.Members.Count(m => m.Role == CampaignRole.Player);
+            // Existuje neaktivní záznam? Pak he reaktivuj místo vytvoření nového
+            var existingMember = campaign.Members.FirstOrDefault(m => m.UserId == userId && !m.IsActive);
+            if (existingMember is not null)
+            {
+                var playerCount = campaign.Members.Count(m => m.Role == CampaignRole.Player && m.IsActive);
+                if (campaign.MaxPlayers.HasValue && playerCount >= campaign.MaxPlayers.Value)
+                    throw new InvalidOperationException("Dobrodružství už je plné dobrodruhů.");
 
-            if (campaign.MaxPlayers.HasValue && playerCount >= campaign.MaxPlayers.Value)
+                existingMember.IsActive = true;
+                await _repository.SaveChangesAsync();
+                return;
+            }
+
+            // Jinak vytvoř nového člena
+            var newPlayerCount = campaign.Members.Count(m => m.Role == CampaignRole.Player && m.IsActive);
+
+            if (campaign.MaxPlayers.HasValue && newPlayerCount >= campaign.MaxPlayers.Value)
                 throw new InvalidOperationException("Dobrodružství už je plné dobrodruhů.");
 
             await _repository.AddMemberAsync(new CampaignMember
@@ -98,7 +112,8 @@ namespace Ghoredin.Application.Campaigns
                 CampaignId = campaign.Id,
                 UserId = userId,
                 Role = CampaignRole.Player,
-                CharacterId = command.CharacterId
+                CharacterId = command.CharacterId,
+                IsActive = true
             });
 
             await _repository.SaveChangesAsync();
