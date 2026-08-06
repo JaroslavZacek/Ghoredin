@@ -62,6 +62,11 @@ function CharacterList () {
                                             <span className="character-card__campaign">{c.campaignName}</span>
                                         )
                                     }
+                                    {
+                                        c.campaignName && !c.campaignActive && (
+                                            <span className="character-card__left-badge">(Opuštěna)</span>
+                                        )
+                                    }
                                 </li>
                             ))
                         }
