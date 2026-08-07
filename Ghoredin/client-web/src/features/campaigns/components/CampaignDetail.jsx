@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 import { useAuth } from "../../auth/AuthContext";
+import { useTheme } from "../../../shared/theme/ThemeContext";
 
 import { getCampaign, deleteCampaign, leaveCampaign } from "../api/campaignsApi";
 import { getCampaignCharacters, createCharacterInCampaign, deleteCharacter } from "../../characters/api/charactersApi";
@@ -16,6 +17,7 @@ import "./CampaignDetail.css"
 function CampaignDetail() {
     const { id } = useParams();
     const { user } = useAuth();
+    const { setActiveTheme } = useTheme();
     const navigate = useNavigate();
 
     const [campaign, setCampaign] = useState(null);
@@ -45,6 +47,13 @@ function CampaignDetail() {
     useEffect(() => {
         load();
     }, [id]);
+
+    useEffect(() => {
+        if (campaign) {
+            setActiveTheme(getThemeForGameSystem(campaign.gameSystemId));
+        }
+        return () => setActiveTheme("shell");
+    }, [campaign]);
 
     const handleCreateCharacter = async () => {
         setError("");
@@ -138,7 +147,7 @@ function CampaignDetail() {
                         });
 
     return (
-        <div className="campaign-detail" data-theme={getThemeForGameSystem(campaign.gameSystemId)}>
+        <div className="campaign-detail">
             <div className="campaign-detail__header">
                 
                 <div className="campaign-detail__heading">
