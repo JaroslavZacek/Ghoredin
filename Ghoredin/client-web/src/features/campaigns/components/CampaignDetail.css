@@ -1,4 +1,8 @@
 .campaign-detail {
+    background: var(--color-bg);
+    color: var(--color--text-on-bg);
+    padding: var(--space-md);
+    border-radius: var(--radius);
     max-width: 560px;
     margin: 0 auto;
 }
