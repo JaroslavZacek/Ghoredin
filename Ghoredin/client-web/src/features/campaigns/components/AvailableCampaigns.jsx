@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { getAvailableCampaigns, joinCampaign } from "../api/campaignsApi";
 import { creationMethodLabel } from "../utils/campaignHelpers";
 
+import CampaignCard from "./CampaignCard";
+
 import "./CampaignList.css"
 
 function AvailableCampaigns() {
@@ -65,28 +67,15 @@ function AvailableCampaigns() {
                     <ul className="campaign-list__items">
                         {
                             campaigns.map((c) => (
-                                <li key={c.id} className="campaign-card">
-                                    <div className="campaign-card__main">
-                                        <span className="campaign-card__name">{c.name}</span>
-                                        <span className="campaign-card__system">{c.gameSystemId}</span>
-                                    </div>
-
-                                    <div className="campaign-card__join">
-                                        <span className="campaign-card__players">
-                                            {c.playerCount}
-                                            {c.maxPlayers != null ? ` / ${c.maxPlayers}` : ""} hráčů
-                                        </span>
-                                        <span className="campaign-card__creation">
-                                            Tvorba postavy: {creationMethodLabel(c.characterCreation)}
-                                        </span>
-
-                                        <button
-                                            className="campaign-list-form__btn"
-                                            onClick={() => handleJoin(c.id)}
-                                        >
-                                            Připojit se
-                                        </button>
-                                    </div>
+                                <li key={c.id}>
+                                    <CampaignCard 
+                                        campaign={c}
+                                        action={
+                                            <button className="campaign-card__join-btn" onClick={() => handleJoin(c.id)}>
+                                                Připojit se
+                                            </button>
+                                        }
+                                    />
                                 </li>
                             ))
                         }

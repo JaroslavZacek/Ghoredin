@@ -4,7 +4,9 @@
 }
 
 .character-list__title {
-    font-size: 20px;
+    font-size: var(--font-size-page-title);
+    font-family: var(--font-heading);
+    color: var(--color-heading);
     margin-bottom: var(--space-md);
 }
 

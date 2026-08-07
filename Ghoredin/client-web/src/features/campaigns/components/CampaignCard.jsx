@@ -4,18 +4,14 @@ import { getThemeForGameSystem } from "../../../shared/theme/themeUtils";
 import { getIconForTheme } from "../../../shared/theme/themeIcons";
 import { creationMethodLabel } from "../utils/campaignHelpers";
 
-import ".CampaignCard.css";
+import "./CampaignCard.css";
 
-export default function CampaignCard({ campaign }) {
+export default function CampaignCard({ campaign, action }) {
     const theme = getThemeForGameSystem(campaign.gameSystemId);
     const Icon = getIconForTheme(theme);
 
-    return (
-        <Link
-            to={`/campaigns/${campaign.id}`}
-            className="campaign-card"
-            data-theme={theme}
-        >
+    const content = (
+        <>
             <span className="campaign-card__icon">
                 <Icon size={20} />
             </span>
@@ -28,6 +24,28 @@ export default function CampaignCard({ campaign }) {
                     {campaign.maxPlayers != null ? ` / ${campaign.maxPlayers}` : ""} hráčů
                 </span>
             </span>
+            {
+                action &&
+                    <span className="campaign-card__action">{action}</span>
+            }
+        </>
+    );
+
+    if (action) {
+        return (
+            <div className="campaign-card" data-theme={theme}>
+                {content}
+            </div>
+        );
+    }
+
+    return (
+        <Link
+            to={`/campaigns/${campaign.id}`}
+            className="campaign-card"
+            data-theme={theme}
+        >
+            {content}
         </Link>
     );
 }

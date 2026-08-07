@@ -4,6 +4,8 @@ import { Link, Links, useNavigate } from "react-router-dom";
 import { getMyCampaigns, createCampaign } from "../api/campaignsApi";
 import { creationMethodLabel } from "../utils/campaignHelpers";
 
+import CampaignCard from "./CampaignCard";
+
 import "./CampaignList.css"
 
 
@@ -13,13 +15,6 @@ function CampaignList() {
     const [campaigns, setCampaigns] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-
-    // Formulář
-    const [name, setName] = useState("");
-    const [gameSystemId, setGameSystemId] = useState("dnd5e");
-    const [maxPlayers, setMaxPlayers] = useState("");
-    const [characterCreationMethod, setCharacterCreationMethod] = useState("PointBuy");
-    const [charactersVisibleToAll, setCharactersVisibleToAll] = useState(false);
 
     const loadCampaigns = async () => {
         setError("");
@@ -51,7 +46,7 @@ function CampaignList() {
                 Nové dobrodružství
             </button>
 
-            <h2>Moje dobrodružství</h2>
+            <h2 className="campaign-list__title">Moje dobrodružství</h2>
 
             {
                 error &&
@@ -67,21 +62,8 @@ function CampaignList() {
                     <ul className="campaign-list__items">
                         {
                             campaigns.map((c) => (
-                                <li key={c.id} className="campaign-card">
-                                    <Link to={`/campaigns/${c.id}`} className="campaign-card campaign-card--link">
-                                        <div className="campaign-card__main">
-                                            <span className="campaign-card__name">{c.name}</span>
-                                            <span className="campaign-card__system">{c.gameSystemId}</span>
-                                        </div>
-
-                                        <span className="campaign-card__players">
-                                            {c.playerCount}
-                                            {c.maxPlayers != null ? ` / ${c.maxPlayers}` : ""} hráčů
-                                        </span>
-                                        <span className="campaign-card__creation ">
-                                            Tvorba postavy: {creationMethodLabel(c.characterCreation)}
-                                        </span>
-                                    </Link>
+                                <li key={c.id}>
+                                    <CampaignCard campaign={c} />
                                 </li>
                             ))
                         }

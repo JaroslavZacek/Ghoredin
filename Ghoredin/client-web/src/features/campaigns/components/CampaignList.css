@@ -4,7 +4,9 @@
 }
 
 .campaign-list__title {
-    font-size: 20px;
+    font-size: var(--font-size-page-title);
+    font-family: var(--font-heading);
+    color: var(--color-heading);
     margin-bottom: var(--space-md);
 }
 
@@ -26,58 +28,6 @@
     gap: var(--space-sm);
 }
 
-.campaign-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 14px;
-    background: var(--color-surface);
-    border: 1px solic var(--color-border);
-    border-radius: var(--radius);
-}
-
-.campaign-card__main {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.campaign-card__name {
-    font-weight: 500;
-}
-
-.campaign-card__system {
-    font-size: 12px;
-    color: var(--color-text-muted);
-}
-
-.campaign-card__players {
-    font-size: 13px;
-    color: var(--color-text-muted);
-}
-
-.campaign-card__creation {
-    font-size: 13px;
-    color: var(--color-text-muted);
-    margin-left: 4px;
-}
-
-.campaign-card__join {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-}
-
-.campaign-card--link {
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-}
-
-.campaign-card--link:hover {
-    border-color: var(--color-primary);
-}
-
 .campaign-list__create-button {
     padding: 10px 14px;
     border: none;
@@ -90,16 +40,20 @@
     margin-top: 10px;
 }
 
-.campaign-list-form__btn {
-    padding: 10px 14px;
-    border: none;
+.campaign-card__join-btn {
+    padding: 6px 14px;
+    border: 1px solid var(--color-chip-border);
     border-radius: var(--radius);
-    background: var(--color-primary);
-    color: #fff;
-    font-size: 14px;
+    background: var(--color-chip-bg);
+    color: var(--color-chip-text);
+    font-size: 12px;
+    font-weight: 500;
+    font-family: var(--font-heading);
     cursor: pointer;
+    white-space: nowrap;
 }
 
-.campaign-list-form__btn:hover {
+.campaign-card__join-btn:hover {
     background: var(--color-primary-hover);
+    color: var(--color-primary-text);
 }

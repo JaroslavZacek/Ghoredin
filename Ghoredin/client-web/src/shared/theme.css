@@ -19,6 +19,7 @@
   --color-chip-border: var(--color-border);
   --color-chip-text: var(--color-text);
 
+  --font-size-page-title: 20px;
   --font-sans: 'Inter', sans-serif;
   --font-heading: 'Inter', sans-serif;
 
