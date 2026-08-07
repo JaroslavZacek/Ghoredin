@@ -33,18 +33,23 @@ function App() {
   return (
     <div className="app" data-theme={activeTheme}>
       <header className="app__header">
-        <h1 className="app__title">Kronika Ghoredinu</h1>
+        <div className="app__header-col app__header-col--start">
+          <h1 className="app__title">Kronika Ghoredinu</h1>
+        </div>
 
-        <nav className="app__nav">
+        <nav className="app__header-col app__header-col--center">
           <Link className="app__nav-link" to="/characters">Postavy</Link>
           <Link className="app__nav-link" to="/campaigns">Dobrodružství</Link>
           <Link className="app__nav-link" to="/campaigns/available">Najít dobrodružství</Link>
+        </nav>
 
+        <div className="app__header-col app__header-col--end">
           <div className="app__user">
             <span className="app__user-email">{user.email}</span>
             <button className="app__user-logout-btn" onClick={logout}>Odhlásit se</button>
           </div>
-        </nav>
+        </div>
+
       </header>
 
       <div className="app__inner">
