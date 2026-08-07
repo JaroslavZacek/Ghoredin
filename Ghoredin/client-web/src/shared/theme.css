@@ -1,23 +1,111 @@
-:root {
-  /* Barvy */
-  --color-bg: #f5f5f4;
-  --color-surface: #ffffff;
-  --color-text: #1c1917;
-  --color-text-muted: #78716c;
-  --color-border: #d6d3d1;
-  --color-primary: #4a5568;
-  --color-primary-hover: #2d3748;
-  --color-danger: #b91c1c;
-  --color-success: #15803d;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Cinzel:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
 
-  /* Mezery */
+:root {
+  --color-bg: #dde3dc;
+  --color-surface: #e8ece6;
+  --color-border: #c9d1c7;
+  --color-text: #242822;
+  --color-text-muted: #5f6b62;
+  --color-text-on-bg: #242822;
+  --color-primary: #7e9c85;
+  --color-primary-hover: #6b8672;
+  --color-danger: #a8433a;
+  --color-danger-hover: #8f382f;
+
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Inter', sans-serif;
+
+  --radius: 8px;
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 24px;
-
-  /* Tvar */
-  --radius: 6px;
-
-  /* Typografie */
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
+
+[data-theme="fantasy"] {
+  --color-bg: #241a12;
+  --color-surface: #e9dcc0;
+  --color-border: #b89a68;
+  --color-text: #3a2c1a;
+  --color-text-muted: #6a5333;
+  --color-text-on-bg: #e9dcc0;
+  --color-primary: #7a8a4a;
+  --color-primary-hover: #66753d;
+  --color-danger: #a04a3a;
+  --color-danger-hover: #863d2f;
+
+  --font-sans: 'EB Garamond', serif;
+  --font-heading: 'Cinzel', serif;
+  
+  --radius: 5px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.themed-select {
+  width: 100%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 9px 32px 9px 11px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--color-text);
+  box-sizing: border-box;
+  appearance: none;
+}
+
+.themed-select-wrap {
+  position: relative;
+}
+
+.themed-select-wrap svg {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.themed-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.themed-checkbox input {
+  position: absolute;
+  opacity: 0;
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.themed-checkbox__box {
+  width: 17px;
+  height: 17px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 3px;
+  background: var(--color-surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: transparent;
+}
+
+.themed-checkbox input:checked ~ .themed-checkbox__box {
+  background: var(--color-primary);
+  border-color: var(--color-primary-hover);
+  color: #fff;
+}
+
