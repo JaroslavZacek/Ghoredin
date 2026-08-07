@@ -140,9 +140,12 @@ function CampaignDetail() {
     return (
         <div className="campaign-detail" data-theme={getThemeForGameSystem(campaign.gameSystemId)}>
             <div className="campaign-detail__header">
-                <h2 className="campaign-detail__title">{campaign.name}</h2>
+                
+                <div className="campaign-detail__heading">
+                    <h2 className="campaign-detail__title">{campaign.name}</h2>
 
-                <span className="campaign-detail__system">{campaign.gameSystemId}</span>
+                    <span className="campaign-detail__system">{campaign.gameSystemId}</span>
+                </div>
 
                 {
                     iAmGameMaster && (
@@ -174,10 +177,38 @@ function CampaignDetail() {
 
             <CurrentScene campaignId={id} />
             <section className="campaign-detail__section">
-                <h3 className="campaign-detail__section-title">
-                    Členové ({campaign.playerCount}
-                    {campaign.maxPlayers != null ? ` / ${campaign.maxPlayers}` : ""} hráčů)
-                </h3>
+    
+                <div className="campaign-detail__section-header">
+                    <h3 className="campaign-detail__section-title">
+                        Členové ({campaign.playerCount}
+                        {campaign.maxPlayers != null ? ` / ${campaign.maxPlayers}` : ""} hráčů)
+                    </h3>
+
+                    {
+                        !iAmGameMaster && !iHaveCharacter &&
+                        (
+                            <button
+                                className="campaign-detail__action"
+                                onClick={() => navigate(`/campaigns/${id}/create-character`)}
+                            >
+                                Vytvoř postavu
+                            </button>
+                        )
+                    }
+
+                    {
+                        !iAmGameMaster && iHaveCharacter && !myCharacterComplete &&
+                        (
+                            <button
+                                className="campaign-detail__action"
+                                onClick={() => navigate(`/campaigns/${id}/create-character`)}
+                            >
+                                Dokonči postavu
+                            </button>
+                        )
+                    }
+
+                </div>
 
                 <ul className="member-list">
                     {
@@ -228,34 +259,7 @@ function CampaignDetail() {
                 <NoteList campaignId={campaign.id} isGameMaster={iAmGameMaster} players={players}/>
             </section>
 
-            {
-                !iAmGameMaster && !iHaveCharacter && 
-                (
-                    <section className="campaign-detail__section">
-                        <button
-                            className="auth-button"
-                            onClick={() => navigate(`/campaigns/${id}/create-character`)}
-                        >
-                            Vytvoř postavu
-                        </button>
-                    </section>
-                )
-            }
-
-            {
-                !iAmGameMaster && iHaveCharacter && !myCharacterComplete &&
-                (
-                    <section className="campaign-detail__section">
-                        <p>Máš rozpracovanou postavu.</p>
-                        <button
-                            className="auth-button"
-                            onClick={() => navigate(`/campaigns/${id}/create-character`)}
-                        >
-                            Dokonči postavu
-                        </button>
-                    </section>
-                )
-            }
+            
         </div>
     );
 }

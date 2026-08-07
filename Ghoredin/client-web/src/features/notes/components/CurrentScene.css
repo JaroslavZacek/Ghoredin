@@ -23,7 +23,10 @@
 
 .current-scene__title {
     font-size: 18px;
+    font-family: var(--font-heading);
     margin: 0 0 var(--space-sm);
+    color: var(--color-heading);
+
 }
 
 .current-scene__text {

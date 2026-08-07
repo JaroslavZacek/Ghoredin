@@ -4,6 +4,7 @@
   --color-bg: #dde3dc;
   --color-surface: #e8ece6;
   --color-border: #c9d1c7;
+  --color-border-subtle: #d5dad3;
   --color-text: #242822;
   --color-text-muted: #5f6b62;
   --color-text-muted-on-bg: #6b7280;
@@ -31,6 +32,7 @@
   --color-bg: #241a12;
   --color-surface: #e9dcc0;
   --color-border: #b89a68;
+  --color-border-subtle: #d9c6a0;
   --color-text: #3a2c1a;
   --color-text-muted: #6a5333;
   --color-text-muted-on-bg: #b89a68;
