@@ -10,6 +10,7 @@
 - [+] Přidat mazání postavy do detailu dobrodružství
 - [+] Přidat mazání dobrodružství do detailu dobrodružství
 - [] Pro PJ se nezobrazuje právě se odehrává
+- [] Na nastavení konkrétní scény musí být nastaveno na Sdíleno. Což by být nemělo. PJ by měl mít možnost nastavit current scene aniž by nastavil sdílet.
 
 ## Všeobecné
 - [] Přidat pozvání hráče do dobrodružství. (Zřejmě přes email)
