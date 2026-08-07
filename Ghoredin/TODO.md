@@ -9,6 +9,7 @@
 ## React
 - [+] Přidat mazání postavy do detailu dobrodružství
 - [+] Přidat mazání dobrodružství do detailu dobrodružství
+- [] Pro PJ se nezobrazuje právě se odehrává
 
 ## Všeobecné
 - [] Přidat pozvání hráče do dobrodružství. (Zřejmě přes email)
