@@ -10,6 +10,7 @@ import { isCharacterComplete } from "../utils/campaignHelpers";
 import NoteList from "../../notes/components/NoteList";
 import CurrentScene from "../../notes/components/CurrentScene";
 
+import { getThemeForGameSystem } from "../../../shared/theme/themeUtils";
 import "./CampaignDetail.css"
 
 function CampaignDetail() {
@@ -137,7 +138,7 @@ function CampaignDetail() {
                         });
 
     return (
-        <div className="campaign-detail">
+        <div className="campaign-detail" data-theme={getThemeForGameSystem(campaign.gameSystemId)}>
             <div className="campaign-detail__header">
                 <h2 className="campaign-detail__title">{campaign.name}</h2>
 
