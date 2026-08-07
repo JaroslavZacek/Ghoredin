@@ -10,8 +10,13 @@
   --color-text-on-bg: #242822;
   --color-primary: #7e9c85;
   --color-primary-hover: #6b8672;
+  --color-primary-text: #fff;
   --color-danger: #a8433a;
   --color-danger-hover: #8f382f;
+  --color-heading: #242822;
+  --color-chip-bg: var(--color-surface);
+  --color-chip-border: var(--color-border);
+  --color-chip-text: var(--color-text);
 
   --font-sans: 'Inter', sans-serif;
   --font-heading: 'Inter', sans-serif;
@@ -30,10 +35,15 @@
   --color-text-muted: #6a5333;
   --color-text-muted-on-bg: #b89a68;
   --color-text-on-bg: #e9dcc0;
-  --color-primary: #7a8a4a;
-  --color-primary-hover: #66753d;
+  --color-primary: #d8c79e;
+  --color-primary-hover: #cbb888;
+  --color-primary-text: #3a2c1a;
   --color-danger: #a04a3a;
   --color-danger-hover: #863d2f;
+  --color-heading: #5a4525;
+  --color-chip-bg: #d8c79e;
+  --color-chip-border: #8a6d3f;
+  --color-chip-text: #3a2c1a;
 
   --font-sans: 'EB Garamond', serif;
   --font-heading: 'Cinzel', serif;

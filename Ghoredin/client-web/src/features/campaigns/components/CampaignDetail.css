@@ -3,6 +3,7 @@
     color: var(--color--text-on-bg);
     padding: var(--space-md);
     border-radius: var(--radius);
+    font-family: var(--font-sans);
     max-width: 560px;
     margin: 0 auto;
 }
@@ -17,6 +18,8 @@
 .campaign-detail__title {
     font-size: 22px;
     margin: 0;
+    color: var(--color-text-on-bg);
+    font-family: var(--font-heading);
 }
 
 .campaign-detail__system {
@@ -35,43 +38,48 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
+    color: var(--color-text);
 }
 
 .campaign-detail__section-title {
     font-size: 16px;
     margin: 0 0 var(--space-md);
+    font-family: var(--font-heading);
+    color: var(--color-heading);
 }
 
 .campaign-detail__delete {
     padding: 8px 14px;
-    border: 1px solid var(--color-danger);
+    border: 1px solid var(--color-chip-border);
     border-radius: var(--radius);
-    background: transparent;
-    color: var(--color-danger);
+    background: var(--color-chip-bg);
+    color: var(--color-chip-text);
     font-size: 13px;
+    font-weight: 500;
     cursor: pointer;
-    margin-top: var(--space-lg);
+    font-family: var(--font-heading);
 }
 
 .campaign-detail__delete:hover {
-    background: var(--color-danger);
-    color: #fff;
+    border-color: var(--color-danger);
+    color: var(--color-danger);
 }
 
 .campaign-detail__leave {
     padding: 8px 14px;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-chip-border);
     border-radius: var(--radius);
-    background: transparent;
-    color: var(--color-text-muted);
+    background: var(--color-chip-bg);
+    color: var(--color-chip-text);
     font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-heading);
     cursor: pointer;
-    margin-top: var(--space-lg);
 }
 
 .campaign-detail__leave:hover {
-    background: var(--color-surface);
-    color: var(--color-text);
+    color: var(--color-danger);
+    border-color: var(--color-danger);
 }
 
 .member-list {
@@ -94,10 +102,11 @@
     font-weight: 500;
     padding: 2px 8px;
     border-radius: var(--radius);
-    background: var(--color-bg);
-    color: var(--color-text-muted);
+    background: var(--color-chip-bg);
+    color: var(--color-heading);
     min-width: 40px;
     text-align: center;
+    font-family: var(--font-heading);
 }
 
 .member-row__character {
@@ -105,7 +114,7 @@
 }
 
 .member-row__character-link {
-    color: var(--color-primary);
+    color: var(--color-text);
     text-decoration: none;
 }
 

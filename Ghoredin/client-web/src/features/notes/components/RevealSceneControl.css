@@ -1,7 +1,7 @@
 .reveal-control {
     margin-top: var(--space-sm);
     padding: var(--space-sm);
-    background: var(--color-bg);
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
 }
@@ -9,10 +9,10 @@
 .reveal-control__toggle {
     font-size: 12px;
     padding: 4px 12px;
-    border: 1px solid var(--color-primary);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius);
     background: transparent;
-    color: var(--color-primary);
+    color: var(--color-text);
     cursor: pointer;
     margin-top: var(--space-sm);
 }
@@ -59,9 +59,8 @@
 }
 
 .reveal-control__confirm {
-    background: var(--color-primary);
-    color: #fff;
-    border-color: var(--color-primary);
+    background: transparent;
+    color: var(--color-text);
 }
 
 .reveal-control__all,
