@@ -1,21 +1,33 @@
 .sheet-page {
-    max-width: 560px;
-    margin: 0 auto;
+    width: 1000px;
+    max-width: calc(100vw - 64px);
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: var(--space-lg);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
 }
 
 .sheet-page__back {
     background: none;
     border: none;
-    color: var(--color-primary);
+    color: var(--color-chip-text);
     cursor: pointer;
     font-size: 14px;
+    font-family: var(--font-heading);
     padding: 0;
     margin-bottom: var(--space-md);
 }
 
 .sheet-page__name {
     font-size: 24px;
+    font-family: var(--font-heading);
     margin: 0 0 2px;
+    color: var(--color-heading);
 }
 
 .sheet-page__system {
@@ -25,9 +37,9 @@
 }
 
 .sheet-page__incomplete {
-    background: #fdf6ec;
-    border: 1px solid #e6cfa6;
-    color: #6b4e16;
+    background: var(--color-chip-bg);
+    border: 1px solid var(--color-chip-border);
+    color: var(--color-chip-text);
     padding: 8px 12px;
     border-radius: var(--radius);
     font-size: 14px;
@@ -44,19 +56,23 @@
 
 .sheet-page__section-title {
     font-size: 16px;
+    font-family: var(--font-heading);
     margin: 0 0 var(--space-md);
+    color: var(--color-heading);
 }
 
 .sheet-page__abilities {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: var(--space-sm);
 }
 
 .sheet-page__hp {
     font-size: 20px;
     font-weight: 500;
+    font-family: var(--font-heading);
     margin: 0;
+    color: var(--color-heading);
 }
 
 .ability-card {
@@ -64,13 +80,14 @@
     flex-direction: column;
     align-items: center;
     padding: 12px 8px;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: var(--color-chip-bg);
+    border: 1px solid var(--color-chip-border);
     border-radius: var(--radius);
 }
 
 .ability-card__label {
     font-size: 12px;
+    font-family: var(--font-heading);
     color: var(--color-text-muted);
     margin-bottom: 4px;
 }
@@ -78,6 +95,8 @@
 .ability-card__score {
     font-size: 22px;
     font-weight: 600;
+    font-family: var(--font-heading);
+    color: var(--color-text);
 }
 
 .ability-card__mod {

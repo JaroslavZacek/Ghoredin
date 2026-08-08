@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+import { useTheme } from "../../../shared/theme/ThemeContext";
+import { getThemeForGameSystem } from "../../../shared/theme/themeUtils";
+
 import { getCharacter } from "../api/charactersApi";
 
 import "./CharacterSheetPage.css";
@@ -24,6 +27,7 @@ function formatModifier(mod) {
 
 export default function CharacterSheetPage() {
     const navigate = useNavigate();
+    const { setActiveTheme } = useTheme();
     
     const { characterId } = useParams();
     const [character, setCharacter] = useState(null);
@@ -49,6 +53,13 @@ export default function CharacterSheetPage() {
 
         load();
     }, [characterId]);
+
+    useEffect(() => {
+        if (character) {
+            setActiveTheme(getThemeForGameSystem(character.gameSystemId));
+        }
+        return () => setActiveTheme("shell");
+    }, [character]);
 
     if (loading)
         return <p>Načítání postavy...</p>
@@ -78,7 +89,7 @@ export default function CharacterSheetPage() {
                 )
             }
 
-            <section className="sheet-page_section">
+            <section className="sheet-page__section">
                 <h3 className="sheet-page__section-title">Atributy</h3>
 
                 <div className="sheet-page__abilities">
