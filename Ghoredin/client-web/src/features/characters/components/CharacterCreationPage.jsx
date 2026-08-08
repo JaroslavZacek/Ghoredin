@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../auth/AuthContext";
+import { useTheme } from "../../../shared/theme/ThemeContext";
+import { getThemeForGameSystem } from "../../../shared/theme/themeUtils";
 
 import { getCampaign } from "../../campaigns/api/campaignsApi";
 import { creationMethodLabel } from "../../campaigns/utils/campaignHelpers";
@@ -15,6 +17,7 @@ export default function CharacterCreationPage() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { user } = useAuth();
+    const { setActiveTheme } = useTheme();
 
     const [campaign, setCampaign] = useState(null);
     const [existingCharacter, setExistingCharacter] = useState(null);
@@ -44,6 +47,13 @@ export default function CharacterCreationPage() {
         };
         load();
     }, [id, user.userId]);
+
+    useEffect(() => {
+        if (campaign) {
+            setActiveTheme(getThemeForGameSystem(campaign.gameSystemId));
+        }
+        return () => setActiveTheme("shell");
+    }, [campaign]);
 
     const handleDone = () => {
         navigate(`/campaigns/${id}`);
