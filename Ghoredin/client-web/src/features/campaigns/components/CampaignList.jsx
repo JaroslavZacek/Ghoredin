@@ -47,7 +47,7 @@ function CampaignList() {
 
                 <button
                     className="campaign-list__create-button"
-                    onClick={() => navigate("campaigns/create")}
+                    onClick={() => navigate("/campaigns/create")}
                 >
                     Nové dobrodružství
                 </button>
