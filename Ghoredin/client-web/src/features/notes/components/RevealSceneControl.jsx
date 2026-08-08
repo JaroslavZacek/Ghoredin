@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IconCheck } from "@tabler/icons-react";
 
 import { revealScene } from "../api/notesApi";
 
@@ -71,12 +72,15 @@ function RevealSceneControl({ campaignId, noteId, players, onRevealed }) {
                             <span className="reveal-control__empty">Žádní hráči v dobrodružství</span>
                         ) : (
                             players.map((p) => (
-                                <label key={p.userId} className="reveal-control__player">
+                                <label key={p.userId} className="themed-checkbox">
                                     <input 
                                         type="checkbox"
                                         checked={selected.includes(p.userId)}
                                         onChange={() => togglePlayer(p.userId)}
                                     />
+                                    <span className="themed-checkbox__box">
+                                        <IconCheck size={12} />
+                                    </span>
                                     {p.characterName || "Hráč bez postavy"}
                                 </label>
                             ))

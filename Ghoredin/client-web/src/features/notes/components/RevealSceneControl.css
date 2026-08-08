@@ -8,13 +8,19 @@
 
 .reveal-control__toggle {
     font-size: 12px;
+    font-family: var(--font-heading);
     padding: 4px 12px;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-chip-border);
     border-radius: var(--radius);
-    background: transparent;
-    color: var(--color-text);
+    background: var(--color-chip-bg);
+    color: var(--color-chip-text);
     cursor: pointer;
     margin-top: var(--space-sm);
+}
+
+.reveal-control__toggle:hover {
+    background: var(--color-primary-hover);
+    color: var(--color-primary-text);
 }
 
 .reveal-control__error {
@@ -26,21 +32,13 @@
 .reveal-control__players {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    margin-bottom: var(--space-sm);
-}
-
-.reveal-control__player {
-    display: flex;
-    align-items: center;
     gap: 6px;
-    font-size: 14px;
-    cursor: pointer;
+    margin-bottom: var(--space-sm);
 }
 
 .reveal-control__empty {
     font-size: 13px;
-    color: var(--color-text-muted);
+    color: var(--color-text);
 }
 
 .reveal-control__actions {
@@ -52,19 +50,30 @@
 .reveal-control__confirm,
 .reveal-control__cancel {
     font-size: 12px;
+    font-family: var(--font-heading);
     padding: 6px 12px;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-chip-border);
     border-radius: var(--radius);
     cursor: pointer;
 }
 
 .reveal-control__confirm {
-    background: transparent;
-    color: var(--color-text);
+    background: var(--color-primary);
+    color: var(--color-primary-text);
+    border-color: var(--color-primary);
+}
+
+.reveal-control__confirm:hover {
+    background: var(--color-primary-hover);
 }
 
 .reveal-control__all,
 .reveal-control__cancel {
-    background: transparent;
-    color: var(--color-text);
+    background: var(--color-chip-bg);
+    color: var(--color-chip-text);
+}
+
+.reveal-control__all:hover,
+.reveal-control__cancel:hover {
+    background: var(--color-surface);
 }
