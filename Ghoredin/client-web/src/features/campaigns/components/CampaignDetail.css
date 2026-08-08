@@ -136,6 +136,14 @@
     border-bottom: 1px solid var(--color-border-subtle);
 }
 
+.member-row--me {
+    background: var(--color-chip-bg);
+    border-radius: var(--radius);
+    margin: 0 -8px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
 .member-row:last-child {
     border-bottom: none;
 }

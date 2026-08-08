@@ -223,9 +223,9 @@ function CampaignDetail() {
                     {
                         campaign.members.map((m) => {
                             const character = characters.find((c) => c.id === m.characterId);
-
+                            const isMe = m.userId === user.userId;
                             return (
-                                <li key={m.id} className="member-row">
+                                <li key={m.id} className={`member-row ${isMe ? "member-row--me" : ""}`}>
                                     <span className="member-row__role">
                                         {m.role === "GameMaster" ? "PJ" : "Hráč"}
                                     </span>
@@ -251,7 +251,7 @@ function CampaignDetail() {
                                                     }
                                                 </>
                                                 
-                                            ) : (
+                                            ) : m.role === "GameMaster" ? null : (
                                                 <em>bez postavy</em>
                                             )
                                         }
