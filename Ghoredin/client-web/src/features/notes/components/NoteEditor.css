@@ -73,5 +73,11 @@
     background: transparent;
     color: var(--color-text-muted);
     font-size: 14px;
+    font-family: var(--font-heading);
     cursor: pointer;
+}
+
+.note-editor__cancel:hover {
+    background: var(--color-chip-bg);
+    color: var(--color-chip-text);
 }
