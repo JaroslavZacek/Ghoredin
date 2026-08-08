@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { IconChevronDown } from "@tabler/icons-react";
 
 import { createNote, updateNote } from "../api/notesApi";
 
@@ -101,14 +102,17 @@ function NoteEditor({ campaignId, editingNote, onSaved, onCancel }) {
 
             <label className="note-editor__label">Viditelnost</label>
 
-            <select
-                className="note-editor__input"
-                value={visibility}
-                onChange={(e) => setVisibility(e.target.value)}
-            >
-                <option value="GmOnly">Jen PJ</option>
-                <option value="SharedWithPlayers">Sdíleno s hráři</option>
-            </select>
+            <div className="themed-select-wrap">
+                <select
+                    className="themed-select"
+                    value={visibility}
+                    onChange={(e) => setVisibility(e.target.value)}
+                >
+                    <option value="GmOnly">Jen PJ</option>
+                    <option value="SharedWithPlayers">Sdíleno s hráři</option>
+                </select>
+                <IconChevronDown size={16} />
+            </div>
 
             <div className="note-editor__actions">
                 <button className="note-editor__save" onClick={handleSave}>
