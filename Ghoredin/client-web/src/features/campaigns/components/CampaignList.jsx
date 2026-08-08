@@ -42,11 +42,16 @@ function CampaignList() {
 
     return (
         <div className="campaign-list">
-            <button className="campaign-list__create-button" onClick={() => navigate("/campaigns/create")}>
-                Nové dobrodružství
-            </button>
+            <div className="campaign-list__header">
+                <h2 className="campaign-list__title">Moje dobrodružství</h2>
 
-            <h2 className="campaign-list__title">Moje dobrodružství</h2>
+                <button
+                    className="campaign-list__create-button"
+                    onClick={() => navigate("campaigns/create")}
+                >
+                    Nové dobrodružství
+                </button>
+            </div>
 
             {
                 error &&
