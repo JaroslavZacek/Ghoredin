@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IconChevronDown } from "@tabler/icons-react";
 
 import { createCharacterInCampaign } from "../api/charactersApi";
 
@@ -97,16 +98,19 @@ export default function StandardArrayFrom({ campaignId, onCreated }) {
                     ABILITIES.map((a) => (
                         <div key={a.key} className="ability-row">
                             <span className="ability-row__label">{a.label}</span>
-                            <select
-                                className="ability-row__select"
-                                value={assignments[a.key] ?? ""}
-                                onChange={(e) => handleChange(a.key, e.target.value)}
-                            >
-                                <option value="">- vyber -</option>
-                                {availableFor(assignments[a.key]).map((v) => (
-                                    <option key={v} value={v}>{v}</option>
-                                ))}
-                            </select>
+                            <div className="themed-select-wrap ability-row__select-wrap">
+                                <select
+                                    className="themed-select"
+                                    value={assignments[a.key] ?? ""}
+                                    onChange={(e) => handleChange(a.key, e.target.value)}
+                                >
+                                    <option value="">- vyber -</option>
+                                    {availableFor(assignments[a.key]).map((v) => (
+                                        <option key={v} value={v}>{v}</option>
+                                    ))}
+                                </select>
+                                <IconChevronDown size={16} />
+                            </div> 
                         </div>
                     ))
                 }

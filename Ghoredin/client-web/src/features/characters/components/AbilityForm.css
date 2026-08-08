@@ -4,16 +4,31 @@
     gap: var(--space-md);
 }
 
-.ability-form__name {
+.ability-form__name,
+.ability-form__name-display {
     padding: 10px 12px;
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
     font-size: 14px;
-    font-family: inherit;
+    font-family: var(--font-sans);
+    background: var(--color-surface);
+    color: var(--color-text);
+}
+
+.ability-form__name-display {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: var(--font-heading);
+    margin: 0;
+    border: none;
+    padding: 0;
+    background: none;
+    color: var(--color-heading);
 }
 
 .ability-form__budget {
     font-size: 14px;
+    font-family: var(--font-sans);
     color: var(--color-text-muted);
 }
 
@@ -41,7 +56,13 @@
     background: var(--color-primary);
     color: var(--color-primary-text);
     font-size: 14px;
+    font-weight: 500;
+    font-family: var(--font-heading);
     cursor: pointer;
+}
+
+.ability-form__submit:hover:not(:disabled) {
+    background: var(--color-primary-hover);
 }
 
 .ability-form__submit:disabled {
@@ -60,13 +81,14 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 12px;
-    background: var(--color-bg);
+    background: var(--color-bg-item, var(--color-surface));
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
 }
 
 .ability-row__label {
     font-size: 14px;
+    color: var(--color-text);
 }
 
 .ability-row__controls {
@@ -78,14 +100,21 @@
 .ability-row__btn {
     width: 32px;
     height: 32px;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-chip-border);
     border-radius: var(--radius);
-    background: var(--color-surface);
+    background: var(--color-chip-bg);
+    color: var(--color-chip-text);
     font-size: 18px;
+    font-family: var(--font-heading);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.ability-row__btn:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+    color: var(--color-primary-text);
 }
 
 .ability-row__btn:disabled {
@@ -98,26 +127,28 @@
     text-align: center;
     font-size: 16px;
     font-weight: 500;
+    font-family: var(--font-heading);
+    color: var(--color-text);
 }
 
-.ability-row__select {
-    padding: 6px 10px;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    font-size: 14px;
-    font-family: inherit;
-    background: var(--color-surface);
-    min-width: 90px;
+.ability-row__select-wrap {
+    min-width: 110px;
 }
 
 .ability-row__roll-btn {
     padding: 6px 14px;
-    border: 1px solid var(--color-primary);
+    border: 1px solid var(--color-chip-border);
     border-radius: var(--radius);
-    background: transparent;
-    color: var(--color-primary);
+    background: var(--color-chip-bg);
+    color: var(--color-chip-text);
     font-size: 13px;
+    font-family: var(--font-heading);
     cursor: pointer;
+}
+
+.ability-row__roll-btn:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+    color: var(--color-primary-text);
 }
 
 .ability-row__roll-btn:disabled {
