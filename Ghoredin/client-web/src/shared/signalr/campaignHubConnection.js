@@ -1,23 +1,32 @@
 import * as signalR from "@microsoft/signalr";
 
 let connection = null;
+let startPromise = null;
+
+function createConnection() {
+    return new signalR.HubConnectionBuilder()
+        .withUrl("/hubs/campaign", { withCredentials: true })
+        .withAutomaticReconnect()
+        .build();
+}
 
 export async function getHubConnection() {
-    if (connection && connection.state === signalR.HubConnectionState.Connected) {
+    if (!connection) {
+        connection = createConnection();
+    }
+
+    if (connection.state === signalR.HubConnectionState.Connected) {
         return connection;
     }
 
-    if (!connection) {
-        connection = new signalR.HubConnectionBuilder()
-            .withUrl("/hubs/campaign", { withCredentials: true })
-            .withAutomaticReconnect()
-            .build();
+    if (!startPromise) {
+        startPromise = connection.start().catch((error) => {
+            startPromise = null;
+            throw error;
+        });
     }
 
-    if (connection.state === signalR.HubConnectionState.Disconnected) {
-        await connection.start();
-    }
-
+    await startPromise;
     return connection;
 }
 
