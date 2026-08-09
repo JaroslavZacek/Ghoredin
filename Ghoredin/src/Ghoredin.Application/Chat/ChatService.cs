@@ -15,17 +15,20 @@ namespace Ghoredin.Application.Chat
         private readonly ICampaignRepository _campaignRepository;
         private readonly ICampaignAuthorizationService _campaignAuthorizationService;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IChatNotifier _notifier;
 
         public ChatService (
             IChatRepository chatRepository,
             ICampaignRepository campaignRepository,
             ICampaignAuthorizationService campaignAuthorizationService,
-            ICurrentUserService currentUserService)
+            ICurrentUserService currentUserService,
+            IChatNotifier notifier)
         {
             _chatRepository = chatRepository;
             _campaignRepository = campaignRepository;
             _campaignAuthorizationService = campaignAuthorizationService;
             _currentUserService = currentUserService;
+            _notifier = notifier;
         }
 
         public async Task<ChatMessageDto> SendMessageAsync(SendMessageCommand command)
@@ -55,7 +58,10 @@ namespace Ghoredin.Application.Chat
             await _chatRepository.AddAsync(message);
             await _chatRepository.SaveChangesAsync();
 
-            return message.ToDto();
+            var dto = message.ToDto();
+            await _notifier.NotifyMessageAsync(dto, userId, command.WhisperToUserId);
+
+            return dto;
         }
 
         public async Task<List<ChatMessageDto>> GetVisibleHistoryAsync(Guid campaignId)
