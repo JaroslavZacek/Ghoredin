@@ -39,6 +39,7 @@ namespace Ghoredin.Server.Controllers
 
         #region Post
 
+        [HttpPost]
         public async Task<IActionResult> Send([FromBody] SendMessageRequest request)
         {
             try
