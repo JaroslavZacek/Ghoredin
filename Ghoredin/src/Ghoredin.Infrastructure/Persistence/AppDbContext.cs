@@ -2,6 +2,7 @@
 using Ghoredin.Domain.Characters;
 using Ghoredin.Domain.Campaigns;
 using Ghoredin.Domain.Notes;
+using Ghoredin.Domain.Chat;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -25,6 +26,7 @@ namespace Ghoredin.Infrastructure.Persistence
         public DbSet<Campaign> Campaigns => Set<Campaign>();
         public DbSet<CampaignMember> CampaignMembers => Set<CampaignMember>();
         public DbSet<CampaignNote> CampaignNotes => Set<CampaignNote>();
+        public DbSet<ChatMessage> ChatMessages => Set<ChatMessage>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -89,6 +91,13 @@ namespace Ghoredin.Infrastructure.Persistence
                 entity.Property(n => n.Content);
                 entity.Property(n => n.PlayerFacingContent);
                 entity.Property(n => n.Visibility).HasConversion<string>();
+            });
+
+            builder.Entity<ChatMessage>(entity =>
+            {
+                entity.HasKey(m => m.Id);
+                entity.Property(m => m.AuthorUserId).IsRequired();
+                entity.Property(m => m.Content).IsRequired();
             });
         }
     }
