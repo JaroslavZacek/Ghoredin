@@ -191,6 +191,11 @@ function CampaignDetail() {
                         </button>
                     )
                 }
+
+                <button className="campaign-detail__action" onClick={() => navigate(`/campaigns/${id}/table`)}>
+                    Na herní stůl
+                </button>
+                
             </div>
 
             {
