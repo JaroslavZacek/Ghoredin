@@ -4,6 +4,7 @@ using Ghoredin.Application.Campaigns;
 using Ghoredin.Application.Notes;
 using Ghoredin.Application.GameSystems;
 using Ghoredin.Application.Dice;
+using Ghoredin.Application.Chat;
 using Ghoredin.Infrastructure.Identity;
 using Ghoredin.Infrastructure.Persistence;
 using Ghoredin.Infrastructure.Persistence.Repositories;
@@ -39,6 +40,8 @@ builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
 builder.Services.AddScoped<ICampaignAuthorizationService, CampaignAuthorizationService>();
 builder.Services.AddScoped<INoteService, NoteService>();
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
+builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<IChatRepository, ChatRepository>();
 
 builder.Services.AddSingleton<IGameSystem, Dnd5eGameSystem>();
 builder.Services.AddSingleton<IGameSystemRegistry, GameSystemRegistry>();
