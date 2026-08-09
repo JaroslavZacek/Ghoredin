@@ -10,6 +10,7 @@ using Ghoredin.Infrastructure.Persistence.Repositories;
 using Ghoredin.Infrastructure.GameSystems;
 using Ghoredin.Infrastructure.Dice;
 using Ghoredin.Server.Services;
+using Ghoredin.Server.Hubs;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,8 @@ builder.Services
     .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddSignalR();
 
 // DI 
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
@@ -78,6 +81,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<CampaignHub>("/hubs/campaign");
 
 app.MapGroup("/api").MapIdentityApi<ApplicationUser>();
 
