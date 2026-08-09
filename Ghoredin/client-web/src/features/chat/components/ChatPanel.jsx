@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 
-import { getChatHistory } from "../api/chatApi";
+import { getChatHistory, sendMessage } from "../api/chatApi";
 import { getHubConnection } from "../../../shared/signalr/campaignHubConnection";
 
 import "./ChatPanel.css";
-import { sendMessage } from "@microsoft/signalr/dist/esm/Utils";
 
 export default function ChatPanel({ campaignId, currentUserId, isGameMaster, players }) {
     const [messages, setMessages] = useState([]);
@@ -25,6 +24,7 @@ export default function ChatPanel({ campaignId, currentUserId, isGameMaster, pla
                 setError("Nepodařilo se načíst chat: " + error.message);
             }
         }
+        load();
     }, [campaignId]);
 
     useEffect(() => {
@@ -86,7 +86,7 @@ export default function ChatPanel({ campaignId, currentUserId, isGameMaster, pla
                         >
                             {
                                 m.isWhisper &&
-                                    <span className="chat-message__whisper-tag">šepot</span>
+                                    <span className="chat-message__whisper-tag"></span>
                             }
                             <span className="chat-message__content">{m.content}</span>
                         </div>
