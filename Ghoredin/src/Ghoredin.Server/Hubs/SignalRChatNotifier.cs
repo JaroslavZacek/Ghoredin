@@ -8,7 +8,7 @@ namespace Ghoredin.Server.Hubs
     {
         private readonly IHubContext<CampaignHub> _hubContext;
 
-        public SignalRChatNotifier(IHubContext<CampaignHub> hubContext>)
+        public SignalRChatNotifier(IHubContext<CampaignHub> hubContext)
         {
             _hubContext = hubContext;
         }
