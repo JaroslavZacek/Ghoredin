@@ -1,0 +1,43 @@
+.game-table {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.game-table__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.game-table__back {
+    background: none;
+    border: none;
+    color: var(--color-chip-text);
+    cursor: pointer;
+    font-size: 14px;
+    font-family: var(--font-heading);
+    padding: 0;
+}
+
+.game-table__title {
+    font-size: 20px;
+    font-family: var(--font-heading);
+    margin: 0;
+    color: var(--color-text-on-bg);
+}
+
+.game-table__error {
+    color: var(--color-danger);
+}
+
+.game-table__section {
+    margin-top: var(--space-lg);
+}
+
+.game-table__section-title {
+    font-size: 16px;
+    font-family: var(--font-heading);
+    color: var(--color-text-on-bg);
+    margin: 0 0 var(--space-md);
+}
