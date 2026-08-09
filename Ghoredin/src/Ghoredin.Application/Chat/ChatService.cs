@@ -69,7 +69,7 @@ namespace Ghoredin.Application.Chat
             if (!_campaignAuthorizationService.IsMember(campaign, userId))
                 throw new InvalidOperationException("Nejsi členem tohoto dobrodružství.");
 
-            var isGm = _campaignAuthorizationService.IsGameMaster(campaign, userId)¨;
+            var isGm = _campaignAuthorizationService.IsGameMaster(campaign, userId);
 
             var messages = await _chatRepository.GetByCampaignAsync(campaignId);
 
