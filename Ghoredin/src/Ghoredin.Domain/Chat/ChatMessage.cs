@@ -13,6 +13,6 @@ namespace Ghoredin.Domain.Chat
 
         public string? WhisperToUserId { get; set; }
 
-        public DateTime CreateAt { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

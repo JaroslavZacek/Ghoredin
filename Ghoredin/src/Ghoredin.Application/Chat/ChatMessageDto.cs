@@ -10,6 +10,6 @@ namespace Ghoredin.Application.Chat
         string AuthorUserId,
         string Content,
         bool IsWhisper,
-        DateTime CreateAt
+        DateTime CreatedAt
     );
 }
