@@ -28,43 +28,6 @@
     gap: var(--space-sm);
 }
 
-.character-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 14px;
-    background: var(--color-surface);
-    border: 1px solic var(--color-border);
-    border-radius: var(--radius);
-}
-
-.character-card__name {
-    font-weight: 500;
-}
-
-.character-card__system {
-    font-size: 12px;
-    color: var(--color-text-muted);
-    background: var(--color-bg);
-    padding: 2px 8px;
-    border-radius: var(--radius);
-}
-
-.character-card__campaign {
-    font-size: 12px;
-    color: var(--color-text-muted);
-}
-
-.character-card__left-badge {
-    font-size: 11px;
-    color: var(--color-text-muted);
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    padding: 2px 8px;
-    border-radius: var(--radius);
-    font-style: italic;
-}
-
 .character-form {
     padding: var(--space-md);
     background: var(--color-surface);

@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 
 import { getMyCharacters } from "../api/charactersApi";
 
+import CharacterCard from "./CharacterCard";
+
 import "./CharacterList.css";
 
 function CharacterList () {
@@ -53,20 +55,8 @@ function CharacterList () {
                     <ul className="character-list__items">
                         {
                             characters.map((c) =>(
-                                <li key={c.id} className="character-card">
-                                    <span className="character-card__name">{c.name}</span>
-                                    <span className="chatacter-card__system">{c.gameSystemId}</span>
-
-                                    {
-                                        c.campaignName && (
-                                            <span className="character-card__campaign">{c.campaignName}</span>
-                                        )
-                                    }
-                                    {
-                                        c.campaignName && !c.campaignActive && (
-                                            <span className="character-card__left-badge">(Opuštěna)</span>
-                                        )
-                                    }
+                                <li key={c.id}>
+                                    <CharacterCard character={c} />
                                 </li>
                             ))
                         }
