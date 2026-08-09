@@ -42,6 +42,7 @@ builder.Services.AddScoped<INoteService, NoteService>();
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
+builder.Services.AddScoped<IChatNotifier, SignalRChatNotifier>();
 
 builder.Services.AddSingleton<IGameSystem, Dnd5eGameSystem>();
 builder.Services.AddSingleton<IGameSystemRegistry, GameSystemRegistry>();
