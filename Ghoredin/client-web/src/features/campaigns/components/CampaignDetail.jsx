@@ -9,7 +9,6 @@ import { getCampaignCharacters, createCharacterInCampaign, deleteCharacter } fro
 import { isCharacterComplete } from "../utils/campaignHelpers";
 
 import NoteList from "../../notes/components/NoteList";
-import CurrentScene from "../../notes/components/CurrentScene";
 
 import { getThemeForGameSystem } from "../../../shared/theme/themeUtils";
 import { joinCampaignGroup, leaveCampaignGroup } from "../../../shared/signalr/campaignHubConnection";
@@ -199,7 +198,6 @@ function CampaignDetail() {
                     <p className="campaign-detail__error">{error}</p>
             }
 
-            <CurrentScene campaignId={id} />
             <section className="campaign-detail__section">
     
                 <div className="campaign-detail__section-header">
