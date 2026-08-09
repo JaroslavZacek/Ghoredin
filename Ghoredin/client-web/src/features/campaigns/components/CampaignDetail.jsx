@@ -12,6 +12,8 @@ import NoteList from "../../notes/components/NoteList";
 import CurrentScene from "../../notes/components/CurrentScene";
 
 import { getThemeForGameSystem } from "../../../shared/theme/themeUtils";
+import { joinCampaignGroup, leaveCampaignGroup } from "../../../shared/signalr/campaignHubConnection";
+
 import "./CampaignDetail.css"
 
 function CampaignDetail() {
@@ -53,6 +55,19 @@ function CampaignDetail() {
             setActiveTheme(getThemeForGameSystem(campaign.gameSystemId));
         }
         return () => setActiveTheme("shell");
+    }, [campaign]);
+
+    useEffect(() => {
+        if (!campaign)
+            return;
+
+        joinCampaignGroup(campaign.Id)
+            .then(() => console.log("Připojeno ke skupině dobrodružství:", campaign.id))
+            .catch((error) => console.error("Chyba připojení k SignalR:", error));
+
+        return () => {
+            leaveCampaignGroup(campaign.id).catch(() => {});
+        };
     }, [campaign]);
 
     const handleCreateCharacter = async () => {
