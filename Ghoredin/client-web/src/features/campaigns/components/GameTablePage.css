@@ -13,7 +13,7 @@
 .game-table__back {
     background: none;
     border: none;
-    color: var(--color-chip-text);
+    color: var(--color-text-muted-on-bg);
     cursor: pointer;
     font-size: 14px;
     font-family: var(--font-heading);
