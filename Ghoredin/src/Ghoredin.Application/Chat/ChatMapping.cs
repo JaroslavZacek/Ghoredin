@@ -16,7 +16,7 @@ namespace Ghoredin.Application.Chat
                 message.AuthorUserId,
                 message.Content,
                 message.WhisperToUserId is not null,
-                message.CreateAt
+                message.CreatedAt
                 );
         }
     }
