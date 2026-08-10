@@ -14,6 +14,8 @@ namespace Ghoredin.Application.Notes
         string? PlayerFacingContent,
         string Visibility,
         DateTime CreatedAt,
-        DateTime UpdatedAt
+        DateTime UpdatedAt,
+        Guid? ParentNoteId,
+        int SortOrder
     );
 }
