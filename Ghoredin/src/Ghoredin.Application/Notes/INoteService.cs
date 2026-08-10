@@ -11,5 +11,7 @@ namespace Ghoredin.Application.Notes
         Task<List<NoteDto>> GetCampaignNotesAsync(Guid campaignId);
         Task RevealSceneAsync(RevealSceneCommand command);
         Task<NoteDto?> GetMyCurrentSceneAsync(Guid campaignId);
+        Task MoveAsync(MoveNoteCommand command);
+        Task ReorderSiblingsAsync(ReorderSiblingsCommand command);
     }
 }
