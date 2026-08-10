@@ -19,5 +19,8 @@ namespace Ghoredin.Domain.Notes
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
+        public Guid? ParentNoteId { get; set; }
+        public int SortOrder { get; set; }
     }
 }
