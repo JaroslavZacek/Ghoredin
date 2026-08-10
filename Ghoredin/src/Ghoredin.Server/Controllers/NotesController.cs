@@ -64,7 +64,8 @@ namespace Ghoredin.Server.Controllers
                     request.Title,
                     request.Content,
                     request.PlayerFacingContent,
-                    request.Visibility
+                    request.Visibility,
+                    request.ParentNoteId
                     );
 
                 var note = await _noteService.CreateAsync(command);
