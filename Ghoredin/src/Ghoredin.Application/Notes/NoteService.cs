@@ -38,6 +38,13 @@ namespace Ghoredin.Application.Notes
             if (!_campaignAuthorizationService.IsGameMaster(campaign, userId))
                 throw new InvalidOperationException("Jen PJ může psát poznámky");
 
+            var siblings = await _noteRepository.GetByCampaignAsync(command.CamapignId);
+
+            var maxSortOrder = siblings
+                .Where(n => n.ParentNoteId == command.ParentNoteId)
+                .Select(n => (int?)n.SortOrder)
+                .Max() ?? -1;
+
             var note = new CampaignNote
             {
                 Id = Guid.NewGuid(),
@@ -48,7 +55,9 @@ namespace Ghoredin.Application.Notes
                 PlayerFacingContent = command.PlayerFacingContent,
                 Visibility = command.Visibility,
                 CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                UpdatedAt = DateTime.UtcNow,
+                ParentNoteId = command.ParentNoteId,
+                SortOrder = maxSortOrder + 1
             };
 
             await _noteRepository.AddAsync(note);
