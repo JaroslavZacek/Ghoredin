@@ -99,6 +99,34 @@ namespace Ghoredin.Server.Controllers
             }
         }
 
+        [HttpPost("{id:guid}/move")]
+        public async Task<IActionResult> Move(Guid id, [FromBody] MoveNoteRequest request)
+        {
+            try
+            {
+                await _noteService.MoveAsync(new MoveNoteCommand(id, request.NewParentNoteId));
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost("reorder")]
+        public async Task<IActionResult> Reorder([FromBody] ReorderSiblingsCommand command)
+        {
+            try
+            {
+                await _noteService.ReorderSiblingsAsync(command);
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
         #endregion
 
         #region Put
