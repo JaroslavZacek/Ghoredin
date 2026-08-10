@@ -12,6 +12,7 @@ namespace Ghoredin.Application.Notes
         string Title,
         string Content,
         string? PlayerFacingContent,
-        NoteVisibility Visibility
+        NoteVisibility Visibility,
+        Guid? ParentNoteId
     );
 }
