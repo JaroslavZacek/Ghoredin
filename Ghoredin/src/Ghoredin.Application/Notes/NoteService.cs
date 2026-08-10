@@ -109,7 +109,9 @@ namespace Ghoredin.Application.Notes
                 ? notes
                 : notes.Where(n => n.Visibility == NoteVisibility.SharedWithPlayers);
 
-            return visible.Select(n => n.ToDto(isGm)).ToList();
+            var ordered = visible.OrderBy(n => n.ParentNoteId.HasValue).ThenBy(n => n.SortOrder);
+
+            return ordered.Select(n => n.ToDto(isGm)).ToList();
         }
 
         public async Task RevealSceneAsync(RevealSceneCommand command)
@@ -162,6 +164,63 @@ namespace Ghoredin.Application.Notes
             var isGm = _campaignAuthorizationService.IsGameMaster(campaign, userId);
 
             return note.ToDto(isGm);
+        }
+
+        public async Task MoveAsync(MoveNoteCommand command)
+        {
+            var userId = _currentUserService.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var note = await _noteRepository.GetByIdAsync(command.NoteId)
+                ?? throw new InvalidOperationException("Poznámka neexistuje");
+
+            var campaign = await _campaignRepository.GetByIdAsync(note.CampaignId)
+                ?? throw new InvalidOperationException("Dobrodružství neexistuje");
+
+            if (!_campaignAuthorizationService.IsGameMaster(campaign, userId))
+                throw new InvalidOperationException("Jen PJ může přesouvat poznámky.");
+
+            if (command.NewParentNoteId == note.Id)
+                throw new InvalidOperationException("Poznámka nemůže být sama svým rodičem.");
+
+            var siblings = await _noteRepository.GetByCampaignAsync(note.CampaignId);
+            var maxSortOrder = siblings
+                .Where(n => n.ParentNoteId == command.NewParentNoteId && n.Id != note.Id)
+                .Select(n => (int?)n.SortOrder)
+                .Max() ?? -1;
+
+            note.ParentNoteId = command.NewParentNoteId;
+            note.SortOrder = maxSortOrder + 1;
+
+            await _noteRepository.SaveChangesAsync();
+        }
+
+        public async Task ReorderSiblingsAsync(ReorderSiblingsCommand command)
+        {
+            var userId = _currentUserService.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var campaign = await _campaignRepository.GetByIdAsync(command.CampaignId)
+                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
+
+            if (!_campaignAuthorizationService.IsGameMaster(campaign, userId))
+                throw new InvalidOperationException("Jen PJ může přeskládat poznámky.");
+
+            var notes = await _noteRepository.GetByCampaignAsync(command.CampaignId);
+
+            var siblingsById = notes
+                .Where(n => n.ParentNoteId == command.ParentNoteId)
+                .ToDictionary(n => n.Id);
+
+            for (int i = 0; i < command.OrderNoteIds.Count; i++)
+            {
+                if (siblingsById.TryGetValue(command.OrderNoteIds[i], out var note))
+                {
+                    note.SortOrder = i;
+                }
+            }
+
+            await _noteRepository.SaveChangesAsync();
         }
     }
 }
