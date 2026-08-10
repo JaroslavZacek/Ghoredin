@@ -14,3 +14,9 @@ export const revealScene = (data) =>
 
 export const getMyCurrentScene = (campaignId) =>
     apiGet(`notes/campaign/${campaignId}/my-current-scene`);
+
+export const moveNote = (noteId, newParentNoteId) =>
+    apiPost(`notes/${noteId}/move`, { newParentNoteId });
+
+export const reorderSiblings = (campaignId, parentNoteId, orderedNoteIds) =>
+    apiPost("notes/reorder", { campaignId, parentNoteId, orderedNoteIds });
