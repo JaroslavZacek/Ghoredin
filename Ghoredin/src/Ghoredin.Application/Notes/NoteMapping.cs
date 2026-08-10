@@ -21,7 +21,9 @@ namespace Ghoredin.Application.Notes
                 note.PlayerFacingContent,
                 note.Visibility.ToString(),
                 note.CreatedAt,
-                note.UpdatedAt
+                note.UpdatedAt,
+                note.ParentNoteId,
+                note.SortOrder
             );
         }
     }
