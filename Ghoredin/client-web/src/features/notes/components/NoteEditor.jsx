@@ -5,7 +5,7 @@ import { createNote, updateNote } from "../api/notesApi";
 
 import "./NoteEditor.css";
 
-function NoteEditor({ campaignId, editingNote, onSaved, onCancel }) {
+function NoteEditor({ campaignId, editingNote, parentNoteId,  onSaved, onCancel }) {
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
@@ -44,7 +44,8 @@ function NoteEditor({ campaignId, editingNote, onSaved, onCancel }) {
             title,
             content,
             playerFacingContent: playerFacingContent.trim() === "" ? null : playerFacingContent,
-            visibility
+            visibility,
+            parentNoteId: editingNote ? editingNote.parentNoteId : parentNoteId
         };
 
         try {
