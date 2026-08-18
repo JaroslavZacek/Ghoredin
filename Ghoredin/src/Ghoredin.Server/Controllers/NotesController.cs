@@ -118,7 +118,7 @@ namespace Ghoredin.Server.Controllers
         {
             try
             {
-                var command = new ReorderSiblingsCommand(request.CampaignId, request.ParentNoteId, request.OrderNoteIds);
+                var command = new ReorderSiblingsCommand(request.CampaignId, request.ParentNoteId, request.OrderedNoteIds);
                 await _noteService.ReorderSiblingsAsync(command);
                 return NoContent();
             }

@@ -212,9 +212,9 @@ namespace Ghoredin.Application.Notes
                 .Where(n => n.ParentNoteId == command.ParentNoteId)
                 .ToDictionary(n => n.Id);
 
-            for (int i = 0; i < command.OrderNoteIds.Count; i++)
+            for (int i = 0; i < command.OrderedNoteIds.Count; i++)
             {
-                if (siblingsById.TryGetValue(command.OrderNoteIds[i], out var note))
+                if (siblingsById.TryGetValue(command.OrderedNoteIds[i], out var note))
                 {
                     note.SortOrder = i;
                 }
