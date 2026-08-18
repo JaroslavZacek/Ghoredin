@@ -3,5 +3,5 @@
     public record ReorderSiblingsRequest(
         Guid CampaignId,
         Guid? ParentNoteId,
-        List<Guid> OrderNoteIds);
+        List<Guid> OrderedNoteIds);
 }

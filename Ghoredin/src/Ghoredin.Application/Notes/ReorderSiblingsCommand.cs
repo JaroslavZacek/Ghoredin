@@ -7,5 +7,5 @@ namespace Ghoredin.Application.Notes
     public record ReorderSiblingsCommand(
         Guid CampaignId,
         Guid? ParentNoteId,
-        List<Guid> OrderNoteIds);
+        List<Guid> OrderedNoteIds);
 }
