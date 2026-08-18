@@ -5,7 +5,7 @@ import { getCampaignNotes, moveNote, reorderSiblings } from "../api/notesApi";
 import NoteEditor from "./NoteEditor";
 import RevealSceneControl from "./RevealSceneControl";
 
-import ".StoryOutline.css";
+import "./StoryOutline.css";
 
 export default function StoryOutline({ campaignId, isGameMaster, players }) {
     const [notes, setNotes] = useState([]);
@@ -148,31 +148,35 @@ export default function StoryOutline({ campaignId, isGameMaster, players }) {
                                 onCancel={() => { setEditingNote(null); setCreatingUnderParent(undefined); }}
                             />
                         ) : selectedNote ? (
-                            <div>
-                                <div className="story-outline__detail-header">
-                                    <h4>{selectedNote.title}</h4>
-                                    {
-                                        <div className="story-outline__detail-actions">
-                                            <button onClick={() => { setEditingNote(null); setCreatingUnderParent(selectedNote.id); }}>
-                                                <IconCornerDownRight size={14} /> Nová scéna zde
-                                            </button>
-                                            <select
-                                                value={selectedNote.parentNoteId ?? ""}
-                                                onChange={(e) => handleMoveTo(selectedNote, e.target.value || null)}
-                                            >
-                                                <option value="">Přesunout pod: (kořen)</option>
-                                                {
-                                                    notes.filter((n) => n.id !== selectedNote.id)
-                                                        .map((n) => (
-                                                            <option key={n.id} value={n.id}>
-                                                                Přesunout pod: {n.title}
-                                                            </option>
-                                                        ))
-                                                }
-                                            </select>
-                                        </div>
-                                    }
-                                </div>
+                                <div>
+                                    <div className="story-outline__detail-header">
+                                        <h4>{selectedNote.title}</h4>
+                                        {
+                                            isGameMaster && (
+                                                <div className="story-outline__detail-actions">
+                                                    <button onClick={() => { setEditingNote(null); setCreatingUnderParent(selectedNote.id); }}>
+                                                        <IconCornerDownRight size={14} /> Nová scéna zde
+                                                    </button>
+                                                    <select
+                                                        value={selectedNote.parentNoteId ?? ""}
+                                                        onChange={(e) => handleMoveTo(selectedNote, e.target.value || null)}
+                                                    >
+                                                        <option value="">Přesunout pod: (kořen)</option>
+                                                        {
+                                                            notes.filter((n) => n.id !== selectedNote.id)
+                                                                .map((n) => (
+                                                                    <option key={n.id} value={n.id}>
+                                                                        Přesunout pod: {n.title}
+                                                                    </option>
+                                                                ))
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                            )
+
+                                        }
+                                    </div>
 
                                 {
                                     selectedNote.content &&

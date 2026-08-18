@@ -10,6 +10,7 @@ import { getCampaignCharacters} from "../../characters/api/charactersApi";
 
 import CurrentScene from "../../notes/components/CurrentScene";
 import ChatPanel from "../../chat/components/ChatPanel";
+import StoryOutline from "../../notes/components/StoryOutline";
 
 import "./GameTablePage.css";
 
@@ -60,7 +61,7 @@ export default function GameTablePage() {
     if (!campaign)
         return <p>Dobrodružství nenalezeno.</p>
 
-    const myMembership = campaign.member?.find((m) => m.userId === user.userId);
+    const myMembership = campaign.members?.find((m) => m.userId === user.userId);
     const iAmGameMaster = myMembership?.role === "GameMaster";
     const players = campaign.members
         .filter((m) => m.role === "Player")
@@ -77,6 +78,11 @@ export default function GameTablePage() {
                 </button>
                 <h2 className="game-table__title">{campaign.name} - Herní stůl</h2>
             </div>
+
+            <section className="game-table__section">
+                <h3 className="game-table__section-title">Příběh</h3>
+                <StoryOutline campaignId={id} isGameMaster={iAmGameMaster} players={players} />
+            </section>
 
             <CurrentScene campaignId={id} />
 

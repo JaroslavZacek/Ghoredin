@@ -37,9 +37,18 @@
     color: var(--color-primary-text);
 }
 
-.story-outline__row-action {
+.story-outline__row-title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.story-outline__row-actions {
     display: flex;
     gap: 2px;
+    flex-shrink: 0;
 }
 
 .story-outline__row-actions button {
@@ -87,7 +96,7 @@
     color: var(--color-heading);
 }
 
-.story-outline__detail-action {
+.story-outline__detail-actions {
     display: flex;
     gap: 6px;
     align-items: center;
