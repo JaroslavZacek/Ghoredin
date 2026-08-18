@@ -114,10 +114,11 @@ namespace Ghoredin.Server.Controllers
         }
 
         [HttpPost("reorder")]
-        public async Task<IActionResult> Reorder([FromBody] ReorderSiblingsCommand command)
+        public async Task<IActionResult> Reorder([FromBody] ReorderSiblingsRequest request)
         {
             try
             {
+                var command = new ReorderSiblingsCommand(request.CampaignId, request.ParentNoteId, request.OrderNoteIds);
                 await _noteService.ReorderSiblingsAsync(command);
                 return NoContent();
             }
