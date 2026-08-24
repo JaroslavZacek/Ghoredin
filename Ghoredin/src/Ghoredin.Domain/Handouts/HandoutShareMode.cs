@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ghoredin.Domain.Notes
+namespace Ghoredin.Domain.Handouts
 {
     public enum HandoutShareMode
     {
