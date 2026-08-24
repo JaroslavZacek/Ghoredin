@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
-using Ghoredin.Domain.Notes
+using Ghoredin.Domain.Handouts;
 
 namespace Ghoredin.Application.Handouts
 {
