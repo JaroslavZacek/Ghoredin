@@ -18,7 +18,7 @@ namespace Ghoredin.Application.Handouts
 
             return new HandoutDto(
                 handout.Id,
-                handout.CamapaignId,
+                handout.CampaignId,
                 handout.Title,
                 content,
                 handout.ShareMode.ToString(),
