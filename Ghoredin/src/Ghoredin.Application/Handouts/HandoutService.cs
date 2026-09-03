@@ -55,4 +55,28 @@ namespace Ghoredin.Application.Handouts
 
             return handout.ToDto(isGameMaster: true);
         }
+
+
+        //----------------------------------------------------------------------------
+        //-----------------------------Privátní metody--------------------------------
+        //----------------------------------------------------------------------------
+
+        private async Task<(Handout handout, Domain.Campaigns.Campaign campaign, string userId)> LoadForGmAsync(
+            Guid handoutId, string actionVerb)
+        {
+            var userId = _currentUserService.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var handout = await _handoutRepository.GetByIdAsync(handoutId)
+                ?? throw new InvalidOperationException("Listina neexistuje.");
+
+            var campaign = await _campaignRepository.GetByIdAsync(handout.CampaignId)
+                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
+
+            if (!_campaignAuthorizationService.IsGameMaster(campaign, userId))
+                throw new InvalidOperationException($"Jen PJ může {actionVerb} listiny.");
+
+            return (handout, campaign, userId);
+        }
+    }
 }
