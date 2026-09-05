@@ -75,6 +75,21 @@ namespace Ghoredin.Server.Controllers
             }
         }
 
+        [HttpPost("{id:guid}/unshare")]
+        public async Task<IActionResult> Unshare(Guid id)
+        {
+            try
+            {
+                await _handoutService.UnshareAsync(id);
+
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
         #endregion
     }
 }
