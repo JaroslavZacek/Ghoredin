@@ -102,6 +102,26 @@ namespace Ghoredin.Application.Handouts
             await _handoutRepository.SaveChangesAsync();
         }
 
+        public async Task<List<HandoutDto>> GetVisibleForCampaignAsync(Guid campaignId)
+        {
+            var userId = _currentUserService.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var campaign = await _campaignRepository.GetByIdAsync(campaignId)
+                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
+
+            if (!_campaignAuthorizationService.IsMember(campaign, userId))
+                throw new InvalidOperationException("Nejsi členem tohoto dobrodružství.");
+
+            var isGm = _campaignAuthorizationService.IsGameMaster(campaign, userId);
+
+            var handouts = await _handoutRepository.GetByCampaignAsync(campaignId);
+
+            var visible = isGm ? handouts : handouts.Where(h => h.IsShared);
+
+            return visible.Select(h => h.ToDto(isGm)).ToList();
+        }
+
         //----------------------------------------------------------------------------
         //-----------------------------Privátní metody--------------------------------
         //----------------------------------------------------------------------------
