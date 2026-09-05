@@ -91,5 +91,29 @@ namespace Ghoredin.Server.Controllers
         }
 
         #endregion
+
+        #region Put
+        
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateHandoutRequest request)
+        {
+            try
+            {
+                var command = new UpdateHandoutCommand(
+                    id,
+                    request.Title,
+                    request.Content);
+
+                var handout = await _handoutService.UpdateAsync(command);
+
+                return Ok(handout);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        #endregion
     }
 }
