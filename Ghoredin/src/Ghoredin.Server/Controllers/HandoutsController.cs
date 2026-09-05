@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Ghoredin.Application.Handouts;
+using Ghoredin.Server.Requests;
 
 namespace Ghoredin.Server.Controllers
 {
@@ -26,6 +27,30 @@ namespace Ghoredin.Server.Controllers
                 var handouts = await _handoutService.GetVisibleForCampaignAsync(campaignId);
 
                 return Ok(handouts);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        #endregion
+
+        #region Post
+
+        public async Task<IActionResult> Create([FromBody] CreateHandoutRequest request)
+        {
+            try
+            {
+                var command = new CreateHandoutCommand(
+                    request.CampaignId,
+                    request.Title,
+                    request.Content,
+                    request.ContentType,
+                    request.ShareMode);
+
+                var handout = await _handoutService.CreateAsync(command);
+                return Ok(handout);
             }
             catch (InvalidOperationException ex)
             {
