@@ -38,6 +38,7 @@ namespace Ghoredin.Server.Controllers
 
         #region Post
 
+        [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateHandoutRequest request)
         {
             try
