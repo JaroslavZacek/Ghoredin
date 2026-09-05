@@ -16,6 +16,7 @@ using Ghoredin.Server.Hubs;
 using Microsoft.EntityFrameworkCore;
 
 using Scalar.AspNetCore;
+using Ghoredin.Application.Handouts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,8 @@ builder.Services.AddScoped<INoteRepository, NoteRepository>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<IChatNotifier, SignalRChatNotifier>();
+builder.Services.AddScoped<IHandoutService, HandoutService>();
+builder.Services.AddScoped<IHandoutRepository, HandoutRepository>();
 
 builder.Services.AddSingleton<IGameSystem, Dnd5eGameSystem>();
 builder.Services.AddSingleton<IGameSystemRegistry, GameSystemRegistry>();
