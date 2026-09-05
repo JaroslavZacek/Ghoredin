@@ -85,6 +85,15 @@ namespace Ghoredin.Application.Handouts
             await _handoutRepository.SaveChangesAsync();
         }
 
+        public async Task UnshareAsync(Guid handoutId)
+        {
+            var (handout, _, _) = await LoadForGmAsync(handoutId, "skrýt");
+
+            handout.IsShared = false;
+
+            await _handoutRepository.SaveChangesAsync();
+        }
+
         //----------------------------------------------------------------------------
         //-----------------------------Privátní metody--------------------------------
         //----------------------------------------------------------------------------
