@@ -43,6 +43,7 @@ namespace Ghoredin.Application.Handouts
                 Id = Guid.NewGuid(),
                 CampaignId = command.CampaignId,
                 Title = command.Title,
+                ContentType = command.ContentType,
                 Content = command.Content,
                 ShareMode = command.ShareMode,
                 IsShared = false,
