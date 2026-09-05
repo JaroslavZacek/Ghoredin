@@ -9,6 +9,8 @@ namespace Ghoredin.Domain.Handouts
         public Guid Id { get; set; }
         public Guid CampaignId { get; set; }
         public string Title { get; set; } = string.Empty;
+
+        public HandoutContentType ContentType { get; set; }
         public string Content {  get; set; } = string.Empty;
         public HandoutShareMode ShareMode { get; set; }
         public bool IsShared { get; set; }
