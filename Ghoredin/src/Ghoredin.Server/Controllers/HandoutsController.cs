@@ -51,7 +51,23 @@ namespace Ghoredin.Server.Controllers
                     request.ShareMode);
 
                 var handout = await _handoutService.CreateAsync(command);
+
                 return Ok(handout);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost("{id:guid}/share")]
+        public async Task<IActionResult> Share(Guid id)
+        {
+            try
+            {
+                await _handoutService.ShareAsync(id);
+
+                return NoContent();
             }
             catch (InvalidOperationException ex)
             {
