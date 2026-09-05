@@ -20,6 +20,7 @@ namespace Ghoredin.Application.Handouts
                 handout.Id,
                 handout.CampaignId,
                 handout.Title,
+                handout.ContentType.ToString(),
                 content,
                 handout.ShareMode.ToString(),
                 handout.IsShared,
