@@ -56,6 +56,19 @@ namespace Ghoredin.Application.Handouts
             return handout.ToDto(isGameMaster: true);
         }
 
+        public async Task<HandoutDto> UpdateAsync(UpdateHandoutCommand command)
+        {
+            var (handout, campaign, userId) = await LoadForGmAsync(command.Id, "upravovat");
+
+            handout.Title = command.Title;
+            handout.Content = command.Content;
+            handout.UpdatedAt = DateTime.UtcNow;
+
+            await _handoutRepository.SaveChangesAsync();
+
+            return handout.ToDto(isGameMaster: true);
+        }
+
 
         //----------------------------------------------------------------------------
         //-----------------------------Privátní metody--------------------------------
