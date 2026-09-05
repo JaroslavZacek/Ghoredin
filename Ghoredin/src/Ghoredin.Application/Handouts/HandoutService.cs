@@ -69,6 +69,21 @@ namespace Ghoredin.Application.Handouts
             return handout.ToDto(isGameMaster: true);
         }
 
+        public async Task ShareAsync(Guid handoutId)
+        {
+            var (handout, _, _) = await LoadForGmAsync(handoutId, "sdílet");
+
+            handout.IsShared = true;
+
+            if (handout.ShareMode == HandoutShareMode.Snapshot)
+            {
+                handout.SnapshotContent = handout.Content;
+            }
+
+            handout.UpdatedAt = DateTime.UtcNow;
+
+            await _handoutRepository.SaveChangesAsync();
+        }
 
         //----------------------------------------------------------------------------
         //-----------------------------Privátní metody--------------------------------
