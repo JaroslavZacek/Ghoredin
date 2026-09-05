@@ -8,6 +8,7 @@ namespace Ghoredin.Application.Handouts
         Guid Id,
         Guid CampaignId,
         string Title,
+        string ContentType,
         string Content,
         string ShareMode,
         bool IsShared,
