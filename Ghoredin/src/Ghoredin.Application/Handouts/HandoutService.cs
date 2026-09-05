@@ -94,6 +94,14 @@ namespace Ghoredin.Application.Handouts
             await _handoutRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(Guid handoutId)
+        {
+            var (handout, _, _) = await LoadForGmAsync(handoutId, "smazat");
+            
+            await _handoutRepository.DeleteAsync(handout);
+            await _handoutRepository.SaveChangesAsync();
+        }
+
         //----------------------------------------------------------------------------
         //-----------------------------Privátní metody--------------------------------
         //----------------------------------------------------------------------------
