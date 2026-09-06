@@ -3,6 +3,8 @@ import { IconChevronDown } from "@tabler/icons-react";
 
 import { getHandouts, createHandout, updateHandout, shareHandout, unshareHandout, deleteHandout } from "../api/handoutsApi";
 
+import HandoutForm from "./HandoutForm";
+
 import "./HandoutPanel.css";
 
 const SHARE_MODE_LABELS = {
@@ -145,7 +147,15 @@ export default function HandoutPanel({ campaignId, isGameMaster }) {
                     editingId === "new" && (
                         <div className="handout-item">
                             <div className="handout-item__body">
-                                ------ Zde bude formulář ------
+                                <HandoutForm
+                                    title={title} setTitle={setTitle}
+                                    content={content} setContent={setContent}
+                                    contentType={contentType} setContentType={setContentType}
+                                    shareMode={shareMode} setShareMode={setShareMode}
+                                    isNew
+                                    onSave={handleSave}
+                                    onCancel={cancelEdit}
+                                />
                             </div>
                         </div>
                     )
@@ -193,9 +203,12 @@ export default function HandoutPanel({ campaignId, isGameMaster }) {
                                         <div>
                                             {
                                                 isEditing ? (
-                                                    <p>
-                                                        ------ Zde bude formulář ------
-                                                    </p>
+                                                    <HandoutForm 
+                                                        title={title} setTitle={setTitle}
+                                                        content={content} setContent={setContent}
+                                                        onSave={handleSave}
+                                                        onCancel={cancelEdit}
+                                                    />
                                                 ) : (
                                                     <>
                                                         {
