@@ -29,6 +29,8 @@
 .handout-form__save,
 .handout-form__cancel {
     padding: 6px 14px;
+    margin: 0px 10px;
+    margin-bottom: 5px;
     border-radius: var(--radius);
     font-size: 13px;
     font-family: var(--font-heading);
