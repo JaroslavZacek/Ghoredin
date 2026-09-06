@@ -1,0 +1,118 @@
+.handout-panel__error {
+    color: var(--color-danger);
+    font-size: 14px;
+}
+
+.handout-panel__empty {
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+.handout-panel__add {
+    padding: 8px 14px;
+    margin-bottom: var(--space-md);
+    border: 1px solid var(--color-chip-border);
+    border-radius: var(--radius);
+    background: var(--color-chip-bg);
+    color: var(--color-chip-text);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-heading);
+    cursor: pointer;
+}
+
+.handout-panel__add:hover {
+    background: var(--color-primary-hover);
+    color: var(--color-primary-text);
+}
+
+.handout-panel__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.handout-item {
+    border: 1px solid var(--color-chip-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+}
+
+.handout-item__header {
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    cursor: pointer;
+}
+
+.handout-item__title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.handout-item__header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.handout-item__header-right button {
+    padding: 3px 9px;
+    font-size: 11px;
+    font-family: var(--font-heading);
+    border: 1px solid var(--color-chip-border);
+    border-radius: var(--radius);
+    background: var(--color-chip-bg);
+    color: var(--color-chip-text);
+    cursor: pointer;
+}
+
+.handout-item__badge {
+    font-size: 10px;
+    font-family: var(--font-heading);
+    font-style: italic;
+    color: var(--color-text-muted);
+}
+
+.handout-item__chevron {
+    color: var(--color-text-muted);
+    transition: transform 0.15s ease;
+}
+
+.handout-item__chevron--open {
+    transform: rotate(180deg);
+}
+
+.handout-item__body {
+    padding: 0 14px 12px;
+    padding-top: 10px;
+    margin-top: 4px;
+    border-top: 1px solid var(--color-border);
+}
+
+.handout-item__content {
+    font-size: 14px;
+    color: var(--color-text);
+    white-space: pre-wrap;
+}
+
+.handout-item__image {
+    max-width: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+}
+
+.handout-item__share-toggle {
+    padding: 5px 12px;
+    margin-top: var(--space-sm);
+    font-size: 12px;
+    font-family: var(--font-heading);
+    border: 1px solid var(--color-chip-border);
+    border-radius: var(--radius);
+    background: var(--color-chip-bg);
+    color: var(--color-chip-text);
+    cursor: pointer;
+}
