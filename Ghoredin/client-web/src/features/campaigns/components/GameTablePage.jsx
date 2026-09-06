@@ -11,6 +11,7 @@ import { getCampaignCharacters} from "../../characters/api/charactersApi";
 import CurrentScene from "../../notes/components/CurrentScene";
 import ChatPanel from "../../chat/components/ChatPanel";
 import StoryOutline from "../../notes/components/StoryOutline";
+import HandoutPanel from "../../handouts/components/HandoutPanel";
 
 import "./GameTablePage.css";
 
@@ -95,6 +96,11 @@ export default function GameTablePage() {
                     isGameMaster={iAmGameMaster}
                     players={players}
                 />
+            </section>
+
+            <section className="game-table__section">
+                <h3 className="game-table__section-title">Listiny</h3>
+                <HandoutPanel campaignId={id} isGameMaster={iAmGameMaster} />
             </section>
         </div>
     );
