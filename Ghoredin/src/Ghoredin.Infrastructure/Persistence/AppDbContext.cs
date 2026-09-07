@@ -4,6 +4,7 @@ using Ghoredin.Domain.Campaigns;
 using Ghoredin.Domain.Notes;
 using Ghoredin.Domain.Chat;
 using Ghoredin.Domain.Handouts;
+using Ghoredin.Domain.Journal;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -29,6 +30,7 @@ namespace Ghoredin.Infrastructure.Persistence
         public DbSet<CampaignNote> CampaignNotes => Set<CampaignNote>();
         public DbSet<ChatMessage> ChatMessages => Set<ChatMessage>();
         public DbSet<Handout> Handouts => Set<Handout>();
+        public DbSet<JournalEntry> JournalEntries => Set<JournalEntry>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -115,6 +117,14 @@ namespace Ghoredin.Infrastructure.Persistence
                 entity.Property(h => h.Content).IsRequired();
                 entity.Property(h => h.ShareMode).HasConversion<string>();
                 entity.Property(h => h.ContentType).HasConversion<string>();
+            });
+
+            // JournalEntry entity konfigurace
+            builder.Entity<JournalEntry>(entity =>
+            {
+                entity.HasKey(j => j.Id);
+                entity.Property(j => j.OwnerUserId).IsRequired();
+                entity.Property(j => j.Content).IsRequired();
             });
         }
     }
