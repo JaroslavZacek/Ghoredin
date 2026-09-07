@@ -81,6 +81,22 @@ namespace Ghoredin.Application.Journal
             return entry?.ToDto();
         }
 
-        
+        // -----------------------------------------------------------------------------------
+        // ------------------------------Privátní metody--------------------------------------
+        // -----------------------------------------------------------------------------------
+
+        private async Task<string> EnsureMemberAsync(Guid campaignId)
+        {
+            var userId = _currentUserService.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var campaign = await _campaignRepository.GetByIdAsync(campaignId)
+                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
+
+            if (!_campaignAuthorizationService.IsMember(campaign, userId))
+                throw new InvalidOperationException("Nejsi členem tohoto dobrodružství.");
+
+            return userId;
+        }
     }
 }
