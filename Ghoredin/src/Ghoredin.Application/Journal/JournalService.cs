@@ -27,7 +27,43 @@ namespace Ghoredin.Application.Journal
             _currentUserService = currentUserService;
         }
 
-        
+        public async Task<JournalEntryDto> SaveAsync(SaveJournalCommand command)
+        {
+            var userId = _currentUserService.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var campaign = await _campaignRepository.GetByIdAsync(command.CampaignId)
+                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
+
+            if (!_campaignAuthorizationService.IsMember(campaign, userId))
+                throw new InvalidOperationException("Nejsi členem tohoto dobrodružství.");
+
+            var entry = await _journalRepository.GetByOwnerAndCampaignAsync(command.CampaignId, userId);
+
+            if (entry is null)
+            {
+                entry = new JournalEntry
+                {
+                    Id = Guid.NewGuid(),
+                    CampaignId = command.CampaignId,
+                    OwnerUserId = userId,
+                    Content = command.Content,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                };
+
+                await _journalRepository.AddAsync(entry);
+            }
+            else
+            {
+                entry.Content = command.Content;
+                entry.UpdatedAt = DateTime.UtcNow;
+            }
+
+            await _journalRepository.SaveChangesAsync();
+
+            return entry.ToDto();
+        }
 
     }
 }
