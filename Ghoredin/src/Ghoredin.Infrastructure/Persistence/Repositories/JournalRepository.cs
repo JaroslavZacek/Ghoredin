@@ -1,12 +1,15 @@
-﻿using Ghoredin.Domain.Journal;
+﻿using Ghoredin.Application.Journal;
+using Ghoredin.Domain.Journal;
+
 using Microsoft.EntityFrameworkCore;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Ghoredin.Infrastructure.Persistence.Repositories
 {
-    public class JournalRepository
+    public class JournalRepository : IJournalRepository
     {
         private readonly AppDbContext _context;
 
