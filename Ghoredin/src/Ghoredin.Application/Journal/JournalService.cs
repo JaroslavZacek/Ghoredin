@@ -65,5 +65,22 @@ namespace Ghoredin.Application.Journal
             return entry.ToDto();
         }
 
+        public async Task<JournalEntryDto> GetMyEntryAsync(Guid campaignId)
+        { 
+            var userId = _currentUserService.UserId
+                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
+
+            var campaign = await _campaignRepository.GetByIdAsync(campaignId)
+                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
+
+            if (!_campaignAuthorizationService.IsMember(campaign, userId))
+                throw new InvalidOperationException("Nejsi členem tohoto dobrodružství.");
+
+            var entry = await _journalRepository.GetByOwnerAndCampaignAsync(campaignId, userId);
+
+            return entry?.ToDto();
+        }
+
+        
     }
 }
