@@ -29,14 +29,7 @@ namespace Ghoredin.Application.Journal
 
         public async Task<JournalEntryDto> SaveAsync(SaveJournalCommand command)
         {
-            var userId = _currentUserService.UserId
-                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
-
-            var campaign = await _campaignRepository.GetByIdAsync(command.CampaignId)
-                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
-
-            if (!_campaignAuthorizationService.IsMember(campaign, userId))
-                throw new InvalidOperationException("Nejsi členem tohoto dobrodružství.");
+            var userId = await EnsureMemberAsync(command.CampaignId);
 
             var entry = await _journalRepository.GetByOwnerAndCampaignAsync(command.CampaignId, userId);
 
@@ -67,14 +60,7 @@ namespace Ghoredin.Application.Journal
 
         public async Task<JournalEntryDto> GetMyEntryAsync(Guid campaignId)
         { 
-            var userId = _currentUserService.UserId
-                ?? throw new InvalidOperationException("Není přihlášený uživatel.");
-
-            var campaign = await _campaignRepository.GetByIdAsync(campaignId)
-                ?? throw new InvalidOperationException("Dobrodružství neexistuje.");
-
-            if (!_campaignAuthorizationService.IsMember(campaign, userId))
-                throw new InvalidOperationException("Nejsi členem tohoto dobrodružství.");
+            var userId = await EnsureMemberAsync(campaignId);
 
             var entry = await _journalRepository.GetByOwnerAndCampaignAsync(campaignId, userId);
 
