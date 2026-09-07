@@ -25,5 +25,10 @@ namespace Ghoredin.Infrastructure.Persistence.Repositories
         {
             await _context.JournalEntries.AddAsync(entry);
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }
