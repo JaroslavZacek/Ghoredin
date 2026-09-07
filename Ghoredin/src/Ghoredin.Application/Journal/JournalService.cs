@@ -8,7 +8,7 @@ using Ghoredin.Domain.Journal;
 
 namespace Ghoredin.Application.Journal
 {
-    public class JournalService
+    public class JournalService: IJournalService
     {
         private readonly IJournalRepository _journalRepository;
         private readonly ICampaignRepository _campaignRepository;
