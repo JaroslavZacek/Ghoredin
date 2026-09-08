@@ -12,6 +12,8 @@
 - [+] Přidat mazání dobrodružství do detailu dobrodružství
 - [] Pro PJ se nezobrazuje právě se odehrává
 - [] Na nastavení konkrétní scény musí být nastaveno na Sdíleno. Což by být nemělo. PJ by měl mít možnost nastavit current scene aniž by nastavil sdílet.
+- [] Přidat možnost zobrazení obrázku v Handout. Listiny mohou být i mapy, nákresy atd... proto by bylo dobré mít možnost zobrazit obrázek v Handoutu. (Jen tvůrce)
+- [] Přidání přesouvání note pomocí drag and drop. (Jen tvůrce)
 
 ## Všeobecné
 - [] Přidat pozvání hráče do dobrodružství. (Zřejmě přes email)
