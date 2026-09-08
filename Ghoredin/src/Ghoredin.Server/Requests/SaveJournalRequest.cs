@@ -1,6 +1,4 @@
 ﻿namespace Ghoredin.Server.Requests
 {
-    public class SaveJournalRequest
-    {
-    }
+    public record SaveJournalRequest(string Content);
 }
