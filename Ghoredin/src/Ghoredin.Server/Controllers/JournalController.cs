@@ -39,6 +39,7 @@ namespace Ghoredin.Server.Controllers
 
         #region Put
 
+        [HttpPut("campaign/{campaignId:guid}")]
         public async Task<IActionResult> Save(Guid campaignId, [FromBody] SaveJournalRequest request)
         {
             try
