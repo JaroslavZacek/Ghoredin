@@ -12,8 +12,10 @@ import CurrentScene from "../../notes/components/CurrentScene";
 import ChatPanel from "../../chat/components/ChatPanel";
 import StoryOutline from "../../notes/components/StoryOutline";
 import HandoutPanel from "../../handouts/components/HandoutPanel";
+import JournalPanel from "../../journal/components/JournalPanel";
 
 import "./GameTablePage.css";
+
 
 export default function GameTablePage() {
     const { id } = useParams();
@@ -101,6 +103,11 @@ export default function GameTablePage() {
             <section className="game-table__section">
                 <h3 className="game-table__section-title">Listiny</h3>
                 <HandoutPanel campaignId={id} isGameMaster={iAmGameMaster} />
+            </section>
+
+            <section className="game-table__section">
+                <h3 className="game-table__section-title">Můj deník</h3>
+                <JournalPanel campaignId={id} />
             </section>
         </div>
     );
