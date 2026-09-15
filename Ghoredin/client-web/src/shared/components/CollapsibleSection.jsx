@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { IconChevronDown } from "@tabler/icons-react";
 
+import "./CollapsibleSection.css";
+
 export default function CollapsibleSection({ title, defaultOpen = true, onDarkBg = false, children }) {
     const [open, setOpen] = useState(defaultOpen);
 
