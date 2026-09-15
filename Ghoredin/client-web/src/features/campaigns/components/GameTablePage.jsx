@@ -13,6 +13,7 @@ import ChatPanel from "../../chat/components/ChatPanel";
 import StoryOutline from "../../notes/components/StoryOutline";
 import HandoutPanel from "../../handouts/components/HandoutPanel";
 import JournalPanel from "../../journal/components/JournalPanel";
+import CollapsibleSection from "../../../shared/components/CollapsibleSection";
 
 import "./GameTablePage.css";
 
@@ -101,8 +102,9 @@ export default function GameTablePage() {
             </section>
 
             <section className="game-table__section">
-                <h3 className="game-table__section-title">Listiny</h3>
-                <HandoutPanel campaignId={id} isGameMaster={iAmGameMaster} />
+                <CollapsibleSection title="Listiny" defaultOpen={false} onDarkBg>
+                    <HandoutPanel campaignId={id} isGameMaster={iAmGameMaster}/>
+                </CollapsibleSection>
             </section>
 
             <section className="game-table__section">
