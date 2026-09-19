@@ -6,6 +6,8 @@ using Ghoredin.Application.GameSystems;
 using Ghoredin.Application.Dice;
 using Ghoredin.Application.Chat;
 using Ghoredin.Application.Journal;
+using Ghoredin.Application.Voice;
+using Ghoredin.Infrastructure.Voice;
 using Ghoredin.Infrastructure.Identity;
 using Ghoredin.Infrastructure.Persistence;
 using Ghoredin.Infrastructure.Persistence.Repositories;
@@ -53,6 +55,7 @@ builder.Services.AddScoped<IJournalRepository, JournalRepository>();
 builder.Services.AddSingleton<IGameSystem, Dnd5eGameSystem>();
 builder.Services.AddSingleton<IGameSystemRegistry, GameSystemRegistry>();
 builder.Services.AddSingleton<IDiceService, DiceService>();
+builder.Services.AddSingleton<IVoiceStateService, InMemoryVoiceStateService>();
 
 
 builder.Services.AddCors(options =>
