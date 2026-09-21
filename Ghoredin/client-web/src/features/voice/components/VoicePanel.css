@@ -1,0 +1,100 @@
+.voice-panel__error {
+    color: var(--color-danger);
+    font-size: 13px;
+}
+
+.voice-panel__join {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1px solid var(--color-chip-border);
+    border-radius: var(--radius);
+    background: var(--color-chip-bg);
+    color: var(--color-chip-text);
+    cursor: pointer;
+}
+
+.voice-panel__controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-sm);
+}
+
+.voice-panel__mute,
+.voice-panel__whisper-toggle,
+.voice-panel__leave {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-heading);
+    font-size: 12px;
+    padding: 6px 12px;
+    border: 1px solid var(--color-chip-border);
+    border-radius: var(--radius);
+    background: var(--color-chip-bg);
+    color: var(--color-chip-text);
+    cursor: pointer;
+}
+
+.voice-panel__leave {
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+}
+
+.voice-panel__list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.voice-participant {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    padding: 6px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    color: var(--color-text);
+}
+
+.voice-participant--speaking {
+    border-color: var(--color-primary);
+    background: var(--color-chip-bg);
+}
+
+.voice-participant__name {
+    flex: 1;
+}
+
+.voice-participant__badge {
+    font-size: 10px;
+    font-family: var(--font-heading);
+    color: var(--color-danger);
+}
+
+.voice-participant__whisper-check {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+}
+
+.voice-participant__force-mute {
+    font-size: 11px;
+    font-family: var(--font-heading);
+    padding: 3px 8px;
+    border: 1px solid var(--color-chip-border);
+    border-radius: var(--radius);
+    background: var(--color-chip-bg);
+    color: var(--color-chip-text);
+    cursor: pointer;
+}
