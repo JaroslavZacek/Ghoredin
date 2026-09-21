@@ -88,7 +88,7 @@ function startSpeakingDetection() {
         const volume = data.reduce((sum, v) => sum + v, 0) / data.length;
         const isSpeaking = volume > 15;
 
-        const now = Date.new();
+        const now = Date.now();
         if (isSpeaking !== wasSpeaking && now - lastSent > 300) {
             wasSpeaking = isSpeaking;
             lastSent = now;
