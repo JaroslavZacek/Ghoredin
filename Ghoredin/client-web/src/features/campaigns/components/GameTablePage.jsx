@@ -14,6 +14,7 @@ import StoryOutline from "../../notes/components/StoryOutline";
 import HandoutPanel from "../../handouts/components/HandoutPanel";
 import JournalPanel from "../../journal/components/JournalPanel";
 import CollapsibleSection from "../../../shared/components/CollapsibleSection";
+import VoicePanel from "../../voice/components/VoicePanel";
 
 import "./GameTablePage.css";
 
@@ -110,6 +111,12 @@ export default function GameTablePage() {
             <section className="game-table__section">
                 <h3 className="game-table__section-title">Můj deník</h3>
                 <JournalPanel campaignId={id} />
+            </section>
+
+            <section className="game-table__section">
+                <CollapsibleSection title="Hlasoví kanál" defaultOpen={false} onDarkBg>
+                    <VoicePanel campaignId={id} isGameMaster={iAmGameMaster} players={players}/>
+                </CollapsibleSection>
             </section>
         </div>
     );
