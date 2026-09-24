@@ -18,7 +18,7 @@ let handlers = {
 function createPeerConnection(targetUserId) {
     const pc = new RTCPeerConnection({ iceServers: ICE_SERVERS });
 
-    const clonedTrack = localStream.getAudioTrack()[0].clone();
+    const clonedTrack = localStream.getAudioTracks()[0].clone();
     pc.addTrack(clonedTrack, localStream);
 
     pc.onicecandidate = (e) => {
@@ -57,7 +57,7 @@ async function handleIncomingSignal({ fromUserId, signalType, payload }) {
         await pc.setLocalDescription(answer);
         await conn.invoke("SendVoiceSignal", campaignId, fromUserId, "answer", JSON.stringify(answer));
     } else if (signalType === "answer") {
-        const pc = peers[fromUserID]?.connection;
+        const pc = peers[fromUserId]?.connection;
         if (pc)
             await pc.setRemoteDescription(new RTCSessionDescription(data));
     } else if (signalType === "ice-candidate") {
@@ -86,13 +86,14 @@ function startSpeakingDetection() {
         analyser.getByteFrequencyData(data);
 
         const volume = data.reduce((sum, v) => sum + v, 0) / data.length;
-        const isSpeaking = volume > 15;
+        //console.log("volume:", volume);
+        const isSpeaking = volume > 10;
 
         const now = Date.now();
         if (isSpeaking !== wasSpeaking && now - lastSent > 300) {
             wasSpeaking = isSpeaking;
             lastSent = now;
-            conn.invoke("SetSpeaking", campaignId, isSpeaking).catch(() => {});
+            conn.invoke("SetSpeaking", campaignId, isSpeaking).catch((err) => {console.error("SetSpeaking selhalo: ", err);});
         }
         requestAnimationFrame(check);
     };
@@ -159,7 +160,7 @@ export async function leaveVoice() {
 
 export function setSelfMute(muted) {
     if (localStream) 
-        localStream.getAudioTrack().forEach((t) => (t.enabled = !muted));
+        localStream.getAudioTracks().forEach((t) => (t.enabled = !muted));
 
     conn?.invoke("SetSelfMute", campaignId, muted).catch(() => {});
 }
@@ -167,7 +168,7 @@ export function setSelfMute(muted) {
 export function setWhisperTargets(targetUserIds) {
     Object.entries(peers).forEach(([userId, peer]) => {
         const shouldHear = !targetUserIds || targetUserIds.includes(userId);
-        peer.clonedTrackt.enabled = shouldHear;
+        peer.clonedTrack.enabled = shouldHear;
     });
 }
 
