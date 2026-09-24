@@ -9,6 +9,7 @@ let conn = null;
 
 let isSelfMuted = false;
 let isForceMuted = false;
+let currentWhisperTargets = null;
 
 let handlers = {
     onParticipantsChanged: () => {},
@@ -17,6 +18,22 @@ let handlers = {
     onMuteChanged: () => {},
     onForceMuteChanged: () => {},
 };
+
+function applyTrackStateForPeer(userId) {
+    const peer = peers[userId];
+
+    if (!peer)
+        return;
+
+    const globallyAllowed = !isSelfMuted && !isForceMuted;
+    const whisperAllowed = !currentWhisperTargets || currentWhisperTargets.includes(userId);
+
+    peer.clonedTrack.enabled = globallyAllowed && whisperAllowed;
+}
+
+function applyTrackStateForAllPeers() {
+    Object.keys(peers).forEach(applyTrackStateForPeer);
+}
 
 function createPeerConnection(targetUserId) {
     const pc = new RTCPeerConnection({ iceServers: ICE_SERVERS });
@@ -35,6 +52,7 @@ function createPeerConnection(targetUserId) {
     };
 
     peers[targetUserId] = { connection: pc, clonedTrack };
+    applyTrackStateForPeer(targetUserId);
 
     return pc;
 }
@@ -89,7 +107,6 @@ function startSpeakingDetection() {
         analyser.getByteFrequencyData(data);
 
         const volume = data.reduce((sum, v) => sum + v, 0) / data.length;
-        
         const isSpeaking = !isSelfMuted && !isForceMuted && volume > 10;
 
         const now = Date.now();
@@ -128,8 +145,9 @@ export async function joinVoice(newCampaignId, myUserId,newHandlers) {
         handlers.onMuteChanged(userId, muted);
     });
     conn.on("VoiceForceMuteChanged", ({ userId, isForceMuted: muted }) => {
-        if (userId === myUserIdPlaceholder) {
+        if (userId === myUserId) {
             isForceMuted = muted;
+            applyTrackStateForAllPeers();
         }
 
         handlers.onForceMuteChanged(userId, muted);
@@ -162,25 +180,23 @@ export async function leaveVoice() {
         localStream.getTracks().forEach((t) => t.stop());
         localStream = null;
     }
-    campaignId = null;
+    campaignId = null; 
     isSelfMuted = false;
     isForceMuted = false;
+    currentWhisperTargets = null;
 }
 
 export function setSelfMute(muted) {
     isSelfMuted = muted;
 
-    if (localStream) 
-        localStream.getAudioTracks().forEach((t) => (t.enabled = !muted));
+    applyTrackStateForAllPeers();
 
     conn?.invoke("SetSelfMute", campaignId, muted).catch(() => {});
 }
 
 export function setWhisperTargets(targetUserIds) {
-    Object.entries(peers).forEach(([userId, peer]) => {
-        const shouldHear = !targetUserIds || targetUserIds.includes(userId);
-        peer.clonedTrack.enabled = shouldHear;
-    });
+    currentWhisperTargets = targetUserIds;
+    applyTrackStateForAllPeers();
 }
 
 export function forceMute(campaignIdParam, targetUserId, muted) {
