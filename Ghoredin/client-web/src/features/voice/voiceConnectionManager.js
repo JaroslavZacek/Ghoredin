@@ -7,6 +7,9 @@ let peers = {};
 let campaignId = null;
 let conn = null;
 
+let isSelfMuted = false;
+let isForceMuted = false;
+
 let handlers = {
     onParticipantsChanged: () => {},
     onRemoteStream: () => {},
@@ -86,21 +89,21 @@ function startSpeakingDetection() {
         analyser.getByteFrequencyData(data);
 
         const volume = data.reduce((sum, v) => sum + v, 0) / data.length;
-        //console.log("volume:", volume);
-        const isSpeaking = volume > 10;
+        
+        const isSpeaking = !isSelfMuted && !isForceMuted && volume > 10;
 
         const now = Date.now();
         if (isSpeaking !== wasSpeaking && now - lastSent > 300) {
             wasSpeaking = isSpeaking;
             lastSent = now;
-            conn.invoke("SetSpeaking", campaignId, isSpeaking).catch((err) => {console.error("SetSpeaking selhalo: ", err);});
+            conn.invoke("SetSpeaking", campaignId, isSpeaking).catch((error) => {console.error("SetSpeaking selhalo: ", error);});
         }
         requestAnimationFrame(check);
     };
     check();
 }
 
-export async function joinVoice(newCampaignId, newHandlers) {
+export async function joinVoice(newCampaignId, myUserId,newHandlers) {
     campaignId = newCampaignId;
     handlers = { ...handlers, ...newHandlers };
 
@@ -121,11 +124,15 @@ export async function joinVoice(newCampaignId, newHandlers) {
     conn.on("VoiceSpeakingChanged", ({ userId, isSpeaking }) => {
         handlers.onSpeakingChanged(userId, isSpeaking);
     });
-    conn.on("VoiceMuteChanged", ({ userId, isSelfMuted }) => {
-        handlers.onMuteChanged(userId, isSelfMuted);
+    conn.on("VoiceMuteChanged", ({ userId, isSelfMuted: muted }) => {
+        handlers.onMuteChanged(userId, muted);
     });
-    conn.on("VoiceForceMuteChanged", ({ userId, isForceMuted }) => {
-        handlers.onForceMuteChanged(userId, isForceMuted);
+    conn.on("VoiceForceMuteChanged", ({ userId, isForceMuted: muted }) => {
+        if (userId === myUserIdPlaceholder) {
+            isForceMuted = muted;
+        }
+
+        handlers.onForceMuteChanged(userId, muted);
     });
 
     const existingParticipants = await new Promise((resolve) => {
@@ -159,6 +166,8 @@ export async function leaveVoice() {
 }
 
 export function setSelfMute(muted) {
+    isSelfMuted = muted;
+
     if (localStream) 
         localStream.getAudioTracks().forEach((t) => (t.enabled = !muted));
 
