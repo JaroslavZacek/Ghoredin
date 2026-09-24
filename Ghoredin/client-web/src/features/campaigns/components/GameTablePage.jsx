@@ -115,7 +115,7 @@ export default function GameTablePage() {
                 </section>
 
                 <section className="game-table__section game-table__section--voice">
-                    <h3 className="game-table__section--title">Telepatie</h3>
+                    <h3 className="game-table__section-title">Telepatie</h3>
                     <VoicePanel 
                         campaignId={id}
                         currentUserId={user.userId}
