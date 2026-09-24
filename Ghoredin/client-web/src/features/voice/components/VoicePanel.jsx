@@ -5,7 +5,7 @@ import { joinVoice, leaveVoice, setSelfMute, setWhisperTargets, forceMute } from
 
 import "./VoicePanel.css";
 
-export default function VoicePanel({ campaignId, isGameMaster, players }) {
+export default function VoicePanel({ campaignId, isGameMaster, players, currentUserId }) {
     const [connected, setConnected] = useState(false);
     const [participants, setParticipants] = useState([]);
     const [myMuted, setMyMuted] = useState(false);
@@ -40,13 +40,17 @@ export default function VoicePanel({ campaignId, isGameMaster, players }) {
                     audioRefs.current[userId].srcObject = stream;
                     upsertParticipant(userId, {});
                 },
-                onSpeakingChanged: (userId, speaking) => upsertParticipant(userId, { speaking }),
+                onSpeakingChanged: (userId, speaking) => {
+                    upsertParticipant(userId, { speaking });
+                },
                 onMuteChanged: (userId, selfMuted) => upsertParticipant(userId, { selfMuted }),
                 onForceMuteChanged: (userId, forceMuted) => upsertParticipant(userId, { forceMuted }),
             });
             existing.forEach((p) => upsertParticipant(p.userId, {
                 selfMuted: p.isSelfMuted, forceMuted: p.isForceMuted, speaking: p.isSpeaking
             }));
+            upsertParticipant(currentUserId, {});
+
             setConnected(true);
         } catch (error) {
             setError("Nepodařilo se připojit k hlasovému chatu: " + error.message);
@@ -116,7 +120,7 @@ export default function VoicePanel({ campaignId, isGameMaster, players }) {
                                         {whisperMode ? "Mluvit na všechny" : "Šeptat vybraným"}
                                     </button>
                                 )
-                            };
+                            }
 
                             <button className="voice-panel__leave" onClick={handleLeave}>
                                 <IconPhoneOff size={16} /> Odpojit
