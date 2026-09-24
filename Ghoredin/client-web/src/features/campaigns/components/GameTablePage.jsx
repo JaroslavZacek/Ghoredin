@@ -7,6 +7,7 @@ import { useTheme } from "../../../shared/theme/ThemeContext";
 import { getThemeForGameSystem} from "../../../shared/theme/themeUtils";
 import { getCampaign } from "../api/campaignsApi";
 import { getCampaignCharacters} from "../../characters/api/charactersApi";
+import { joinCampaignGroup, leaveCampaignGroup } from "../../../shared/signalr/campaignHubConnection";
 
 import CurrentScene from "../../notes/components/CurrentScene";
 import ChatPanel from "../../chat/components/ChatPanel";
@@ -55,6 +56,17 @@ export default function GameTablePage() {
         }
 
         return () => setActiveTheme("shell");
+    }, [campaign]);
+
+    useEffect(() => {
+        if (!campaign)
+            return;
+
+        joinCampaignGroup(campaign.id).catch((err) => console.error("Chyba připojení k SignalR:", err));
+
+        return () => {
+            leaveCampaignGroup(campaign.id).catch(() => {});
+        };
     }, [campaign]);
 
     if (loading)
@@ -115,7 +127,7 @@ export default function GameTablePage() {
 
             <section className="game-table__section">
                 <CollapsibleSection title="Hlasoví kanál" defaultOpen={false} onDarkBg>
-                    <VoicePanel campaignId={id} isGameMaster={iAmGameMaster} players={players}/>
+                    <VoicePanel campaignId={id} isGameMaster={iAmGameMaster} players={players} currentUserId={user.userId}/>
                 </CollapsibleSection>
             </section>
         </div>
