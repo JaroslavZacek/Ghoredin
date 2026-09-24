@@ -103,16 +103,27 @@ export default function GameTablePage() {
 
             <CurrentScene campaignId={id} />
 
-            <section className="game-table__section">
-                <h3 className="game-table__section-title">Chat</h3>
+            <div className="game-table__row">
+                <section className="game-table__section game-table__section--chat">
+                    <h3 className="game-table__section-title">Kronika výpravy</h3>
+                    <ChatPanel 
+                        campaignId={id}
+                        currentUserId={user.userId}
+                        isGameMaster={iAmGameMaster}
+                        players={players}
+                    />
+                </section>
 
-                <ChatPanel 
-                    campaignId={id}
-                    currentUserId={user.userId}
-                    isGameMaster={iAmGameMaster}
-                    players={players}
-                />
-            </section>
+                <section className="game-table__section game-table__section--voice">
+                    <h3 className="game-table__section--title">Telepatie</h3>
+                    <VoicePanel 
+                        campaignId={id}
+                        currentUserId={user.userId}
+                        isGameMaster={iAmGameMaster}
+                        players={players}
+                    />
+                </section>
+            </div>
 
             <section className="game-table__section">
                 <CollapsibleSection title="Listiny" defaultOpen={false} onDarkBg>
@@ -125,11 +136,6 @@ export default function GameTablePage() {
                 <JournalPanel campaignId={id} />
             </section>
 
-            <section className="game-table__section">
-                <CollapsibleSection title="Hlasoví kanál" defaultOpen={false} onDarkBg>
-                    <VoicePanel campaignId={id} isGameMaster={iAmGameMaster} players={players} currentUserId={user.userId}/>
-                </CollapsibleSection>
-            </section>
         </div>
     );
 }
