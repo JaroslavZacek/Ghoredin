@@ -163,6 +163,8 @@ export async function leaveVoice() {
         localStream = null;
     }
     campaignId = null;
+    isSelfMuted = false;
+    isForceMuted = false;
 }
 
 export function setSelfMute(muted) {
