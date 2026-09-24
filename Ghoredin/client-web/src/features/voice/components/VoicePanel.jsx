@@ -29,7 +29,7 @@ export default function VoicePanel({ campaignId, isGameMaster, players, currentU
     const handleJoin = async () => {
         setError("");
         try {
-            const existing = await joinVoice(campaignId, {
+            const existing = await joinVoice(campaignId, currentUserId,{
                 onParticipantsChanged: () => {},
                 onRemoteStream: (userId, stream) => {
                     if (!audioRefs.current[userId]) {
