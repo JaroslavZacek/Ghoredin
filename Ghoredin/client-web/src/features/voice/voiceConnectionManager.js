@@ -11,6 +11,9 @@ let isSelfMuted = false;
 let isForceMuted = false;
 let currentWhisperTargets = null;
 
+let speakingDetectionActive = false;
+let audioContext = null;
+
 let handlers = {
     onParticipantsChanged: () => {},
     onRemoteStream: () => {},
@@ -89,9 +92,9 @@ async function handleIncomingSignal({ fromUserId, signalType, payload }) {
 }
 
 function startSpeakingDetection() {
-    const audioCtx = new AudioContext();
-    const source = audioCtx.createMediaStreamSource(localStream);
-    const analyser = audioCtx.createAnalyser();
+    const audioContext = new AudioContext();
+    const source = audioContext.createMediaStreamSource(localStream);
+    const analyser = audioContext.createAnalyser();
 
     analyser.fftSize = 512;
     source.connect(analyser);
@@ -100,8 +103,10 @@ function startSpeakingDetection() {
     let wasSpeaking = false;
     let lastSent = 0;
 
+    speakingDetectionActive = true;
+
     const check = () => {
-        if (!conn)
+        if (!speakingDetectionActive)
             return;
 
         analyser.getByteFrequencyData(data);
@@ -169,6 +174,13 @@ export async function joinVoice(newCampaignId, myUserId,newHandlers) {
 }
 
 export async function leaveVoice() {
+    speakingDetectionActive = false;
+
+    if (audioContext) {
+        audioContext.close();
+        audioContext = null;
+    }
+
     if (conn && campaignId) {
         await conn.invoke("LeaveVoice", campaignId).catch(() => {});
         conn.off("ReceiveVoiceSignal", handleIncomingSignal);
