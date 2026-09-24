@@ -10,6 +10,12 @@
     margin-bottom: var(--space-lg);
 }
 
+.game-table__row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+}
+
 .game-table__back {
     background: none;
     border: none;
@@ -40,4 +46,14 @@
     font-family: var(--font-heading);
     color: var(--color-text-on-bg);
     margin: 0 0 var(--space-md);
+}
+
+.game-table__section--chat {
+    flex: 1;
+    min-width: 0;
+}
+
+.game-table__section--voice {
+    width: 280px;
+    flex-shrink: 0;
 }
