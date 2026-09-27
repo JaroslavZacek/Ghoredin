@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
-import { login as apiLogin, logout as apiLogout, getMe} from "./api/authApi";
+import { login as apiLogin, logout as apiLogout, getMe, setNickname} from "./api/authApi";
 
 const AuthContext = createContext(null);
 
@@ -43,7 +43,12 @@ export function AuthProvider({ children }) {
         }
     };
 
-    const value = { user, loading, login, logout };
+    const updateNickname = async (nickname) => {
+        const updated = await setNickname(nickname);
+        setUser((prev) => ({ ...prev, ...updated }));
+    };
+
+    const value = { user, loading, login, logout, updateNickname };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
