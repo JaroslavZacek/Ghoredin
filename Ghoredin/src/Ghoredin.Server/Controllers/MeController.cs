@@ -1,39 +1,47 @@
 ﻿using Ghoredin.Application.Users;
+using Ghoredin.Infrastructure.Identity;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Ghoredin.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/me")]
     [ApiController]
+    [Authorize]
     public class MeController : ControllerBase
     {
-        private readonly ICurrentUserService _currentUser;
+        private readonly UserManager<ApplicationUser> _userManager;
         
-        public MeController(ICurrentUserService currentUser)
+        public MeController(UserManager<ApplicationUser> userManager)
         {
-            _currentUser = currentUser;
+            _userManager = userManager;
         }
 
-        /// <summary>
-        /// Vrací základní informace o právě přihlášeném uživateli.
-        /// </summary>
-        /// <returns>HTTP 200 (OK) s JSON objektem ve tvaru: { userId, isAuthenticated }</returns>
-        [HttpGet]
-        [Authorize]
-        public IActionResult GetMe() 
-        {
-            var email = User.FindFirstValue(ClaimTypes.Email);
 
-            return Ok(new
-            {
-                userId = _currentUser.UserId,
-                email = email,
-                isAuthenticated = _currentUser.IsAuthenticated
-            });
+        [HttpGet]
+        public async Task<IActionResult> GetMe()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is null)
+                return Unauthorized();
+
+            return Ok(ToDto(user));
+        }
+
+
+        //---------------------------------------------------------------------------------------
+        //------------------------- Privátní metody ---------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        private static MeDto ToDto(ApplicationUser user)
+        {
+            var displayName = !string.IsNullOrWhiteSpace(user.Nickname) ? user.Nickname : user.Email;
+
+            return new MeDto(user.Id, user.Email!, user.Nickname, displayName);
         }
     }
 }
