@@ -1,4 +1,4 @@
-import { apiGet, apiPost } from "../../../shared/api/apiClient";
+import { apiGet, apiPost, apiPut } from "../../../shared/api/apiClient";
 
 export const register = (email, password) => 
     apiPost("register", { email, password });
@@ -10,3 +10,6 @@ export const logout = () =>
     apiPost("auth/logout", {});
 
 export const getMe = () => apiGet("me");
+
+export const setNickname = (nickname) =>
+    apiPut("me/nickname", { nickname });
