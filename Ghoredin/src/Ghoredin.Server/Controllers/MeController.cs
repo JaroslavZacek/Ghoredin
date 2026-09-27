@@ -1,5 +1,6 @@
 ﻿using Ghoredin.Application.Users;
 using Ghoredin.Infrastructure.Identity;
+using Ghoredin.Server.Requests;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +23,10 @@ namespace Ghoredin.Server.Controllers
         }
 
 
+        
+
+        #region Get
+
         [HttpGet]
         public async Task<IActionResult> GetMe()
         {
@@ -32,7 +37,25 @@ namespace Ghoredin.Server.Controllers
             return Ok(ToDto(user));
         }
 
+        #endregion
 
+        #region Put
+
+        [HttpPut("nickname")]
+        public async Task<IActionResult> SetNickname([FromBody] SetNicknameRequest request)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is null)
+                return Unauthorized();
+
+            user.Nickname = string.IsNullOrWhiteSpace(request.Nickname) ? null : request.Nickname.Trim();
+            await _userManager.UpdateAsync(user);
+
+            return Ok(ToDto(user));
+
+        }
+
+        #endregion
         //---------------------------------------------------------------------------------------
         //------------------------- Privátní metody ---------------------------------------------
         //---------------------------------------------------------------------------------------
