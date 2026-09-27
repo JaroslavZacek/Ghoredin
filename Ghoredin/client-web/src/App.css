@@ -64,7 +64,7 @@
   gap: 12px;
 }
 
-.app__user-email {
+.app__user-displayName {
   font-size: 14px;
   color: var(--color-text-muted-on-bg);
 }
