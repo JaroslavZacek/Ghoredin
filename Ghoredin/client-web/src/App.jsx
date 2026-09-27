@@ -46,7 +46,7 @@ function App() {
 
         <div className="app__header-col app__header-col--end">
           <div className="app__user">
-            <span className="app__user-email">{user.email}</span>
+            <span className="app__user-displayName">{user.displayName}</span>
             <button className="app__user-logout-btn" onClick={logout}>Odhlásit se</button>
           </div>
         </div>
