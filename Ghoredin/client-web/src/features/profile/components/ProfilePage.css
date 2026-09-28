@@ -32,6 +32,7 @@
 .profile-page__email {
     font-size: 14px;
     margin: 0;
+    padding-left: 10px;
     color: var(--color-text);
 }
 
