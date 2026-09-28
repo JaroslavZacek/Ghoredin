@@ -1,4 +1,5 @@
 import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { IconSettings } from "@tabler/icons-react";
 
 import { useAuth } from "./features/auth/AuthContext";
 import { useTheme } from "./shared/theme/ThemeContext";
@@ -12,6 +13,7 @@ import CharacterCreationPage from "./features/characters/components/CharacterCre
 import CharacterSheetPage from "./features/characters/components/CharacterSheetPage";
 import CampaignCreationPage from "./features/campaigns/components/CampaignCreationPage";
 import GameTablePage from "./features/campaigns/components/GameTablePage";
+import ProfilePage from "./features/profile/components/ProfilePage";
 
 import "./App.css"
 
@@ -47,6 +49,9 @@ function App() {
         <div className="app__header-col app__header-col--end">
           <div className="app__user">
             <span className="app__user-displayName">{user.displayName}</span>
+            <Link className="app__user-profile-link" to="/profile">
+              <IconSettings size={14} /> Profil
+            </Link>
             <button className="app__user-logout-btn" onClick={logout}>Odhlásit se</button>
           </div>
         </div>
@@ -64,6 +69,7 @@ function App() {
             <Route path="/campaigns/:id/create-character" element={<CharacterCreationPage />} />
             <Route path="/campaigns/:id/characters/:characterId" element={<CharacterSheetPage />} />
             <Route path="/campaigns/:id/table" element={<GameTablePage />} />
+            <Route path="/profile" element={<ProfilePage />} />
             {/* Výchozí adresa -> přesměrování na postavy*/}
             <Route path="*" element={<Navigate to="/characters" replace />} />
           </Routes>
