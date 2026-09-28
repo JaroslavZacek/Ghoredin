@@ -66,6 +66,7 @@
 
 .app__user-displayName {
   font-size: 14px;
+  font-weight: 600;
   color: var(--color-text-muted-on-bg);
 }
 
@@ -84,6 +85,21 @@
 .app__user-logout-btn:hover {
   color: var(--color-danger);
   border-color: var(--color-danger);
+}
+
+.app__user-profile-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  color: var(--color-text-muted-on-bg);
+  padding: 6px 12px;
+  border-radius: var(--radius);
+  transition: color 0.15 ease;
+}
+
+.app__user-profile-link:hover {
+  color: var(--color-text-on-bg);
 }
 
 .app__main {
